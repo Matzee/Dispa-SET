@@ -21,7 +21,7 @@ from ..misc.gdx_handler import gdx_to_list, gdx_to_dataframe, get_gams_path
 from ..misc.str_handler import shrink_to_64, clean_strings
 from ..common import commonvars
 
- # get color definitions: 
+ # get color definitions:
 commons= commonvars()
 
 def GAMSstatus(statustype,num):
@@ -72,7 +72,7 @@ def GAMSstatus(statustype,num):
 
 
 def get_load_data(inputs, c):
-    """ 
+    """
     Get the load curve, the residual load curve, and the net residual load curve of a specific country
 
     :param inputs:  DispaSET inputs (output of the get_sim_results function)
@@ -181,7 +181,7 @@ def get_plot_data(inputs, results, c):
     # re-ordering columns:
     OrderedColumns = [col for col in commons['MeritOrder'] if col in plotdata.columns]
     plotdata = plotdata[OrderedColumns]
-    
+
     # remove empty columns:
     for col in plotdata.columns:
         if plotdata[col].max() == 0 and plotdata[col].min()==0:
@@ -194,11 +194,11 @@ def plot_dispatch_safe(demand, plotdata, level=None, curtailment=None, rng=None)
     """
     Function that plots the dispatch data and the reservoir level as a cumulative sum.
     In this case, the Pandas index is not used since it can cause a bug in matplotlib
-    
+
     :param demand:      Pandas Series with the demand curve
     :param plotdata:    Pandas Dataframe with the data to be plotted. Negative columns should be at the beginning. Output of the function GetPlotData
     :param level:       Optional pandas series with an aggregated reservoir level for the considered zone.
-    :param curtailment: Optional pandas series with the value of the curtailment 
+    :param curtailment: Optional pandas series with the value of the curtailment
     :param rng:         Indexes of the values to be plotted. If undefined, the first week is plotted
     """
     logging.critical('Error in when drawing the dispatch plot. Trying a safer mode without x-axis')
@@ -217,13 +217,13 @@ def plot_dispatch_safe(demand, plotdata, level=None, curtailment=None, rng=None)
         pdrng = plotdata.index[:min(len(plotdata)-1,7*24)]
     else:
         pdrng = rng
-    alpha = '0.3'        
-    idx = [d.to_pydatetime() for d in pdrng]  
+    alpha = '0.3'
+    idx = [d.to_pydatetime() for d in pdrng]
 
     # Netting the interconnections:
     if 'FlowIn' in plotdata and 'FlowOut' in plotdata:
         plotdata['FlowIn'],plotdata['FlowOut'] = (np.maximum(0,plotdata['FlowIn']-plotdata['FlowOut']),np.maximum(0,plotdata['FlowOut']-plotdata['FlowIn']))
-      
+
     # find the zero line position:
     cols = plotdata.columns.tolist()
     idx_zero = 0
@@ -279,8 +279,8 @@ def plot_dispatch_safe(demand, plotdata, level=None, curtailment=None, rng=None)
         labels.append(col2)
         patches.append(mpatches.Patch(color=color, alpha=0.3, hatch=hatch, label=col2))
         colorlist.append(color)
-    
-    # Plot curtailment:    
+
+    # Plot curtailment:
     if isinstance(curtailment,pd.Series):
         if not curtailment.index.equals(demand.index):
             logging.error('The curtailment time series must have the same index as the demand')
@@ -289,7 +289,7 @@ def plot_dispatch_safe(demand, plotdata, level=None, curtailment=None, rng=None)
         plt.fill_between(idx, sumplot_neg.loc[pdrng, 'sum'].values-curtailment[pdrng].values, sumplot_neg.loc[pdrng, 'sum'].values, color='red', alpha=0.7)
         labels.append('Curtailment')
         patches.append(mpatches.Patch(color='red', alpha=0.7, label='Curtailment'))
-   
+
     plt.xticks(rotation=45)
     ax.set_ylabel('Power [MW]')
     ax.yaxis.label.set_fontsize(16)
@@ -315,11 +315,11 @@ def plot_dispatch_safe(demand, plotdata, level=None, curtailment=None, rng=None)
 def plot_dispatch(demand, plotdata, level=None, curtailment=None, rng=None):
     """
     Function that plots the dispatch data and the reservoir level as a cumulative sum
-    
+
     :param demand:      Pandas Series with the demand curve
     :param plotdata:    Pandas Dataframe with the data to be plotted. Negative columns should be at the beginning. Output of the function GetPlotData
     :param level:       Optional pandas series with an aggregated reservoir level for the considered zone.
-    :param curtailment: Optional pandas series with the value of the curtailment 
+    :param curtailment: Optional pandas series with the value of the curtailment
     :param rng:         Indexes of the values to be plotted. If undefined, the first week is plotted
     """
     import matplotlib.pyplot as plt
@@ -336,12 +336,12 @@ def plot_dispatch(demand, plotdata, level=None, curtailment=None, rng=None):
         pdrng = plotdata.index[:min(len(plotdata)-1,7*24)]
     else:
         pdrng = rng
-    alpha = '0.3'        
-    
+    alpha = '0.3'
+
     # Netting the interconnections:
     if 'FlowIn' in plotdata and 'FlowOut' in plotdata:
         plotdata['FlowOut'],plotdata['FlowIn'] = (np.minimum(0,plotdata['FlowIn']+plotdata['FlowOut']),np.maximum(0,plotdata['FlowOut']+plotdata['FlowIn']))
-        
+
     # find the zero line position:
     cols = plotdata.columns.tolist()
     idx_zero = 0
@@ -397,8 +397,8 @@ def plot_dispatch(demand, plotdata, level=None, curtailment=None, rng=None):
         labels.append(col2)
         patches.append(mpatches.Patch(color=color, alpha=0.3, hatch=hatch, label=col2))
         colorlist.append(color)
-    
-    # Plot curtailment:    
+
+    # Plot curtailment:
     if isinstance(curtailment,pd.Series):
         if not curtailment.index.equals(demand.index):
             logging.error('The curtailment time series must have the same index as the demand')
@@ -407,7 +407,7 @@ def plot_dispatch(demand, plotdata, level=None, curtailment=None, rng=None):
         plt.fill_between(pdrng, sumplot_neg.loc[pdrng, 'sum']-curtailment[pdrng], sumplot_neg.loc[pdrng, 'sum'], color='red', alpha=0.7)
         labels.append('Curtailment')
         patches.append(mpatches.Patch(color='red', alpha=0.7, label='Curtailment'))
-   
+
 
     ax.set_ylabel('Power [MW]')
     ax.yaxis.label.set_fontsize(16)
@@ -432,19 +432,19 @@ def plot_dispatch(demand, plotdata, level=None, curtailment=None, rng=None):
 
 def plot_rug(df_series, on_off=False, cmap='Greys'):
     """Create multiaxis rug plot from pandas Dataframe
-    
+
     Parameters:
         df_series: 2D pandas with timed index
-        
-        on_off: 
+
+        on_off:
             * If True all points that are above 0 will be plotted as one color.
             * If False all values will be colored based on their value.
-                
+
         cmap: palette name (from colorbrewer, matplotlib etc.)
-        
+
     Returns:
         plot
-        
+
     Function written by K. Kavvadias
     """
 
@@ -544,7 +544,7 @@ def plot_country_capacities(inputs,plot=True):
     CountryFuels = {}
     for u in units.index:
         CountryFuels[(units.Zone[u],units.Fuel[u])] = (units.Zone[u],units.Fuel[u])
-    
+
     PowerCapacity = pd.DataFrame(columns=inputs['sets']['f'],index=inputs['sets']['n'])
     StorageCapacity = pd.DataFrame(columns=inputs['sets']['f'],index=inputs['sets']['n'])
     for n,f in CountryFuels:
@@ -559,7 +559,7 @@ def plot_country_capacities(inputs,plot=True):
         ax = PowerCapacity.plot(kind="bar", figsize=(12, 8), stacked=True, color=colors, alpha=0.8, legend='reverse',
                                 title='Installed capacity per country (the horizontal lines indicate the peak demand)')
         ax.set_ylabel('Capacity [MW]')
-        demand = inputs['param_df']['Demand']['DA'].max() 
+        demand = inputs['param_df']['Demand']['DA'].max()
         ax.barh(demand, left=ax.get_xticks() - 0.4, width=[0.8] * len(demand), height=ax.get_ylim()[1]*0.005, linewidth=2,
                 color='k')
     return {'PowerCapacity':PowerCapacity,'StorageCapacity':StorageCapacity}
@@ -574,9 +574,9 @@ def get_sim_results(path='.', cache=False, temp_path='.pickle'):
     :param path:                Relative path to the simulation environment folder (current path by default)
     :param cache:               If true, caches the simulation results in a pickle file for faster loading the next time
     :param temp_path:            Temporary path to store the cache file
-    :returns inputs,results:    Two dictionaries with all the input and outputs 
+    :returns inputs,results:    Two dictionaries with all the input and outputs
     """
-
+    2 + "as"
     inputfile = path + '/Inputs.p'
     resultfile = path + '/Results.gdx'
 
@@ -587,7 +587,7 @@ def get_sim_results(path='.', cache=False, temp_path='.pickle'):
     inputs['sets']['u'] = clean_strings(inputs['sets']['u'])
     inputs['units'].index = clean_strings(inputs['units'].index.tolist())
     # inputs['units']['Unit'] = clean_strings(inputs['units']['Unit'].tolist())
-    
+
     # Add the formated parameters in the inputs variable if not already present:
     if not 'param_df' in inputs:
         inputs['param_df'] = ds_to_df(inputs)
@@ -724,7 +724,7 @@ def plot_country(inputs, results, c='', rng=None):
         else:
             plot_dispatch_safe(demand, plotdata, level, rng=rng)
 
-    # Generation plot: 
+    # Generation plot:
     CountryGeneration = filter_by_country(results['OutputPower'], inputs, c)
 
     plot_rug(CountryGeneration, on_off=False, cmap='Greys')
@@ -733,7 +733,7 @@ def plot_country(inputs, results, c='', rng=None):
 
 
 def get_imports(flows, c):
-    """ 
+    """
     Function that computes the balance of the imports/exports of a given zone
 
     :param flows:       Pandas dataframe with the timeseries of the exchanges
@@ -842,7 +842,7 @@ def get_result_analysis(inputs, results):
         StorageData = None
 
     return {'Cost_kwh': Cost_kwh, 'TotalLoad': TotalLoad, 'PeakLoad': PeakLoad, 'NetImports': NetImports,
-            'CountryData': CountryData, 'Congestion': Congestion, 'StorageData': StorageData}    
+            'CountryData': CountryData, 'Congestion': Congestion, 'StorageData': StorageData}
 
 def get_indicators_powerplant(inputs, results):
     """
@@ -956,9 +956,9 @@ def ds_to_df(inputs):
 def CostExPost(inputs,results):
     '''
     Ex post computation of the operational costs with plotting. This allows breaking down
-    the cost into its different components and check that it matches with the objective 
+    the cost into its different components and check that it matches with the objective
     function from the optimization.
-    
+
     The cost objective function is the following:
              SystemCost(i)
              =E=
@@ -974,27 +974,27 @@ def CostExPost(inputs,results):
              +80E3*(sum(n,LL_2U(n,i)+LL_2D(n,i)+LL_3U(n,i)))
              +70E3*sum(u,LL_RampUp(u,i)+LL_RampDown(u,i))
              +1*sum(s,spillage(s,i))
-             
+
     :returns: tuple with the cost components and their cumulative sums in two dataframes.
     '''
     import datetime
-    
+
     dfin = inputs['param_df']
     timeindex = results['OutputPower'].index
-    
+
     costs = pd.DataFrame(index=timeindex)
-    
+
     #%% Fixed Costs:
     costs['FixedCosts'] = 0
     for u in results['OutputCommitted']:
         if u in dfin:
             costs['FixedCosts'] =+ dfin[u] * results['OutputCommited'][u]
-    
-            
+
+
     #%% Ramping and startup costs:
     indexinitial = timeindex[0] - datetime.timedelta(hours=1)
     powerlong = results['OutputPower'].copy()
-    powerlong.loc[indexinitial,:] = 0 
+    powerlong.loc[indexinitial,:] = 0
     powerlong.sort_index(inplace=True)
     committedlong = results['OutputCommitted'].copy()
     for u in powerlong:
@@ -1002,58 +1002,58 @@ def CostExPost(inputs,results):
             powerlong.loc[indexinitial,u] = dfin['PowerInitial'].loc[u,'PowerInitial']
             committedlong.loc[indexinitial,u] = dfin['PowerInitial'].loc[u,'PowerInitial']>0
     committedlong.sort_index(inplace=True)
-            
+
     powerlong_shifted = powerlong.copy()
     powerlong_shifted.iloc[1:,:] = powerlong.iloc[:-1,:].values
     committedlong_shifted = committedlong.copy()
     committedlong_shifted.iloc[1:,:] = committedlong.iloc[:-1,:].values
-    
+
     ramping = powerlong - powerlong_shifted
     startups = committedlong - committedlong_shifted
     ramping.drop([ramping.index[0]],inplace=True); startups.drop([startups.index[0]],inplace=True)
-    
+
     CostStartUp = pd.DataFrame(index=startups.index,columns=startups.columns)
     for u in CostStartUp:
         if u in dfin['CostStartUp'].index:
             CostStartUp[u] = startups[startups>0][u].fillna(0) * dfin['CostStartUp'].loc[u,'CostStartUp']
         else:
             print('Unit ' + u + ' not found in input table CostStartUp!')
-            
+
     CostShutDown = pd.DataFrame(index=startups.index,columns=startups.columns)
     for u in CostShutDown:
         if u in dfin['CostShutDown'].index:
             CostShutDown[u] = startups[startups<0][u].fillna(0) * dfin['CostShutDown'].loc[u,'CostShutDown']
         else:
             print('Unit ' + u + ' not found in input table CostShutDown!')
-            
+
     CostRampUp = pd.DataFrame(index=ramping.index,columns=ramping.columns)
     for u in CostRampUp:
         if u in dfin['CostRampUp'].index:
             CostRampUp[u] = ramping[ramping>0][u].fillna(0) * dfin['CostRampUp'].loc[u,'CostRampUp']
         else:
             print('Unit ' + u + ' not found in input table CostRampUp!')
-            
+
     CostRampDown = pd.DataFrame(index=ramping.index,columns=ramping.columns)
     for u in CostRampDown:
         if u in dfin['CostRampDown'].index:
             CostRampDown[u] = ramping[ramping<0][u].fillna(0) * dfin['CostRampDown'].loc[u,'CostRampDown']
         else:
             print('Unit ' + u + ' not found in input table CostRampDown!')
-    
+
     costs['CostStartUp'] = CostStartUp.sum(axis=1).fillna(0)
     costs['CostShutDown'] = CostShutDown.sum(axis=1).fillna(0)
     costs['CostRampUp'] = CostRampUp.sum(axis=1).fillna(0)
     costs['CostRampDown'] = CostRampDown.sum(axis=1).fillna(0)
-    
+
     #%% Variable cost:
     costs['CostVariable'] = (results['OutputPower'] * dfin['CostVariable']).fillna(0).sum(axis=1)
-    
+
     #%% Transmission cost:
     costs['CostTransmission'] = (results['OutputFlow'] * dfin['PriceTransmission']).fillna(0).sum(axis=1)
-    
+
     #%% Shedding cost:
     costs['CostLoadShedding'] = (results['OutputShedLoad'] * dfin['CostLoadShedding']).fillna(0).sum(axis=1)
-    
+
     #%% Heating costs:
     costs['CostHeatSlack'] = (results['OutputHeatSlack'] * dfin['CostHeatSlack']).fillna(0).sum(axis=0)
     CostHeat = (results['OutputHeatSlack'] * dfin['CostHeatSlack']).fillna(0)
@@ -1064,30 +1064,28 @@ def CostExPost(inputs,results):
         else:
             print('Unit ' + u + ' not found in input table CHPPowerLossFactor!')
     costs['CostHeat'] = CostHeat.sum(axis=1).fillna(0)
-    
+
     #%% Lost loads:
     costs['LostLoad'] = 80e3* (results['LostLoad_2D'].reindex(timeindex).sum(axis=1).fillna(0) + results['LostLoad_2U'].reindex(timeindex).sum(axis=1).fillna(0) + results['LostLoad_3U'].reindex(timeindex).sum(axis=1).fillna(0))  \
                        + 100e3*(results['LostLoad_MaxPower'].reindex(timeindex).sum(axis=1).fillna(0) + results['LostLoad_MinPower'].reindex(timeindex).sum(axis=1).fillna(0)) \
                        + 70e3*(results['LostLoad_RampDown'].reindex(timeindex).sum(axis=1).fillna(0) + results['LostLoad_RampUp'].reindex(timeindex).sum(axis=1).fillna(0))
-        
+
     #%% Spillage:
     costs['Spillage'] = 1 * results['OutputSpillage'].sum(axis=1).fillna(0)
-    
+
     #%% Plotting
     # Drop na columns:
     costs.dropna(axis=1, how='all',inplace=True)
     # Delete all-zero columns:
     costs = costs.loc[:, (costs != 0).any(axis=0)]
-    
+
     sumcost = costs.cumsum(axis=1)
     sumcost['OutputSystemCost'] = results['OutputSystemCost']
-    
+
     sumcost.plot(title='Cumulative sum of the cost components')
-    
+
     #%% Warning if significant error:
     diff = (costs.sum(axis=1) - results['OutputSystemCost']).abs()
     if diff.max() > 0.01 * results['OutputSystemCost'].max():
         logging.critical('There are significant differences between the cost computed ex post and and the cost provided by the optimization results!')
     return costs,sumcost
-
-
