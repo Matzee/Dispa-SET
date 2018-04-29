@@ -16,6 +16,7 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import warnings
 
 from ..misc.gdx_handler import gdx_to_list, gdx_to_dataframe, get_gams_path
 from ..misc.str_handler import shrink_to_64, clean_strings
@@ -576,7 +577,8 @@ def get_sim_results(path='.', cache=False, temp_path='.pickle'):
     :param temp_path:            Temporary path to store the cache file
     :returns inputs,results:    Two dictionaries with all the input and outputs
     """
-    2 + "as"
+
+
     inputfile = path + '/Inputs.p'
     resultfile = path + '/Results.gdx'
 
@@ -595,7 +597,7 @@ def get_sim_results(path='.', cache=False, temp_path='.pickle'):
 
     gams_dir = inputs['config']['GAMS_folder'].encode() # We need to pass the dir in config if we run it in clusters. PBS script fail to autolocate
     if not os.path.exists(gams_dir):
-        logging.warn('The provided path for GAMS (' + gams_dir + ') does not exist. Trying to locate...')
+        logging.warn('The provided path for GAMS (' + str(gams_dir) + ') does not exist. Trying to locate...')
         gams_dir = get_gams_path()
         if not os.path.exists(gams_dir):
             logging.error('GAMS path cannot be located. Simulation is stopped')
@@ -604,9 +606,9 @@ def get_sim_results(path='.', cache=False, temp_path='.pickle'):
 
     # Load results and store in cache file in the .pickle folder:
     if cache:
-        import cPickle
+        import  _pickle as cPickle
         import hashlib
-        m = hashlib.new('md5', resultfile)
+        m = hashlib.new('md5', resultfile.encode('utf-8'))
         resultfile_hash = m.hexdigest()
         filepath_pickle = str(temp_path + os.path.sep + resultfile_hash + '.p')
         if not os.path.isdir(temp_path):
@@ -615,11 +617,17 @@ def get_sim_results(path='.', cache=False, temp_path='.pickle'):
             time_pd = 0
         else:
             time_pd = os.path.getmtime(filepath_pickle)
+            time_pd = 0 #TODO FIXME Correct pickle handling
+            warnings.warn("Pickle import still needs to be handled MZ")
+
         if os.path.getmtime(resultfile) > time_pd:
+            print("HIEr")
+            gams_dir = gams_dir.decode("utf-8") # decode path
+            #print(gdx_to_list(gams_dir.decode("utf-8"), resultfile, varname='all', verbose=True))
             results = gdx_to_dataframe(gdx_to_list(gams_dir, resultfile, varname='all', verbose=True), fixindex=True,
                                        verbose=True)
             with open(filepath_pickle, 'wb') as pfile:
-                cPickle.dump(results, pfile, protocol=cPickle.HIGHEST_PROTOCOL)
+                cPickle.dump(results, pfile, protocol= pickle.HIGHEST_PROTOCOL)
         else:
             with open(filepath_pickle, 'rb') as pfile:
                 results = cPickle.load(pfile)
