@@ -5,26 +5,28 @@
 # the SWIG interface file instead.
 
 
-
-
-
 from sys import version_info
-if version_info >= (2,6,0):
+
+if version_info >= (2, 6, 0):
+
     def swig_import_helper():
         from os.path import dirname
         import imp
+
         fp = None
         try:
-            fp, pathname, description = imp.find_module('_optcc', [dirname(__file__)])
+            fp, pathname, description = imp.find_module("_optcc", [dirname(__file__)])
         except ImportError:
             import _optcc
+
             return _optcc
         if fp is not None:
             try:
-                _mod = imp.load_module('_optcc', fp, pathname, description)
+                _mod = imp.load_module("_optcc", fp, pathname, description)
             finally:
                 fp.close()
             return _mod
+
     _optcc = swig_import_helper()
     del swig_import_helper
 else:
@@ -33,39 +35,54 @@ del version_info
 try:
     _swig_property = property
 except NameError:
-    pass # Python < 2.2 doesn't have 'property'.
-def _swig_setattr_nondynamic(self,class_type,name,value,static=1):
-    if (name == "thisown"): return self.this.own(value)
-    if (name == "this"):
-        if type(value).__name__ == 'SwigPyObject':
+    pass  # Python < 2.2 doesn't have 'property'.
+
+
+def _swig_setattr_nondynamic(self, class_type, name, value, static=1):
+    if name == "thisown":
+        return self.this.own(value)
+    if name == "this":
+        if type(value).__name__ == "SwigPyObject":
             self.__dict__[name] = value
             return
-    method = class_type.__swig_setmethods__.get(name,None)
-    if method: return method(self,value)
-    if (not static):
+    method = class_type.__swig_setmethods__.get(name, None)
+    if method:
+        return method(self, value)
+    if not static:
         self.__dict__[name] = value
     else:
         raise AttributeError("You cannot add attributes to %s" % self)
 
-def _swig_setattr(self,class_type,name,value):
-    return _swig_setattr_nondynamic(self,class_type,name,value,0)
 
-def _swig_getattr(self,class_type,name):
-    if (name == "thisown"): return self.this.own()
-    method = class_type.__swig_getmethods__.get(name,None)
-    if method: return method(self)
+def _swig_setattr(self, class_type, name, value):
+    return _swig_setattr_nondynamic(self, class_type, name, value, 0)
+
+
+def _swig_getattr(self, class_type, name):
+    if name == "thisown":
+        return self.this.own()
+    method = class_type.__swig_getmethods__.get(name, None)
+    if method:
+        return method(self)
     raise AttributeError(name)
 
+
 def _swig_repr(self):
-    try: strthis = "proxy of " + self.this.__repr__()
-    except: strthis = ""
-    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis,)
+    try:
+        strthis = "proxy of " + self.this.__repr__()
+    except:
+        strthis = ""
+    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis)
+
 
 try:
     _object = object
     _newclass = 1
 except AttributeError:
-    class _object : pass
+
+    class _object:
+        pass
+
     _newclass = 0
 
 
@@ -100,29 +117,49 @@ optMsgTooManyMsgs = _optcc.optMsgTooManyMsgs
 optMsgUserError = _optcc.optMsgUserError
 optMapIndicator = _optcc.optMapIndicator
 optMapDefinedVar = _optcc.optMapDefinedVar
+
+
 class intArray(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, intArray, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, intArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _optcc.new_intArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _optcc.delete_intArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _optcc.intArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _optcc.intArray___setitem__(self, *args)
-    def cast(self): return _optcc.intArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _optcc.intArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _optcc.intArray___setitem__(self, *args)
+
+    def cast(self):
+        return _optcc.intArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _optcc.intArray_frompointer
-    if _newclass:frompointer = staticmethod(_optcc.intArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_optcc.intArray_frompointer)
+
+
 intArray_swigregister = _optcc.intArray_swigregister
 intArray_swigregister(intArray)
 
+
 def intArray_frompointer(*args):
-  return _optcc.intArray_frompointer(*args)
+    return _optcc.intArray_frompointer(*args)
+
+
 intArray_frompointer = _optcc.intArray_frompointer
+
 
 class doubleArray(_object):
     __swig_setmethods__ = {}
@@ -130,524 +167,697 @@ class doubleArray(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, doubleArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _optcc.new_doubleArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _optcc.delete_doubleArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _optcc.doubleArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _optcc.doubleArray___setitem__(self, *args)
-    def cast(self): return _optcc.doubleArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _optcc.doubleArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _optcc.doubleArray___setitem__(self, *args)
+
+    def cast(self):
+        return _optcc.doubleArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _optcc.doubleArray_frompointer
-    if _newclass:frompointer = staticmethod(_optcc.doubleArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_optcc.doubleArray_frompointer)
+
+
 doubleArray_swigregister = _optcc.doubleArray_swigregister
 doubleArray_swigregister(doubleArray)
 
+
 def doubleArray_frompointer(*args):
-  return _optcc.doubleArray_frompointer(*args)
+    return _optcc.doubleArray_frompointer(*args)
+
+
 doubleArray_frompointer = _optcc.doubleArray_frompointer
 
 
 def new_intp():
-  return _optcc.new_intp()
+    return _optcc.new_intp()
+
+
 new_intp = _optcc.new_intp
 
+
 def copy_intp(*args):
-  return _optcc.copy_intp(*args)
+    return _optcc.copy_intp(*args)
+
+
 copy_intp = _optcc.copy_intp
 
+
 def delete_intp(*args):
-  return _optcc.delete_intp(*args)
+    return _optcc.delete_intp(*args)
+
+
 delete_intp = _optcc.delete_intp
 
+
 def intp_assign(*args):
-  return _optcc.intp_assign(*args)
+    return _optcc.intp_assign(*args)
+
+
 intp_assign = _optcc.intp_assign
 
+
 def intp_value(*args):
-  return _optcc.intp_value(*args)
+    return _optcc.intp_value(*args)
+
+
 intp_value = _optcc.intp_value
 
+
 def new_doublep():
-  return _optcc.new_doublep()
+    return _optcc.new_doublep()
+
+
 new_doublep = _optcc.new_doublep
 
+
 def copy_doublep(*args):
-  return _optcc.copy_doublep(*args)
+    return _optcc.copy_doublep(*args)
+
+
 copy_doublep = _optcc.copy_doublep
 
+
 def delete_doublep(*args):
-  return _optcc.delete_doublep(*args)
+    return _optcc.delete_doublep(*args)
+
+
 delete_doublep = _optcc.delete_doublep
 
+
 def doublep_assign(*args):
-  return _optcc.doublep_assign(*args)
+    return _optcc.doublep_assign(*args)
+
+
 doublep_assign = _optcc.doublep_assign
 
+
 def doublep_value(*args):
-  return _optcc.doublep_value(*args)
+    return _optcc.doublep_value(*args)
+
+
 doublep_value = _optcc.doublep_value
 
+
 def new_optHandle_tp():
-  return _optcc.new_optHandle_tp()
+    return _optcc.new_optHandle_tp()
+
+
 new_optHandle_tp = _optcc.new_optHandle_tp
 
+
 def copy_optHandle_tp(*args):
-  return _optcc.copy_optHandle_tp(*args)
+    return _optcc.copy_optHandle_tp(*args)
+
+
 copy_optHandle_tp = _optcc.copy_optHandle_tp
 
+
 def delete_optHandle_tp(*args):
-  return _optcc.delete_optHandle_tp(*args)
+    return _optcc.delete_optHandle_tp(*args)
+
+
 delete_optHandle_tp = _optcc.delete_optHandle_tp
 
+
 def optHandle_tp_assign(*args):
-  return _optcc.optHandle_tp_assign(*args)
+    return _optcc.optHandle_tp_assign(*args)
+
+
 optHandle_tp_assign = _optcc.optHandle_tp_assign
 
+
 def optHandle_tp_value(*args):
-  return _optcc.optHandle_tp_value(*args)
+    return _optcc.optHandle_tp_value(*args)
+
+
 optHandle_tp_value = _optcc.optHandle_tp_value
 
+
 def optHandleToPtr(*args):
-  """optHandleToPtr(popt) -> void *"""
-  return _optcc.optHandleToPtr(*args)
+    """optHandleToPtr(popt) -> void *"""
+    return _optcc.optHandleToPtr(*args)
+
 
 def ptrTooptHandle(*args):
-  """ptrTooptHandle(vptr) -> optHandle_t"""
-  return _optcc.ptrTooptHandle(*args)
+    """ptrTooptHandle(vptr) -> optHandle_t"""
+    return _optcc.ptrTooptHandle(*args)
+
 
 def optGetReady(*args):
-  """optGetReady(msgBufSize) -> int"""
-  return _optcc.optGetReady(*args)
+    """optGetReady(msgBufSize) -> int"""
+    return _optcc.optGetReady(*args)
+
 
 def optGetReadyD(*args):
-  """optGetReadyD(dirName, msgBufSize) -> int"""
-  return _optcc.optGetReadyD(*args)
+    """optGetReadyD(dirName, msgBufSize) -> int"""
+    return _optcc.optGetReadyD(*args)
+
 
 def optGetReadyL(*args):
-  """optGetReadyL(libName, msgBufSize) -> int"""
-  return _optcc.optGetReadyL(*args)
+    """optGetReadyL(libName, msgBufSize) -> int"""
+    return _optcc.optGetReadyL(*args)
+
 
 def optCreate(*args):
-  """optCreate(popt, msgBufSize) -> int"""
-  return _optcc.optCreate(*args)
+    """optCreate(popt, msgBufSize) -> int"""
+    return _optcc.optCreate(*args)
+
 
 def optCreateD(*args):
-  """optCreateD(popt, dirName, msgBufSize) -> int"""
-  return _optcc.optCreateD(*args)
+    """optCreateD(popt, dirName, msgBufSize) -> int"""
+    return _optcc.optCreateD(*args)
+
 
 def optCreateL(*args):
-  """optCreateL(popt, libName, msgBufSize) -> int"""
-  return _optcc.optCreateL(*args)
+    """optCreateL(popt, libName, msgBufSize) -> int"""
+    return _optcc.optCreateL(*args)
+
 
 def optFree(*args):
-  """optFree(popt) -> int"""
-  return _optcc.optFree(*args)
+    """optFree(popt) -> int"""
+    return _optcc.optFree(*args)
+
 
 def optLibraryLoaded():
-  """optLibraryLoaded() -> int"""
-  return _optcc.optLibraryLoaded()
+    """optLibraryLoaded() -> int"""
+    return _optcc.optLibraryLoaded()
+
 
 def optLibraryUnload():
-  """optLibraryUnload() -> int"""
-  return _optcc.optLibraryUnload()
+    """optLibraryUnload() -> int"""
+    return _optcc.optLibraryUnload()
+
 
 def optGetScreenIndicator():
-  """optGetScreenIndicator() -> int"""
-  return _optcc.optGetScreenIndicator()
+    """optGetScreenIndicator() -> int"""
+    return _optcc.optGetScreenIndicator()
+
 
 def optSetScreenIndicator(*args):
-  """optSetScreenIndicator(scrind)"""
-  return _optcc.optSetScreenIndicator(*args)
+    """optSetScreenIndicator(scrind)"""
+    return _optcc.optSetScreenIndicator(*args)
+
 
 def optGetExceptionIndicator():
-  """optGetExceptionIndicator() -> int"""
-  return _optcc.optGetExceptionIndicator()
+    """optGetExceptionIndicator() -> int"""
+    return _optcc.optGetExceptionIndicator()
+
 
 def optSetExceptionIndicator(*args):
-  """optSetExceptionIndicator(excind)"""
-  return _optcc.optSetExceptionIndicator(*args)
+    """optSetExceptionIndicator(excind)"""
+    return _optcc.optSetExceptionIndicator(*args)
+
 
 def optGetExitIndicator():
-  """optGetExitIndicator() -> int"""
-  return _optcc.optGetExitIndicator()
+    """optGetExitIndicator() -> int"""
+    return _optcc.optGetExitIndicator()
+
 
 def optSetExitIndicator(*args):
-  """optSetExitIndicator(extind)"""
-  return _optcc.optSetExitIndicator(*args)
+    """optSetExitIndicator(extind)"""
+    return _optcc.optSetExitIndicator(*args)
+
 
 def optGetErrorCallback():
-  """optGetErrorCallback() -> optErrorCallback_t"""
-  return _optcc.optGetErrorCallback()
+    """optGetErrorCallback() -> optErrorCallback_t"""
+    return _optcc.optGetErrorCallback()
+
 
 def optSetErrorCallback(*args):
-  """optSetErrorCallback(func)"""
-  return _optcc.optSetErrorCallback(*args)
+    """optSetErrorCallback(func)"""
+    return _optcc.optSetErrorCallback(*args)
+
 
 def optGetAPIErrorCount():
-  """optGetAPIErrorCount() -> int"""
-  return _optcc.optGetAPIErrorCount()
+    """optGetAPIErrorCount() -> int"""
+    return _optcc.optGetAPIErrorCount()
+
 
 def optSetAPIErrorCount(*args):
-  """optSetAPIErrorCount(ecnt)"""
-  return _optcc.optSetAPIErrorCount(*args)
+    """optSetAPIErrorCount(ecnt)"""
+    return _optcc.optSetAPIErrorCount(*args)
+
 
 def optErrorHandling(*args):
-  """optErrorHandling(msg)"""
-  return _optcc.optErrorHandling(*args)
+    """optErrorHandling(msg)"""
+    return _optcc.optErrorHandling(*args)
+
 
 def optReadDefinition(*args):
-  """optReadDefinition(popt, fn) -> int"""
-  return _optcc.optReadDefinition(*args)
+    """optReadDefinition(popt, fn) -> int"""
+    return _optcc.optReadDefinition(*args)
+
 
 def optReadDefinitionFromPChar(*args):
-  """optReadDefinitionFromPChar(popt, p_mut) -> int"""
-  return _optcc.optReadDefinitionFromPChar(*args)
+    """optReadDefinitionFromPChar(popt, p_mut) -> int"""
+    return _optcc.optReadDefinitionFromPChar(*args)
+
 
 def optReadParameterFile(*args):
-  """optReadParameterFile(popt, fn) -> int"""
-  return _optcc.optReadParameterFile(*args)
+    """optReadParameterFile(popt, fn) -> int"""
+    return _optcc.optReadParameterFile(*args)
+
 
 def optReadFromStr(*args):
-  """optReadFromStr(popt, s)"""
-  return _optcc.optReadFromStr(*args)
+    """optReadFromStr(popt, s)"""
+    return _optcc.optReadFromStr(*args)
+
 
 def optWriteParameterFile(*args):
-  """optWriteParameterFile(popt, fn) -> int"""
-  return _optcc.optWriteParameterFile(*args)
+    """optWriteParameterFile(popt, fn) -> int"""
+    return _optcc.optWriteParameterFile(*args)
+
 
 def optClearMessages(*args):
-  """optClearMessages(popt)"""
-  return _optcc.optClearMessages(*args)
+    """optClearMessages(popt)"""
+    return _optcc.optClearMessages(*args)
+
 
 def optAddMessage(*args):
-  """optAddMessage(popt, info)"""
-  return _optcc.optAddMessage(*args)
+    """optAddMessage(popt, info)"""
+    return _optcc.optAddMessage(*args)
+
 
 def optGetMessage(*args):
-  """optGetMessage(popt, NrMsg)"""
-  return _optcc.optGetMessage(*args)
+    """optGetMessage(popt, NrMsg)"""
+    return _optcc.optGetMessage(*args)
+
 
 def optResetAll(*args):
-  """optResetAll(popt)"""
-  return _optcc.optResetAll(*args)
+    """optResetAll(popt)"""
+    return _optcc.optResetAll(*args)
+
 
 def optResetAllRecent(*args):
-  """optResetAllRecent(popt)"""
-  return _optcc.optResetAllRecent(*args)
+    """optResetAllRecent(popt)"""
+    return _optcc.optResetAllRecent(*args)
+
 
 def optResetRecentChanges(*args):
-  """optResetRecentChanges(popt)"""
-  return _optcc.optResetRecentChanges(*args)
+    """optResetRecentChanges(popt)"""
+    return _optcc.optResetRecentChanges(*args)
+
 
 def optShowHelp(*args):
-  """optShowHelp(popt, HlpID)"""
-  return _optcc.optShowHelp(*args)
+    """optShowHelp(popt, HlpID)"""
+    return _optcc.optShowHelp(*args)
+
 
 def optResetNr(*args):
-  """optResetNr(popt, ANr) -> int"""
-  return _optcc.optResetNr(*args)
+    """optResetNr(popt, ANr) -> int"""
+    return _optcc.optResetNr(*args)
+
 
 def optFindStr(*args):
-  """optFindStr(popt, AName) -> int"""
-  return _optcc.optFindStr(*args)
+    """optFindStr(popt, AName) -> int"""
+    return _optcc.optFindStr(*args)
+
 
 def optGetInfoNr(*args):
-  """optGetInfoNr(popt, ANr) -> int"""
-  return _optcc.optGetInfoNr(*args)
+    """optGetInfoNr(popt, ANr) -> int"""
+    return _optcc.optGetInfoNr(*args)
+
 
 def optGetValuesNr(*args):
-  """optGetValuesNr(popt, ANr) -> int"""
-  return _optcc.optGetValuesNr(*args)
+    """optGetValuesNr(popt, ANr) -> int"""
+    return _optcc.optGetValuesNr(*args)
+
 
 def optSetValuesNr(*args):
-  """optSetValuesNr(popt, ANr, AIVal, ADVal, ASVal) -> int"""
-  return _optcc.optSetValuesNr(*args)
+    """optSetValuesNr(popt, ANr, AIVal, ADVal, ASVal) -> int"""
+    return _optcc.optSetValuesNr(*args)
+
 
 def optSetValues2Nr(*args):
-  """optSetValues2Nr(popt, ANr, AIVal, ADVal, ASVal) -> int"""
-  return _optcc.optSetValues2Nr(*args)
+    """optSetValues2Nr(popt, ANr, AIVal, ADVal, ASVal) -> int"""
+    return _optcc.optSetValues2Nr(*args)
+
 
 def optVersion(*args):
-  """optVersion(popt)"""
-  return _optcc.optVersion(*args)
+    """optVersion(popt)"""
+    return _optcc.optVersion(*args)
+
 
 def optDefinitionFile(*args):
-  """optDefinitionFile(popt)"""
-  return _optcc.optDefinitionFile(*args)
+    """optDefinitionFile(popt)"""
+    return _optcc.optDefinitionFile(*args)
+
 
 def optGetFromAnyStrList(*args):
-  """optGetFromAnyStrList(popt, idash) -> int"""
-  return _optcc.optGetFromAnyStrList(*args)
+    """optGetFromAnyStrList(popt, idash) -> int"""
+    return _optcc.optGetFromAnyStrList(*args)
+
 
 def optGetFromListStr(*args):
-  """optGetFromListStr(popt, skey) -> int"""
-  return _optcc.optGetFromListStr(*args)
+    """optGetFromListStr(popt, skey) -> int"""
+    return _optcc.optGetFromListStr(*args)
+
 
 def optListCountStr(*args):
-  """optListCountStr(popt, skey) -> int"""
-  return _optcc.optListCountStr(*args)
+    """optListCountStr(popt, skey) -> int"""
+    return _optcc.optListCountStr(*args)
+
 
 def optReadFromListStr(*args):
-  """optReadFromListStr(popt, skey, iPos) -> int"""
-  return _optcc.optReadFromListStr(*args)
+    """optReadFromListStr(popt, skey, iPos) -> int"""
+    return _optcc.optReadFromListStr(*args)
+
 
 def optSynonymCount(*args):
-  """optSynonymCount(popt) -> int"""
-  return _optcc.optSynonymCount(*args)
+    """optSynonymCount(popt) -> int"""
+    return _optcc.optSynonymCount(*args)
+
 
 def optGetSynonym(*args):
-  """optGetSynonym(popt, NrSyn) -> int"""
-  return _optcc.optGetSynonym(*args)
+    """optGetSynonym(popt, NrSyn) -> int"""
+    return _optcc.optGetSynonym(*args)
+
 
 def optEchoSet(*args):
-  """optEchoSet(popt, AIVal)"""
-  return _optcc.optEchoSet(*args)
+    """optEchoSet(popt, AIVal)"""
+    return _optcc.optEchoSet(*args)
+
 
 def optEOLOnlySet(*args):
-  """optEOLOnlySet(popt, AIVal) -> int"""
-  return _optcc.optEOLOnlySet(*args)
+    """optEOLOnlySet(popt, AIVal) -> int"""
+    return _optcc.optEOLOnlySet(*args)
+
 
 def optNoBoundsSet(*args):
-  """optNoBoundsSet(popt, AIVal)"""
-  return _optcc.optNoBoundsSet(*args)
+    """optNoBoundsSet(popt, AIVal)"""
+    return _optcc.optNoBoundsSet(*args)
+
 
 def optErrorCount(*args):
-  """optErrorCount(popt)"""
-  return _optcc.optErrorCount(*args)
+    """optErrorCount(popt)"""
+    return _optcc.optErrorCount(*args)
+
 
 def optGetBoundsInt(*args):
-  """optGetBoundsInt(popt, ANr) -> int"""
-  return _optcc.optGetBoundsInt(*args)
+    """optGetBoundsInt(popt, ANr) -> int"""
+    return _optcc.optGetBoundsInt(*args)
+
 
 def optGetBoundsDbl(*args):
-  """optGetBoundsDbl(popt, ANr) -> int"""
-  return _optcc.optGetBoundsDbl(*args)
+    """optGetBoundsDbl(popt, ANr) -> int"""
+    return _optcc.optGetBoundsDbl(*args)
+
 
 def optGetDefaultStr(*args):
-  """optGetDefaultStr(popt, ANr) -> int"""
-  return _optcc.optGetDefaultStr(*args)
+    """optGetDefaultStr(popt, ANr) -> int"""
+    return _optcc.optGetDefaultStr(*args)
+
 
 def optGetIntNr(*args):
-  """optGetIntNr(popt, ANr) -> int"""
-  return _optcc.optGetIntNr(*args)
+    """optGetIntNr(popt, ANr) -> int"""
+    return _optcc.optGetIntNr(*args)
+
 
 def optGetInt2Nr(*args):
-  """optGetInt2Nr(popt, ANr) -> int"""
-  return _optcc.optGetInt2Nr(*args)
+    """optGetInt2Nr(popt, ANr) -> int"""
+    return _optcc.optGetInt2Nr(*args)
+
 
 def optSetIntNr(*args):
-  """optSetIntNr(popt, ANr, AIVal) -> int"""
-  return _optcc.optSetIntNr(*args)
+    """optSetIntNr(popt, ANr, AIVal) -> int"""
+    return _optcc.optSetIntNr(*args)
+
 
 def optSetInt2Nr(*args):
-  """optSetInt2Nr(popt, ANr, AIVal) -> int"""
-  return _optcc.optSetInt2Nr(*args)
+    """optSetInt2Nr(popt, ANr, AIVal) -> int"""
+    return _optcc.optSetInt2Nr(*args)
+
 
 def optGetStrNr(*args):
-  """optGetStrNr(popt, ANr) -> int"""
-  return _optcc.optGetStrNr(*args)
+    """optGetStrNr(popt, ANr) -> int"""
+    return _optcc.optGetStrNr(*args)
+
 
 def optGetOptHelpNr(*args):
-  """optGetOptHelpNr(popt, ANr) -> int"""
-  return _optcc.optGetOptHelpNr(*args)
+    """optGetOptHelpNr(popt, ANr) -> int"""
+    return _optcc.optGetOptHelpNr(*args)
+
 
 def optGetEnumHelp(*args):
-  """optGetEnumHelp(popt, ANr, AOrd) -> int"""
-  return _optcc.optGetEnumHelp(*args)
+    """optGetEnumHelp(popt, ANr, AOrd) -> int"""
+    return _optcc.optGetEnumHelp(*args)
+
 
 def optGetEnumStrNr(*args):
-  """optGetEnumStrNr(popt, ANr) -> int"""
-  return _optcc.optGetEnumStrNr(*args)
+    """optGetEnumStrNr(popt, ANr) -> int"""
+    return _optcc.optGetEnumStrNr(*args)
+
 
 def optGetEnumCount(*args):
-  """optGetEnumCount(popt, ANr) -> int"""
-  return _optcc.optGetEnumCount(*args)
+    """optGetEnumCount(popt, ANr) -> int"""
+    return _optcc.optGetEnumCount(*args)
+
 
 def optGetEnumValue(*args):
-  """optGetEnumValue(popt, ANr, AOrd) -> int"""
-  return _optcc.optGetEnumValue(*args)
+    """optGetEnumValue(popt, ANr, AOrd) -> int"""
+    return _optcc.optGetEnumValue(*args)
+
 
 def optGetStr2Nr(*args):
-  """optGetStr2Nr(popt, ANr) -> int"""
-  return _optcc.optGetStr2Nr(*args)
+    """optGetStr2Nr(popt, ANr) -> int"""
+    return _optcc.optGetStr2Nr(*args)
+
 
 def optSetStrNr(*args):
-  """optSetStrNr(popt, ANr, ASVal) -> int"""
-  return _optcc.optSetStrNr(*args)
+    """optSetStrNr(popt, ANr, ASVal) -> int"""
+    return _optcc.optSetStrNr(*args)
+
 
 def optSetStr2Nr(*args):
-  """optSetStr2Nr(popt, ANr, ASVal) -> int"""
-  return _optcc.optSetStr2Nr(*args)
+    """optSetStr2Nr(popt, ANr, ASVal) -> int"""
+    return _optcc.optSetStr2Nr(*args)
+
 
 def optGetDblNr(*args):
-  """optGetDblNr(popt, ANr) -> int"""
-  return _optcc.optGetDblNr(*args)
+    """optGetDblNr(popt, ANr) -> int"""
+    return _optcc.optGetDblNr(*args)
+
 
 def optGetDbl2Nr(*args):
-  """optGetDbl2Nr(popt, ANr) -> int"""
-  return _optcc.optGetDbl2Nr(*args)
+    """optGetDbl2Nr(popt, ANr) -> int"""
+    return _optcc.optGetDbl2Nr(*args)
+
 
 def optSetDblNr(*args):
-  """optSetDblNr(popt, ANr, ADVal) -> int"""
-  return _optcc.optSetDblNr(*args)
+    """optSetDblNr(popt, ANr, ADVal) -> int"""
+    return _optcc.optSetDblNr(*args)
+
 
 def optSetDbl2Nr(*args):
-  """optSetDbl2Nr(popt, ANr, ADVal) -> int"""
-  return _optcc.optSetDbl2Nr(*args)
+    """optSetDbl2Nr(popt, ANr, ADVal) -> int"""
+    return _optcc.optSetDbl2Nr(*args)
+
 
 def optGetValStr(*args):
-  """optGetValStr(popt, AName) -> int"""
-  return _optcc.optGetValStr(*args)
+    """optGetValStr(popt, AName) -> int"""
+    return _optcc.optGetValStr(*args)
+
 
 def optGetVal2Str(*args):
-  """optGetVal2Str(popt, AName) -> int"""
-  return _optcc.optGetVal2Str(*args)
+    """optGetVal2Str(popt, AName) -> int"""
+    return _optcc.optGetVal2Str(*args)
+
 
 def optGetNameNr(*args):
-  """optGetNameNr(popt, ANr) -> int"""
-  return _optcc.optGetNameNr(*args)
+    """optGetNameNr(popt, ANr) -> int"""
+    return _optcc.optGetNameNr(*args)
+
 
 def optGetDefinedNr(*args):
-  """optGetDefinedNr(popt, ANr) -> int"""
-  return _optcc.optGetDefinedNr(*args)
+    """optGetDefinedNr(popt, ANr) -> int"""
+    return _optcc.optGetDefinedNr(*args)
+
 
 def optGetHelpNr(*args):
-  """optGetHelpNr(popt, ANr) -> int"""
-  return _optcc.optGetHelpNr(*args)
+    """optGetHelpNr(popt, ANr) -> int"""
+    return _optcc.optGetHelpNr(*args)
+
 
 def optGetGroupNr(*args):
-  """optGetGroupNr(popt, ANr) -> int"""
-  return _optcc.optGetGroupNr(*args)
+    """optGetGroupNr(popt, ANr) -> int"""
+    return _optcc.optGetGroupNr(*args)
+
 
 def optGetGroupGrpNr(*args):
-  """optGetGroupGrpNr(popt, AGroup) -> int"""
-  return _optcc.optGetGroupGrpNr(*args)
+    """optGetGroupGrpNr(popt, AGroup) -> int"""
+    return _optcc.optGetGroupGrpNr(*args)
+
 
 def optGetOptGroupNr(*args):
-  """optGetOptGroupNr(popt, ANr) -> int"""
-  return _optcc.optGetOptGroupNr(*args)
+    """optGetOptGroupNr(popt, ANr) -> int"""
+    return _optcc.optGetOptGroupNr(*args)
+
 
 def optGetDotOptNr(*args):
-  """optGetDotOptNr(popt, ANr) -> int"""
-  return _optcc.optGetDotOptNr(*args)
+    """optGetDotOptNr(popt, ANr) -> int"""
+    return _optcc.optGetDotOptNr(*args)
+
 
 def optGetDotOptUel(*args):
-  """optGetDotOptUel(popt, ANr, ADim) -> int"""
-  return _optcc.optGetDotOptUel(*args)
+    """optGetDotOptUel(popt, ANr, ADim) -> int"""
+    return _optcc.optGetDotOptUel(*args)
+
 
 def optGetVarEquMapNr(*args):
-  """optGetVarEquMapNr(popt, maptype, ANr) -> int"""
-  return _optcc.optGetVarEquMapNr(*args)
+    """optGetVarEquMapNr(popt, maptype, ANr) -> int"""
+    return _optcc.optGetVarEquMapNr(*args)
+
 
 def optGetEquVarEquMapNr(*args):
-  """optGetEquVarEquMapNr(popt, maptype, ANr, ADim) -> int"""
-  return _optcc.optGetEquVarEquMapNr(*args)
+    """optGetEquVarEquMapNr(popt, maptype, ANr, ADim) -> int"""
+    return _optcc.optGetEquVarEquMapNr(*args)
+
 
 def optGetVarVarEquMapNr(*args):
-  """optGetVarVarEquMapNr(popt, maptype, ANr, ADim) -> int"""
-  return _optcc.optGetVarVarEquMapNr(*args)
+    """optGetVarVarEquMapNr(popt, maptype, ANr, ADim) -> int"""
+    return _optcc.optGetVarVarEquMapNr(*args)
+
 
 def optVarEquMapCount(*args):
-  """optVarEquMapCount(popt, maptype) -> int"""
-  return _optcc.optVarEquMapCount(*args)
+    """optVarEquMapCount(popt, maptype) -> int"""
+    return _optcc.optVarEquMapCount(*args)
+
 
 def optGetIndicatorNr(*args):
-  """optGetIndicatorNr(popt, ANr) -> int"""
-  return _optcc.optGetIndicatorNr(*args)
+    """optGetIndicatorNr(popt, ANr) -> int"""
+    return _optcc.optGetIndicatorNr(*args)
+
 
 def optGetEquIndicatorNr(*args):
-  """optGetEquIndicatorNr(popt, ANr, ADim) -> int"""
-  return _optcc.optGetEquIndicatorNr(*args)
+    """optGetEquIndicatorNr(popt, ANr, ADim) -> int"""
+    return _optcc.optGetEquIndicatorNr(*args)
+
 
 def optGetVarIndicatorNr(*args):
-  """optGetVarIndicatorNr(popt, ANr, ADim) -> int"""
-  return _optcc.optGetVarIndicatorNr(*args)
+    """optGetVarIndicatorNr(popt, ANr, ADim) -> int"""
+    return _optcc.optGetVarIndicatorNr(*args)
+
 
 def optIndicatorCount(*args):
-  """optIndicatorCount(popt) -> int"""
-  return _optcc.optIndicatorCount(*args)
+    """optIndicatorCount(popt) -> int"""
+    return _optcc.optIndicatorCount(*args)
+
 
 def optDotOptCount(*args):
-  """optDotOptCount(popt) -> int"""
-  return _optcc.optDotOptCount(*args)
+    """optDotOptCount(popt) -> int"""
+    return _optcc.optDotOptCount(*args)
+
 
 def optSetRefNr(*args):
-  """optSetRefNr(popt, ANr, ARefNr) -> int"""
-  return _optcc.optSetRefNr(*args)
+    """optSetRefNr(popt, ANr, ARefNr) -> int"""
+    return _optcc.optSetRefNr(*args)
+
 
 def optSetRefNrStr(*args):
-  """optSetRefNrStr(popt, AOpt, ARefNr) -> int"""
-  return _optcc.optSetRefNrStr(*args)
+    """optSetRefNrStr(popt, AOpt, ARefNr) -> int"""
+    return _optcc.optSetRefNrStr(*args)
+
 
 def optGetConstName(*args):
-  """optGetConstName(popt, cgroup, cindex) -> int"""
-  return _optcc.optGetConstName(*args)
+    """optGetConstName(popt, cgroup, cindex) -> int"""
+    return _optcc.optGetConstName(*args)
+
 
 def optGetTypeName(*args):
-  """optGetTypeName(popt, TNr) -> int"""
-  return _optcc.optGetTypeName(*args)
+    """optGetTypeName(popt, TNr) -> int"""
+    return _optcc.optGetTypeName(*args)
+
 
 def optLookUp(*args):
-  """optLookUp(popt, AOpt) -> int"""
-  return _optcc.optLookUp(*args)
+    """optLookUp(popt, AOpt) -> int"""
+    return _optcc.optLookUp(*args)
+
 
 def optReadFromPChar(*args):
-  """optReadFromPChar(popt, p_mut)"""
-  return _optcc.optReadFromPChar(*args)
+    """optReadFromPChar(popt, p_mut)"""
+    return _optcc.optReadFromPChar(*args)
+
 
 def optGetNameOpt(*args):
-  """optGetNameOpt(popt, ASVal) -> int"""
-  return _optcc.optGetNameOpt(*args)
+    """optGetNameOpt(popt, ASVal) -> int"""
+    return _optcc.optGetNameOpt(*args)
+
 
 def optGetDefinedStr(*args):
-  """optGetDefinedStr(popt, AName) -> int"""
-  return _optcc.optGetDefinedStr(*args)
+    """optGetDefinedStr(popt, AName) -> int"""
+    return _optcc.optGetDefinedStr(*args)
+
 
 def optGetIntStr(*args):
-  """optGetIntStr(popt, AName) -> int"""
-  return _optcc.optGetIntStr(*args)
+    """optGetIntStr(popt, AName) -> int"""
+    return _optcc.optGetIntStr(*args)
+
 
 def optGetDblStr(*args):
-  """optGetDblStr(popt, AName) -> double"""
-  return _optcc.optGetDblStr(*args)
+    """optGetDblStr(popt, AName) -> double"""
+    return _optcc.optGetDblStr(*args)
+
 
 def optGetStrStr(*args):
-  """optGetStrStr(popt, AName) -> char *"""
-  return _optcc.optGetStrStr(*args)
+    """optGetStrStr(popt, AName) -> char *"""
+    return _optcc.optGetStrStr(*args)
+
 
 def optSetIntStr(*args):
-  """optSetIntStr(popt, AName, AIVal)"""
-  return _optcc.optSetIntStr(*args)
+    """optSetIntStr(popt, AName, AIVal)"""
+    return _optcc.optSetIntStr(*args)
+
 
 def optSetDblStr(*args):
-  """optSetDblStr(popt, AName, ADVal)"""
-  return _optcc.optSetDblStr(*args)
+    """optSetDblStr(popt, AName, ADVal)"""
+    return _optcc.optSetDblStr(*args)
+
 
 def optSetStrStr(*args):
-  """optSetStrStr(popt, AName, ASVal)"""
-  return _optcc.optSetStrStr(*args)
+    """optSetStrStr(popt, AName, ASVal)"""
+    return _optcc.optSetStrStr(*args)
+
 
 def optCount(*args):
-  """optCount(popt) -> int"""
-  return _optcc.optCount(*args)
+    """optCount(popt) -> int"""
+    return _optcc.optCount(*args)
+
 
 def optMessageCount(*args):
-  """optMessageCount(popt) -> int"""
-  return _optcc.optMessageCount(*args)
+    """optMessageCount(popt) -> int"""
+    return _optcc.optMessageCount(*args)
+
 
 def optGroupCount(*args):
-  """optGroupCount(popt) -> int"""
-  return _optcc.optGroupCount(*args)
+    """optGroupCount(popt) -> int"""
+    return _optcc.optGroupCount(*args)
+
 
 def optRecentEnabled(*args):
-  """optRecentEnabled(popt) -> int"""
-  return _optcc.optRecentEnabled(*args)
+    """optRecentEnabled(popt) -> int"""
+    return _optcc.optRecentEnabled(*args)
+
 
 def optRecentEnabledSet(*args):
-  """optRecentEnabledSet(popt, x)"""
-  return _optcc.optRecentEnabledSet(*args)
+    """optRecentEnabledSet(popt, x)"""
+    return _optcc.optRecentEnabledSet(*args)
+
+
 GLOBAL_MAX_INDEX_DIM = _optcc.GLOBAL_MAX_INDEX_DIM
 GLOBAL_UEL_IDENT_SIZE = _optcc.GLOBAL_UEL_IDENT_SIZE
 ITERLIM_INFINITY = _optcc.ITERLIM_INFINITY
@@ -712,5 +922,3 @@ GMS_SV_EPS = _optcc.GMS_SV_EPS
 GMS_SV_ACR = _optcc.GMS_SV_ACR
 GMS_SV_NAINT = _optcc.GMS_SV_NAINT
 # This file is compatible with both classic and new-style classes.
-
-

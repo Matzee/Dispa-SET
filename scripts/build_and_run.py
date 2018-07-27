@@ -10,17 +10,18 @@ The script can be run in ipython, but for some reasons, it does not work more th
 
 # Change directory to the root folder of Dispa-SET:
 import os
-os.chdir('..')
+
+os.chdir("..")
 
 # Import Dispa-SET
 import DispaSET as ds
 
 # Load the configuration file
-config = ds.load_config_excel('ConfigFiles/ConfigTest.xlsx')
+config = ds.load_config_excel("ConfigFiles/ConfigTest.xlsx")
 
 # Build the simulation environment:
 SimData = ds.build_simulation(config)
 
 # Solve using PYOMO/GAMS:
-#r = ds.solve_pyomo(config['SimulationDirectory'])
-r = ds.solve_GAMS(config['SimulationDirectory'], config['GAMS_folder'])
+# r = ds.solve_pyomo(config['SimulationDirectory'])
+r = ds.solve_GAMS(config["SimulationDirectory"], config["GAMS_folder"])

@@ -5,26 +5,28 @@
 # the SWIG interface file instead.
 
 
-
-
-
 from sys import version_info
-if version_info >= (2,6,0):
+
+if version_info >= (2, 6, 0):
+
     def swig_import_helper():
         from os.path import dirname
         import imp
+
         fp = None
         try:
-            fp, pathname, description = imp.find_module('_idxcc', [dirname(__file__)])
+            fp, pathname, description = imp.find_module("_idxcc", [dirname(__file__)])
         except ImportError:
             import _idxcc
+
             return _idxcc
         if fp is not None:
             try:
-                _mod = imp.load_module('_idxcc', fp, pathname, description)
+                _mod = imp.load_module("_idxcc", fp, pathname, description)
             finally:
                 fp.close()
             return _mod
+
     _idxcc = swig_import_helper()
     del swig_import_helper
 else:
@@ -33,39 +35,54 @@ del version_info
 try:
     _swig_property = property
 except NameError:
-    pass # Python < 2.2 doesn't have 'property'.
-def _swig_setattr_nondynamic(self,class_type,name,value,static=1):
-    if (name == "thisown"): return self.this.own(value)
-    if (name == "this"):
-        if type(value).__name__ == 'SwigPyObject':
+    pass  # Python < 2.2 doesn't have 'property'.
+
+
+def _swig_setattr_nondynamic(self, class_type, name, value, static=1):
+    if name == "thisown":
+        return self.this.own(value)
+    if name == "this":
+        if type(value).__name__ == "SwigPyObject":
             self.__dict__[name] = value
             return
-    method = class_type.__swig_setmethods__.get(name,None)
-    if method: return method(self,value)
-    if (not static):
+    method = class_type.__swig_setmethods__.get(name, None)
+    if method:
+        return method(self, value)
+    if not static:
         self.__dict__[name] = value
     else:
         raise AttributeError("You cannot add attributes to %s" % self)
 
-def _swig_setattr(self,class_type,name,value):
-    return _swig_setattr_nondynamic(self,class_type,name,value,0)
 
-def _swig_getattr(self,class_type,name):
-    if (name == "thisown"): return self.this.own()
-    method = class_type.__swig_getmethods__.get(name,None)
-    if method: return method(self)
+def _swig_setattr(self, class_type, name, value):
+    return _swig_setattr_nondynamic(self, class_type, name, value, 0)
+
+
+def _swig_getattr(self, class_type, name):
+    if name == "thisown":
+        return self.this.own()
+    method = class_type.__swig_getmethods__.get(name, None)
+    if method:
+        return method(self)
     raise AttributeError(name)
 
+
 def _swig_repr(self):
-    try: strthis = "proxy of " + self.this.__repr__()
-    except: strthis = ""
-    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis,)
+    try:
+        strthis = "proxy of " + self.this.__repr__()
+    except:
+        strthis = ""
+    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis)
+
 
 try:
     _object = object
     _newclass = 1
 except AttributeError:
-    class _object : pass
+
+    class _object:
+        pass
+
     _newclass = 0
 
 
@@ -75,23 +92,41 @@ class intArray(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, intArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _idxcc.new_intArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _idxcc.delete_intArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _idxcc.intArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _idxcc.intArray___setitem__(self, *args)
-    def cast(self): return _idxcc.intArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _idxcc.intArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _idxcc.intArray___setitem__(self, *args)
+
+    def cast(self):
+        return _idxcc.intArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _idxcc.intArray_frompointer
-    if _newclass:frompointer = staticmethod(_idxcc.intArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_idxcc.intArray_frompointer)
+
+
 intArray_swigregister = _idxcc.intArray_swigregister
 intArray_swigregister(intArray)
 
+
 def intArray_frompointer(*args):
-  return _idxcc.intArray_frompointer(*args)
+    return _idxcc.intArray_frompointer(*args)
+
+
 intArray_frompointer = _idxcc.intArray_frompointer
+
 
 class doubleArray(_object):
     __swig_setmethods__ = {}
@@ -99,260 +134,367 @@ class doubleArray(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, doubleArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _idxcc.new_doubleArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _idxcc.delete_doubleArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _idxcc.doubleArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _idxcc.doubleArray___setitem__(self, *args)
-    def cast(self): return _idxcc.doubleArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _idxcc.doubleArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _idxcc.doubleArray___setitem__(self, *args)
+
+    def cast(self):
+        return _idxcc.doubleArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _idxcc.doubleArray_frompointer
-    if _newclass:frompointer = staticmethod(_idxcc.doubleArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_idxcc.doubleArray_frompointer)
+
+
 doubleArray_swigregister = _idxcc.doubleArray_swigregister
 doubleArray_swigregister(doubleArray)
 
+
 def doubleArray_frompointer(*args):
-  return _idxcc.doubleArray_frompointer(*args)
+    return _idxcc.doubleArray_frompointer(*args)
+
+
 doubleArray_frompointer = _idxcc.doubleArray_frompointer
 
 
 def new_intp():
-  return _idxcc.new_intp()
+    return _idxcc.new_intp()
+
+
 new_intp = _idxcc.new_intp
 
+
 def copy_intp(*args):
-  return _idxcc.copy_intp(*args)
+    return _idxcc.copy_intp(*args)
+
+
 copy_intp = _idxcc.copy_intp
 
+
 def delete_intp(*args):
-  return _idxcc.delete_intp(*args)
+    return _idxcc.delete_intp(*args)
+
+
 delete_intp = _idxcc.delete_intp
 
+
 def intp_assign(*args):
-  return _idxcc.intp_assign(*args)
+    return _idxcc.intp_assign(*args)
+
+
 intp_assign = _idxcc.intp_assign
 
+
 def intp_value(*args):
-  return _idxcc.intp_value(*args)
+    return _idxcc.intp_value(*args)
+
+
 intp_value = _idxcc.intp_value
 
+
 def new_doublep():
-  return _idxcc.new_doublep()
+    return _idxcc.new_doublep()
+
+
 new_doublep = _idxcc.new_doublep
 
+
 def copy_doublep(*args):
-  return _idxcc.copy_doublep(*args)
+    return _idxcc.copy_doublep(*args)
+
+
 copy_doublep = _idxcc.copy_doublep
 
+
 def delete_doublep(*args):
-  return _idxcc.delete_doublep(*args)
+    return _idxcc.delete_doublep(*args)
+
+
 delete_doublep = _idxcc.delete_doublep
 
+
 def doublep_assign(*args):
-  return _idxcc.doublep_assign(*args)
+    return _idxcc.doublep_assign(*args)
+
+
 doublep_assign = _idxcc.doublep_assign
 
+
 def doublep_value(*args):
-  return _idxcc.doublep_value(*args)
+    return _idxcc.doublep_value(*args)
+
+
 doublep_value = _idxcc.doublep_value
 
+
 def new_idxHandle_tp():
-  return _idxcc.new_idxHandle_tp()
+    return _idxcc.new_idxHandle_tp()
+
+
 new_idxHandle_tp = _idxcc.new_idxHandle_tp
 
+
 def copy_idxHandle_tp(*args):
-  return _idxcc.copy_idxHandle_tp(*args)
+    return _idxcc.copy_idxHandle_tp(*args)
+
+
 copy_idxHandle_tp = _idxcc.copy_idxHandle_tp
 
+
 def delete_idxHandle_tp(*args):
-  return _idxcc.delete_idxHandle_tp(*args)
+    return _idxcc.delete_idxHandle_tp(*args)
+
+
 delete_idxHandle_tp = _idxcc.delete_idxHandle_tp
 
+
 def idxHandle_tp_assign(*args):
-  return _idxcc.idxHandle_tp_assign(*args)
+    return _idxcc.idxHandle_tp_assign(*args)
+
+
 idxHandle_tp_assign = _idxcc.idxHandle_tp_assign
 
+
 def idxHandle_tp_value(*args):
-  return _idxcc.idxHandle_tp_value(*args)
+    return _idxcc.idxHandle_tp_value(*args)
+
+
 idxHandle_tp_value = _idxcc.idxHandle_tp_value
 
+
 def idxHandleToPtr(*args):
-  """idxHandleToPtr(pidx) -> void *"""
-  return _idxcc.idxHandleToPtr(*args)
+    """idxHandleToPtr(pidx) -> void *"""
+    return _idxcc.idxHandleToPtr(*args)
+
 
 def ptrToidxHandle(*args):
-  """ptrToidxHandle(vptr) -> idxHandle_t"""
-  return _idxcc.ptrToidxHandle(*args)
+    """ptrToidxHandle(vptr) -> idxHandle_t"""
+    return _idxcc.ptrToidxHandle(*args)
+
 
 def idxGetReady(*args):
-  """idxGetReady(msgBufSize) -> int"""
-  return _idxcc.idxGetReady(*args)
+    """idxGetReady(msgBufSize) -> int"""
+    return _idxcc.idxGetReady(*args)
+
 
 def idxGetReadyD(*args):
-  """idxGetReadyD(dirName, msgBufSize) -> int"""
-  return _idxcc.idxGetReadyD(*args)
+    """idxGetReadyD(dirName, msgBufSize) -> int"""
+    return _idxcc.idxGetReadyD(*args)
+
 
 def idxGetReadyL(*args):
-  """idxGetReadyL(libName, msgBufSize) -> int"""
-  return _idxcc.idxGetReadyL(*args)
+    """idxGetReadyL(libName, msgBufSize) -> int"""
+    return _idxcc.idxGetReadyL(*args)
+
 
 def idxCreate(*args):
-  """idxCreate(pidx, msgBufSize) -> int"""
-  return _idxcc.idxCreate(*args)
+    """idxCreate(pidx, msgBufSize) -> int"""
+    return _idxcc.idxCreate(*args)
+
 
 def idxCreateD(*args):
-  """idxCreateD(pidx, dirName, msgBufSize) -> int"""
-  return _idxcc.idxCreateD(*args)
+    """idxCreateD(pidx, dirName, msgBufSize) -> int"""
+    return _idxcc.idxCreateD(*args)
+
 
 def idxCreateL(*args):
-  """idxCreateL(pidx, libName, msgBufSize) -> int"""
-  return _idxcc.idxCreateL(*args)
+    """idxCreateL(pidx, libName, msgBufSize) -> int"""
+    return _idxcc.idxCreateL(*args)
+
 
 def idxFree(*args):
-  """idxFree(pidx) -> int"""
-  return _idxcc.idxFree(*args)
+    """idxFree(pidx) -> int"""
+    return _idxcc.idxFree(*args)
+
 
 def idxLibraryLoaded():
-  """idxLibraryLoaded() -> int"""
-  return _idxcc.idxLibraryLoaded()
+    """idxLibraryLoaded() -> int"""
+    return _idxcc.idxLibraryLoaded()
+
 
 def idxLibraryUnload():
-  """idxLibraryUnload() -> int"""
-  return _idxcc.idxLibraryUnload()
+    """idxLibraryUnload() -> int"""
+    return _idxcc.idxLibraryUnload()
+
 
 def idxGetScreenIndicator():
-  """idxGetScreenIndicator() -> int"""
-  return _idxcc.idxGetScreenIndicator()
+    """idxGetScreenIndicator() -> int"""
+    return _idxcc.idxGetScreenIndicator()
+
 
 def idxSetScreenIndicator(*args):
-  """idxSetScreenIndicator(scrind)"""
-  return _idxcc.idxSetScreenIndicator(*args)
+    """idxSetScreenIndicator(scrind)"""
+    return _idxcc.idxSetScreenIndicator(*args)
+
 
 def idxGetExceptionIndicator():
-  """idxGetExceptionIndicator() -> int"""
-  return _idxcc.idxGetExceptionIndicator()
+    """idxGetExceptionIndicator() -> int"""
+    return _idxcc.idxGetExceptionIndicator()
+
 
 def idxSetExceptionIndicator(*args):
-  """idxSetExceptionIndicator(excind)"""
-  return _idxcc.idxSetExceptionIndicator(*args)
+    """idxSetExceptionIndicator(excind)"""
+    return _idxcc.idxSetExceptionIndicator(*args)
+
 
 def idxGetExitIndicator():
-  """idxGetExitIndicator() -> int"""
-  return _idxcc.idxGetExitIndicator()
+    """idxGetExitIndicator() -> int"""
+    return _idxcc.idxGetExitIndicator()
+
 
 def idxSetExitIndicator(*args):
-  """idxSetExitIndicator(extind)"""
-  return _idxcc.idxSetExitIndicator(*args)
+    """idxSetExitIndicator(extind)"""
+    return _idxcc.idxSetExitIndicator(*args)
+
 
 def idxGetErrorCallback():
-  """idxGetErrorCallback() -> idxErrorCallback_t"""
-  return _idxcc.idxGetErrorCallback()
+    """idxGetErrorCallback() -> idxErrorCallback_t"""
+    return _idxcc.idxGetErrorCallback()
+
 
 def idxSetErrorCallback(*args):
-  """idxSetErrorCallback(func)"""
-  return _idxcc.idxSetErrorCallback(*args)
+    """idxSetErrorCallback(func)"""
+    return _idxcc.idxSetErrorCallback(*args)
+
 
 def idxGetAPIErrorCount():
-  """idxGetAPIErrorCount() -> int"""
-  return _idxcc.idxGetAPIErrorCount()
+    """idxGetAPIErrorCount() -> int"""
+    return _idxcc.idxGetAPIErrorCount()
+
 
 def idxSetAPIErrorCount(*args):
-  """idxSetAPIErrorCount(ecnt)"""
-  return _idxcc.idxSetAPIErrorCount(*args)
+    """idxSetAPIErrorCount(ecnt)"""
+    return _idxcc.idxSetAPIErrorCount(*args)
+
 
 def idxErrorHandling(*args):
-  """idxErrorHandling(msg)"""
-  return _idxcc.idxErrorHandling(*args)
+    """idxErrorHandling(msg)"""
+    return _idxcc.idxErrorHandling(*args)
+
 
 def idxGetLastError(*args):
-  """idxGetLastError(pidx) -> int"""
-  return _idxcc.idxGetLastError(*args)
+    """idxGetLastError(pidx) -> int"""
+    return _idxcc.idxGetLastError(*args)
+
 
 def idxErrorStr(*args):
-  """idxErrorStr(pidx, ErrNr, ErrMsg_i)"""
-  return _idxcc.idxErrorStr(*args)
+    """idxErrorStr(pidx, ErrNr, ErrMsg_i)"""
+    return _idxcc.idxErrorStr(*args)
+
 
 def idxOpenRead(*args):
-  """idxOpenRead(pidx, FileName) -> int"""
-  return _idxcc.idxOpenRead(*args)
+    """idxOpenRead(pidx, FileName) -> int"""
+    return _idxcc.idxOpenRead(*args)
+
 
 def idxOpenWrite(*args):
-  """idxOpenWrite(pidx, FileName, Producer) -> int"""
-  return _idxcc.idxOpenWrite(*args)
+    """idxOpenWrite(pidx, FileName, Producer) -> int"""
+    return _idxcc.idxOpenWrite(*args)
+
 
 def idxClose(*args):
-  """idxClose(pidx) -> int"""
-  return _idxcc.idxClose(*args)
+    """idxClose(pidx) -> int"""
+    return _idxcc.idxClose(*args)
+
 
 def idxGetSymCount(*args):
-  """idxGetSymCount(pidx) -> int"""
-  return _idxcc.idxGetSymCount(*args)
+    """idxGetSymCount(pidx) -> int"""
+    return _idxcc.idxGetSymCount(*args)
+
 
 def idxGetSymbolInfo(*args):
-  """idxGetSymbolInfo(pidx, iSym, symName_i, explText_i) -> int"""
-  return _idxcc.idxGetSymbolInfo(*args)
+    """idxGetSymbolInfo(pidx, iSym, symName_i, explText_i) -> int"""
+    return _idxcc.idxGetSymbolInfo(*args)
+
 
 def idxGetSymbolInfoByName(*args):
-  """idxGetSymbolInfoByName(pidx, symName, explText_i) -> int"""
-  return _idxcc.idxGetSymbolInfoByName(*args)
+    """idxGetSymbolInfoByName(pidx, symName, explText_i) -> int"""
+    return _idxcc.idxGetSymbolInfoByName(*args)
+
 
 def idxDataReadStart(*args):
-  """idxDataReadStart(pidx, symName, ErrMsg_i) -> int"""
-  return _idxcc.idxDataReadStart(*args)
+    """idxDataReadStart(pidx, symName, ErrMsg_i) -> int"""
+    return _idxcc.idxDataReadStart(*args)
+
 
 def idxDataRead(*args):
-  """idxDataRead(pidx) -> int"""
-  return _idxcc.idxDataRead(*args)
+    """idxDataRead(pidx) -> int"""
+    return _idxcc.idxDataRead(*args)
+
 
 def idxDataReadDone(*args):
-  """idxDataReadDone(pidx) -> int"""
-  return _idxcc.idxDataReadDone(*args)
+    """idxDataReadDone(pidx) -> int"""
+    return _idxcc.idxDataReadDone(*args)
+
 
 def idxDataReadSparseColMajor(*args):
-  """idxDataReadSparseColMajor(pidx, idxBase, colPtr, rowIdx, vals) -> int"""
-  return _idxcc.idxDataReadSparseColMajor(*args)
+    """idxDataReadSparseColMajor(pidx, idxBase, colPtr, rowIdx, vals) -> int"""
+    return _idxcc.idxDataReadSparseColMajor(*args)
+
 
 def idxDataReadSparseRowMajor(*args):
-  """idxDataReadSparseRowMajor(pidx, idxBase, rowPtr, colIdx, vals) -> int"""
-  return _idxcc.idxDataReadSparseRowMajor(*args)
+    """idxDataReadSparseRowMajor(pidx, idxBase, rowPtr, colIdx, vals) -> int"""
+    return _idxcc.idxDataReadSparseRowMajor(*args)
+
 
 def idxDataReadDenseColMajor(*args):
-  """idxDataReadDenseColMajor(pidx, vals) -> int"""
-  return _idxcc.idxDataReadDenseColMajor(*args)
+    """idxDataReadDenseColMajor(pidx, vals) -> int"""
+    return _idxcc.idxDataReadDenseColMajor(*args)
+
 
 def idxDataReadDenseRowMajor(*args):
-  """idxDataReadDenseRowMajor(pidx, vals) -> int"""
-  return _idxcc.idxDataReadDenseRowMajor(*args)
+    """idxDataReadDenseRowMajor(pidx, vals) -> int"""
+    return _idxcc.idxDataReadDenseRowMajor(*args)
+
 
 def idxDataWriteStart(*args):
-  """idxDataWriteStart(pidx, symName, explTxt, symDim, dims, ErrMsg_i) -> int"""
-  return _idxcc.idxDataWriteStart(*args)
+    """idxDataWriteStart(pidx, symName, explTxt, symDim, dims, ErrMsg_i) -> int"""
+    return _idxcc.idxDataWriteStart(*args)
+
 
 def idxDataWrite(*args):
-  """idxDataWrite(pidx, keys, val) -> int"""
-  return _idxcc.idxDataWrite(*args)
+    """idxDataWrite(pidx, keys, val) -> int"""
+    return _idxcc.idxDataWrite(*args)
+
 
 def idxDataWriteDone(*args):
-  """idxDataWriteDone(pidx) -> int"""
-  return _idxcc.idxDataWriteDone(*args)
+    """idxDataWriteDone(pidx) -> int"""
+    return _idxcc.idxDataWriteDone(*args)
+
 
 def idxDataWriteSparseColMajor(*args):
-  """idxDataWriteSparseColMajor(pidx, colPtr, rowIdx, vals) -> int"""
-  return _idxcc.idxDataWriteSparseColMajor(*args)
+    """idxDataWriteSparseColMajor(pidx, colPtr, rowIdx, vals) -> int"""
+    return _idxcc.idxDataWriteSparseColMajor(*args)
+
 
 def idxDataWriteSparseRowMajor(*args):
-  """idxDataWriteSparseRowMajor(pidx, rowPtr, colIdx, vals) -> int"""
-  return _idxcc.idxDataWriteSparseRowMajor(*args)
+    """idxDataWriteSparseRowMajor(pidx, rowPtr, colIdx, vals) -> int"""
+    return _idxcc.idxDataWriteSparseRowMajor(*args)
+
 
 def idxDataWriteDenseColMajor(*args):
-  """idxDataWriteDenseColMajor(pidx, dataDim, vals) -> int"""
-  return _idxcc.idxDataWriteDenseColMajor(*args)
+    """idxDataWriteDenseColMajor(pidx, dataDim, vals) -> int"""
+    return _idxcc.idxDataWriteDenseColMajor(*args)
+
 
 def idxDataWriteDenseRowMajor(*args):
-  """idxDataWriteDenseRowMajor(pidx, dataDim, vals) -> int"""
-  return _idxcc.idxDataWriteDenseRowMajor(*args)
+    """idxDataWriteDenseRowMajor(pidx, dataDim, vals) -> int"""
+    return _idxcc.idxDataWriteDenseRowMajor(*args)
+
+
 GLOBAL_MAX_INDEX_DIM = _idxcc.GLOBAL_MAX_INDEX_DIM
 GLOBAL_UEL_IDENT_SIZE = _idxcc.GLOBAL_UEL_IDENT_SIZE
 ITERLIM_INFINITY = _idxcc.ITERLIM_INFINITY
@@ -417,5 +559,3 @@ GMS_SV_EPS = _idxcc.GMS_SV_EPS
 GMS_SV_ACR = _idxcc.GMS_SV_ACR
 GMS_SV_NAINT = _idxcc.GMS_SV_NAINT
 # This file is compatible with both classic and new-style classes.
-
-

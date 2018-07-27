@@ -17,10 +17,22 @@ Functions:
 import sys
 import os
 import logging
+
 try:
 
-    from pyomo.environ import Constraint, ConcreteModel, Objective, Param, Set, Var, \
-        minimize, SolverManagerFactory, SolverFactory, PositiveReals, Binary
+    from pyomo.environ import (
+        Constraint,
+        ConcreteModel,
+        Objective,
+        Param,
+        Set,
+        Var,
+        minimize,
+        SolverManagerFactory,
+        SolverFactory,
+        PositiveReals,
+        Binary,
+    )
     from pyomo.opt import TerminationCondition
 except ImportError:
     logging.critical('Pyomo and a compatible solver is needed to run the pyomo version of DispaSET. Please install by typing "pip install pyomo"')
@@ -46,7 +58,7 @@ def DispOptim(sets, parameters, LPFormulation=False):
     """
 
     # Definition of model:
-    model = ConcreteModel('DispaSET')
+    model = ConcreteModel("DispaSET")
 
     #######################################################################################################################
     ############################################ Definition of the sets ###################################################
@@ -54,19 +66,19 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     # Assign all sets to the pyomo model (to be changed using real Pyomo sets!!)
 
-    model.h = Set(initialize=sets['h'])  # Hours
-    model.mk = Set(initialize=sets['mk'])  # Market
-    model.n = Set(initialize=sets['n'])  # Nodes
-    model.p = Set(initialize=sets['p'])  # Pollutant
-    model.l = Set(initialize=sets['l'])  # Lines
-    model.f = Set(initialize=sets['f'])  # Fuel types
-    model.u = Set(initialize=sets['u'])  # units
-    model.t = Set(initialize=sets['t'])  # Generation technologies
-    model.s = Set(initialize=sets['s'])  # Storage Unit (with reservoir)
-    model.tr = Set(initialize=sets['tr'])  # Renewable generation technologies
+    model.h = Set(initialize=sets["h"])  # Hours
+    model.mk = Set(initialize=sets["mk"])  # Market
+    model.n = Set(initialize=sets["n"])  # Nodes
+    model.p = Set(initialize=sets["p"])  # Pollutant
+    model.l = Set(initialize=sets["l"])  # Lines
+    model.f = Set(initialize=sets["f"])  # Fuel types
+    model.u = Set(initialize=sets["u"])  # units
+    model.t = Set(initialize=sets["t"])  # Generation technologies
+    model.s = Set(initialize=sets["s"])  # Storage Unit (with reservoir)
+    model.tr = Set(initialize=sets["tr"])  # Renewable generation technologies
 
     # Adding special parameter InReserve as a workaround for a bug in PYOMO:
-    parameters['InReserve'] = {'sets':['u'],'val':np.dot(parameters['Technology']['val'],parameters['Reserve']['val'])}
+    parameters["InReserve"] = {"sets": ["u"], "val": np.dot(parameters["Technology"]["val"], parameters["Reserve"]["val"])}
 
     # Transform the parameters into the pyomo format:
     params = {}
@@ -74,62 +86,73 @@ def DispOptim(sets, parameters, LPFormulation=False):
         params[key] = pyomo_format(sets, parameters[key])
         # params = pyomo_format(sets,parameters)
 
-
     ########################################################################################################################
     ######################################### Definition of the Parameters #################################################
     ########################################################################################################################
 
-    model.AvailabilityFactor = Param(sets['u'], sets['h'], initialize=params['AvailabilityFactor'])  # [%] Availability factor
-    model.CostFixed = Param(sets['u'], initialize=params['CostFixed'])  # [€/h] Fixed costs
-    model.CommittedInitial = Param(sets['u'], initialize=params['CommittedInitial'])  # [€/h] Fixed costs
-    model.CostLoadShedding = Param(model.n, model.h, initialize=params['CostLoadShedding'])  # [€/MW] Value of lost load (Initialize after)
-    model.CostRampDown = Param(sets['u'], initialize=params['CostRampDown'])  # [€/MW/h] Ramp-up costs
-    model.CostRampUp = Param(sets['u'], initialize=params['CostRampUp'])  # [€/MW/h] Ramp-down costs
-    model.CostShutDown = Param(sets['u'], initialize=params['CostShutDown'])  # [€] Shut-down costs
-    model.CostStartUp = Param(sets['u'], initialize=params['CostStartUp'])  # [€] Start-up costs
-    model.CostVariable = Param(sets['u'], sets['h'], initialize=params['CostVariable'])  # [€/MW] Variable costs
-    model.Demand = Param(sets['mk'], sets['n'], sets['h'], initialize=params['Demand'], mutable=True)  # [MW] Demand
-    model.Efficiency = Param(sets['u'], initialize=params['Efficiency'])  # [%] Efficiency
-    model.EmissionMaximum = Param(sets['n'], sets['p'], initialize=params['EmissionMaximum'])  # [tP] Emission limit
-    model.EmissionRate = Param(sets['u'], sets['p'], initialize=params['EmissionRate'])  # [tP/MW] P emission rate
-    model.FlowMaximum = Param(sets['l'], sets['h'], initialize=params['FlowMaximum'])  # [MW] Line limits
-    model.FlowMinimum = Param(sets['l'], sets['h'], initialize=params['FlowMinimum'])  # [MW] Minimum flow
-    model.FuelPrice = Param(sets['n'], sets['f'], sets['h'], initialize=params['FuelPrice'])  # [€/F] Fuel price
-    model.Fuel = Param(sets['u'], sets['f'], initialize=params['Fuel'])  # [n.a.] Fuel type {1 0}
-    model.LineNode = Param(sets['l'], sets['n'], initialize=params['LineNode'])  # [n.a.] Incidence matrix {-1 +1}
-    model.LoadMaximum = Param(sets['u'], sets['h'], initialize=params['LoadMaximum'])  # [%] Availability factor * (1-OutageFactor)
-    model.LoadShedding = Param(sets['n'], initialize=params['LoadShedding'])  # [n.a.] Load shedding capacity
-    model.Location = Param(sets['u'], sets['n'], initialize=params['Location'])  # [n.a.] Location {1 0}
+    model.AvailabilityFactor = Param(sets["u"], sets["h"], initialize=params["AvailabilityFactor"])  # [%] Availability factor
+    model.CostFixed = Param(sets["u"], initialize=params["CostFixed"])  # [€/h] Fixed costs
+    model.CommittedInitial = Param(sets["u"], initialize=params["CommittedInitial"])  # [€/h] Fixed costs
+    model.CostLoadShedding = Param(model.n, model.h, initialize=params["CostLoadShedding"])  # [€/MW] Value of lost load (Initialize after)
+    model.CostRampDown = Param(sets["u"], initialize=params["CostRampDown"])  # [€/MW/h] Ramp-up costs
+    model.CostRampUp = Param(sets["u"], initialize=params["CostRampUp"])  # [€/MW/h] Ramp-down costs
+    model.CostShutDown = Param(sets["u"], initialize=params["CostShutDown"])  # [€] Shut-down costs
+    model.CostStartUp = Param(sets["u"], initialize=params["CostStartUp"])  # [€] Start-up costs
+    model.CostVariable = Param(sets["u"], sets["h"], initialize=params["CostVariable"])  # [€/MW] Variable costs
+    model.Demand = Param(sets["mk"], sets["n"], sets["h"], initialize=params["Demand"], mutable=True)  # [MW] Demand
+    model.Efficiency = Param(sets["u"], initialize=params["Efficiency"])  # [%] Efficiency
+    model.EmissionMaximum = Param(sets["n"], sets["p"], initialize=params["EmissionMaximum"])  # [tP] Emission limit
+    model.EmissionRate = Param(sets["u"], sets["p"], initialize=params["EmissionRate"])  # [tP/MW] P emission rate
+    model.FlowMaximum = Param(sets["l"], sets["h"], initialize=params["FlowMaximum"])  # [MW] Line limits
+    model.FlowMinimum = Param(sets["l"], sets["h"], initialize=params["FlowMinimum"])  # [MW] Minimum flow
+    model.FuelPrice = Param(sets["n"], sets["f"], sets["h"], initialize=params["FuelPrice"])  # [€/F] Fuel price
+    model.Fuel = Param(sets["u"], sets["f"], initialize=params["Fuel"])  # [n.a.] Fuel type {1 0}
+    model.LineNode = Param(sets["l"], sets["n"], initialize=params["LineNode"])  # [n.a.] Incidence matrix {-1 +1}
+    model.LoadMaximum = Param(sets["u"], sets["h"], initialize=params["LoadMaximum"])  # [%] Availability factor * (1-OutageFactor)
+    model.LoadShedding = Param(sets["n"], initialize=params["LoadShedding"])  # [n.a.] Load shedding capacity
+    model.Location = Param(sets["u"], sets["n"], initialize=params["Location"])  # [n.a.] Location {1 0}
     # model.OutageFactor = Param(sets['u'],sets['h'],initialize=params['OutageFactor']) # [%] Outage factor (100% = full outage)
-    model.PartLoadMin = Param(sets['u'], initialize=params['PartLoadMin'])  # [%] Minimum part load
-    model.PowerCapacity = Param(sets['u'], initialize=params['PowerCapacity'])  # [MW] Installed capacity
-    model.PowerInitial = Param(sets['u'], initialize=params['PowerInitial'])  # [MW] Power output before initial period
-    model.PowerMustRun = Param(sets['u'], sets['h'], initialize=params['PowerMustRun'])  # [MW] must run power
-    model.PowerMinStable = Param(sets['u'], initialize=params['PowerMinStable'])  # [MW] Minimum power output (Initialize after)
-    model.PriceTransmission = Param(sets['l'], sets['h'], initialize=params['PriceTransmission'])  # [€/Mwh] Transmission price
-    model.StorageChargingCapacity = Param(sets['u'], initialize=params['StorageChargingCapacity'])  # [MW] Storage capacity
-    model.StorageChargingEfficiency = Param(sets['u'], initialize=params['StorageChargingEfficiency'])  # [%] Charging efficiency
-    model.RampDownMaximum = Param(sets['u'], initialize=params['RampDownMaximum'])  # [MW/h] Ramp down limit
-    model.RampShutDownMaximum = Param(sets['u'], initialize=params['RampShutDownMaximum'])  # [MW/h] Shut-down ramp limit
-    model.RampStartUpMaximum = Param(sets['u'], initialize=params['RampStartUpMaximum'])  # [MW/h] Start-up ramp limit
-    model.RampUpMaximum = Param(sets['u'], initialize=params['RampUpMaximum'])  # [MW/h] Ramp up limit
-    model.Reserve = Param(sets['t'], initialize=params['Reserve'])  # [n.a.] Reserve technology {1 0}
-    model.StorageCapacity = Param(sets['s'], initialize=params['StorageCapacity'])  # [MWh] Storage capacity
-    model.StorageDischargeEfficiency = Param(sets['u'], initialize=params['StorageDischargeEfficiency'])  # [%] Discharge efficiency
-    model.StorageFinalMin = Param(sets['s'], initialize=params['StorageFinalMin'])
-    model.StorageInflow = Param(sets['s'], sets['h'], initialize=params['StorageInflow'])  # [MWh] Storage inflows (potential energy)
-    model.StorageInitial = Param(sets['s'], initialize=params['StorageInitial'])  # [MWh] Storage level before initial period
-    model.StorageMinimum = Param(sets['s'], initialize=params['StorageMinimum'])  # [MWh] Storage minimum
-    model.StorageOutflow = Param(sets['s'], sets['h'], initialize=params['StorageOutflow'])  # [MWh] Storage outflows
-    model.Technology = Param(sets['u'], sets['t'], initialize=params['Technology'])  # [n.a] Technology type {1 0}
-    model.TimeDown = Param(sets['u'], sets['h'])  # [h] Hours down
-    model.TimeDownLeft_initial = Param(sets['u'], initialize=params['TimeDownLeft_initial'])  # [h] Required time down left at the beginning of the simulated time period (Initialize after)
-    model.TimeDownLeft_JustStopped = Param(sets['u'], sets['h'], initialize=params['TimeDownLeft_JustStopped'])  # [h] Required time down left at hour h if the unit has just been stopped (Initialize after)
-    model.TimeUpLeft_initial = Param(sets['u'], initialize=params['TimeUpLeft_initial'])  # [h] Required time up left at the beginning of the simulated period (Initialize after)
-    model.TimeUpLeft_JustStarted = Param(sets['u'], sets['h'], initialize=params['TimeUpLeft_JustStarted'])  # [h] Required time up left at hour h if the unit has just been started (Initialize after)
-    model.FlexibilityUp = Param(sets['u'], initialize=params['FlexibilityUp'])  # [MW/h] Flexibility (up) of fast-starting power plants (Initialize after)
-    model.FlexibilityDown = Param(sets['u'], initialize=params['FlexibilityDown'])  # [MW/h] Flexibility (down) of a committed power plant (Initialize after)
-    model.InReserve = Param(sets['u'],initialize=params['InReserve'])
+    model.PartLoadMin = Param(sets["u"], initialize=params["PartLoadMin"])  # [%] Minimum part load
+    model.PowerCapacity = Param(sets["u"], initialize=params["PowerCapacity"])  # [MW] Installed capacity
+    model.PowerInitial = Param(sets["u"], initialize=params["PowerInitial"])  # [MW] Power output before initial period
+    model.PowerMustRun = Param(sets["u"], sets["h"], initialize=params["PowerMustRun"])  # [MW] must run power
+    model.PowerMinStable = Param(sets["u"], initialize=params["PowerMinStable"])  # [MW] Minimum power output (Initialize after)
+    model.PriceTransmission = Param(sets["l"], sets["h"], initialize=params["PriceTransmission"])  # [€/Mwh] Transmission price
+    model.StorageChargingCapacity = Param(sets["u"], initialize=params["StorageChargingCapacity"])  # [MW] Storage capacity
+    model.StorageChargingEfficiency = Param(sets["u"], initialize=params["StorageChargingEfficiency"])  # [%] Charging efficiency
+    model.RampDownMaximum = Param(sets["u"], initialize=params["RampDownMaximum"])  # [MW/h] Ramp down limit
+    model.RampShutDownMaximum = Param(sets["u"], initialize=params["RampShutDownMaximum"])  # [MW/h] Shut-down ramp limit
+    model.RampStartUpMaximum = Param(sets["u"], initialize=params["RampStartUpMaximum"])  # [MW/h] Start-up ramp limit
+    model.RampUpMaximum = Param(sets["u"], initialize=params["RampUpMaximum"])  # [MW/h] Ramp up limit
+    model.Reserve = Param(sets["t"], initialize=params["Reserve"])  # [n.a.] Reserve technology {1 0}
+    model.StorageCapacity = Param(sets["s"], initialize=params["StorageCapacity"])  # [MWh] Storage capacity
+    model.StorageDischargeEfficiency = Param(sets["u"], initialize=params["StorageDischargeEfficiency"])  # [%] Discharge efficiency
+    model.StorageFinalMin = Param(sets["s"], initialize=params["StorageFinalMin"])
+    model.StorageInflow = Param(sets["s"], sets["h"], initialize=params["StorageInflow"])  # [MWh] Storage inflows (potential energy)
+    model.StorageInitial = Param(sets["s"], initialize=params["StorageInitial"])  # [MWh] Storage level before initial period
+    model.StorageMinimum = Param(sets["s"], initialize=params["StorageMinimum"])  # [MWh] Storage minimum
+    model.StorageOutflow = Param(sets["s"], sets["h"], initialize=params["StorageOutflow"])  # [MWh] Storage outflows
+    model.Technology = Param(sets["u"], sets["t"], initialize=params["Technology"])  # [n.a] Technology type {1 0}
+    model.TimeDown = Param(sets["u"], sets["h"])  # [h] Hours down
+    model.TimeDownLeft_initial = Param(
+        sets["u"], initialize=params["TimeDownLeft_initial"]
+    )  # [h] Required time down left at the beginning of the simulated time period (Initialize after)
+    model.TimeDownLeft_JustStopped = Param(
+        sets["u"], sets["h"], initialize=params["TimeDownLeft_JustStopped"]
+    )  # [h] Required time down left at hour h if the unit has just been stopped (Initialize after)
+    model.TimeUpLeft_initial = Param(
+        sets["u"], initialize=params["TimeUpLeft_initial"]
+    )  # [h] Required time up left at the beginning of the simulated period (Initialize after)
+    model.TimeUpLeft_JustStarted = Param(
+        sets["u"], sets["h"], initialize=params["TimeUpLeft_JustStarted"]
+    )  # [h] Required time up left at hour h if the unit has just been started (Initialize after)
+    model.FlexibilityUp = Param(
+        sets["u"], initialize=params["FlexibilityUp"]
+    )  # [MW/h] Flexibility (up) of fast-starting power plants (Initialize after)
+    model.FlexibilityDown = Param(
+        sets["u"], initialize=params["FlexibilityDown"]
+    )  # [MW/h] Flexibility (down) of a committed power plant (Initialize after)
+    model.InReserve = Param(sets["u"], initialize=params["InReserve"])
 
     ########################################################################################################################
     ##########################################  Definition of variables ####################################################
@@ -181,15 +204,17 @@ def DispOptim(sets, parameters, LPFormulation=False):
     ###################################################################################################################################################################################################################################################################
 
     def EQ_SystemCost(model, h):
-        return model.SystemCost[h] == (sum(model.CostFixed[u] * model.Committed[u, h] for u in model.u)
-                                       + sum((model.CostStartUpH[u, h] + model.CostShutDownH[u, h]) for u in model.u)
-                                       + sum((model.CostRampUpH[u, h] + model.CostRampDownH[u, h]) for u in model.u)
-                                       + sum(model.CostVariable[u, h] * model.Power[u, h] for u in model.u)
-                                       + sum(model.PriceTransmission[l, h] * model.Flow[l, h] for l in model.l)
-                                       + sum(model.CostLoadShedding[n, h] * model.ShedLoad[n, h] for n in model.n)
-                                       + 100E3 * sum(model.LostLoad_MaxPower[n, h] + model.LostLoad_MinPower[n, h] for n in model.n)
-                                       + 80E3 * sum(model.LostLoad_Reserve2U[n, h] + model.LostLoad_Reserve2D[n, h] for n in model.n)
-                                       + 70E3 * sum(model.LostLoad_RampUp[u, h] + model.LostLoad_RampDown[u, h] for u in model.u))
+        return model.SystemCost[h] == (
+            sum(model.CostFixed[u] * model.Committed[u, h] for u in model.u)
+            + sum((model.CostStartUpH[u, h] + model.CostShutDownH[u, h]) for u in model.u)
+            + sum((model.CostRampUpH[u, h] + model.CostRampDownH[u, h]) for u in model.u)
+            + sum(model.CostVariable[u, h] * model.Power[u, h] for u in model.u)
+            + sum(model.PriceTransmission[l, h] * model.Flow[l, h] for l in model.l)
+            + sum(model.CostLoadShedding[n, h] * model.ShedLoad[n, h] for n in model.n)
+            + 100E3 * sum(model.LostLoad_MaxPower[n, h] + model.LostLoad_MinPower[n, h] for n in model.n)
+            + 80E3 * sum(model.LostLoad_Reserve2U[n, h] + model.LostLoad_Reserve2D[n, h] for n in model.n)
+            + 70E3 * sum(model.LostLoad_RampUp[u, h] + model.LostLoad_RampDown[u, h] for u in model.u)
+        )
 
     ###################################################################################################################################################################################################################################################################
 
@@ -197,10 +222,10 @@ def DispOptim(sets, parameters, LPFormulation=False):
     ###################################################################################################################################################################################################################################################################
 
     def EQ_CostStartup(model, u, h):
-        if (model.CostStartUp[u] != 0):
-            if (h == 0):
+        if model.CostStartUp[u] != 0:
+            if h == 0:
                 return model.CostStartUpH[u, h] >= model.CostStartUp[u] * (model.Committed[u, h] - float(model.CommittedInitial[u]))
-            elif (h > 0):
+            elif h > 0:
                 return model.CostStartUpH[u, h] >= model.CostStartUp[u] * (model.Committed[u, h] - model.Committed[u, h - 1])
         else:
             return Constraint.Skip
@@ -213,11 +238,9 @@ def DispOptim(sets, parameters, LPFormulation=False):
     def EQ_CostShutDown(model, u, h):
         if model.CostShutDown[u] != 0:
             if int(h) == 0:
-                return (model.CostShutDownH[u, h] >=
-                        model.CostShutDown[u] * (model.CommittedInitial[u] - model.Committed[u, h]))
+                return model.CostShutDownH[u, h] >= model.CostShutDown[u] * (model.CommittedInitial[u] - model.Committed[u, h])
             elif int(h) > 0:
-                return (model.CostShutDownH[u, h] >=
-                        model.CostShutDown[u] * (model.Committed[u, h - 1] - model.Committed[u, h]))
+                return model.CostShutDownH[u, h] >= model.CostShutDown[u] * (model.Committed[u, h - 1] - model.Committed[u, h])
         else:
             return Constraint.Skip
 
@@ -249,30 +272,31 @@ def DispOptim(sets, parameters, LPFormulation=False):
         else:
             return Constraint.Skip
 
-
         ###################################################################################################################################################################################################################################################################
 
         # 4) Hourly demand balance in the day-ahead market for each node:
         ###################################################################################################################################################################################################################################################################
 
     def EQ_Demand_balance_DA(model, n, h):
-        return (sum(model.Power[u, h] * model.Location[u, n] for u in model.u)
-                + sum(model.Flow[l, h] * model.LineNode[l, n] for l in model.l)
-                == model.Demand['DA', n, h]
-                + sum(model.StorageInput[s, h] * model.Location[s, n] for s in model.s)
-                - model.ShedLoad[n, h]
-                - model.LostLoad_MaxPower[n, h]
-                + model.LostLoad_MinPower[n, h])
+        return (
+            sum(model.Power[u, h] * model.Location[u, n] for u in model.u) + sum(model.Flow[l, h] * model.LineNode[l, n] for l in model.l)
+            == model.Demand["DA", n, h]
+            + sum(model.StorageInput[s, h] * model.Location[s, n] for s in model.s)
+            - model.ShedLoad[n, h]
+            - model.LostLoad_MaxPower[n, h]
+            + model.LostLoad_MinPower[n, h]
+        )
 
     ###################################################################################################################################################################################################################################################################
 
     # 5) Demand balance 2U
     ###################################################################################################################################################################################################################################################################
-                      
+
     def EQ_Demand_balance_2U(model, n, h):
-        return (sum(model.MaxRamp2U[u, h] * model.InReserve[u] * model.Location[u, n]
-                    for u in model.u) >=
-                model.Demand['2U', n, h] - model.LostLoad_Reserve2U[n, h])
+        return (
+            sum(model.MaxRamp2U[u, h] * model.InReserve[u] * model.Location[u, n] for u in model.u)
+            >= model.Demand["2U", n, h] - model.LostLoad_Reserve2U[n, h]
+        )
 
     ###################################################################################################################################################################################################################################################################
 
@@ -280,11 +304,12 @@ def DispOptim(sets, parameters, LPFormulation=False):
     ###################################################################################################################################################################################################################################################################
 
     def EQ_Demand_balance_2D(model, n, h):
-        return (sum(model.MaxRamp2D[u, h] * model.InReserve[u] * model.Location[u, n]
-                   for u in model.u
-                   for t in model.t) >=
-                model.Demand['2D', n, h] - sum(model.StorageChargingCapacity[s] - model.StorageInput[s, h]
-                                               for s in model.s) * 4 - model.LostLoad_Reserve2D[n, h] )
+        return (
+            sum(model.MaxRamp2D[u, h] * model.InReserve[u] * model.Location[u, n] for u in model.u for t in model.t)
+            >= model.Demand["2D", n, h]
+            - sum(model.StorageChargingCapacity[s] - model.StorageInput[s, h] for s in model.s) * 4
+            - model.LostLoad_Reserve2D[n, h]
+        )
 
     ###################################################################################################################################################################################################################################################################
 
@@ -309,20 +334,23 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     def EQ_Ramp_up(model, u, h):
         if all(model.Technology[u, tr] == 0 for tr in model.tr):
-            if (h == 0):
-                return model.Power[u, h] <= (model.PowerInitial[u] +
-                                             model.RampUpMaximum[u] * model.CommittedInitial[u] +
-                                             model.RampStartUpMaximum[u] * (1 - model.CommittedInitial[u]) +
-                                             model.LostLoad_RampUp[u, h])
+            if h == 0:
+                return model.Power[u, h] <= (
+                    model.PowerInitial[u]
+                    + model.RampUpMaximum[u] * model.CommittedInitial[u]
+                    + model.RampStartUpMaximum[u] * (1 - model.CommittedInitial[u])
+                    + model.LostLoad_RampUp[u, h]
+                )
 
-            elif (h > 0):
-                return model.Power[u, h] <= (model.Power[u, h - 1] +
-                                             model.RampUpMaximum[u] * model.Committed[u, h - 1] +
-                                             model.RampStartUpMaximum[u] * (1 - model.Committed[u, h - 1]) +
-                                             model.LostLoad_RampUp[u, h])
+            elif h > 0:
+                return model.Power[u, h] <= (
+                    model.Power[u, h - 1]
+                    + model.RampUpMaximum[u] * model.Committed[u, h - 1]
+                    + model.RampStartUpMaximum[u] * (1 - model.Committed[u, h - 1])
+                    + model.LostLoad_RampUp[u, h]
+                )
         else:
             return Constraint.Skip
-
 
         ###################################################################################################################################################################################################################################################################
 
@@ -331,14 +359,20 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     def EQ_Ramp_Down(model, u, h):
         if all(model.Technology[u, tr] == 0 for tr in model.tr):
-            if (h == 0):
-                return (model.PowerInitial[u] - model.Power[u, h] <= model.RampDownMaximum[u] * model.Committed[u, h] +
-                                                                    model.RampShutDownMaximum[u] * (1 - model.Committed[u, h]) +
-                                                                    model.LostLoad_RampDown[u, h])
-            elif (h > 0):
-                return (model.Power[u, h - 1] - model.Power[u, h] <= model.RampDownMaximum[u] * model.Committed[u, h] +
-                                                                    model.RampShutDownMaximum[u] * (1 - model.Committed[u, h]) +
-                                                                    model.LostLoad_RampDown[u, h])
+            if h == 0:
+                return (
+                    model.PowerInitial[u] - model.Power[u, h]
+                    <= model.RampDownMaximum[u] * model.Committed[u, h]
+                    + model.RampShutDownMaximum[u] * (1 - model.Committed[u, h])
+                    + model.LostLoad_RampDown[u, h]
+                )
+            elif h > 0:
+                return (
+                    model.Power[u, h - 1] - model.Power[u, h]
+                    <= model.RampDownMaximum[u] * model.Committed[u, h]
+                    + model.RampShutDownMaximum[u] * (1 - model.Committed[u, h])
+                    + model.LostLoad_RampDown[u, h]
+                )
         else:
             return Constraint.Skip
 
@@ -349,11 +383,10 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     def EQ_Minimum_time_up_A(model, u):
         for h in model.h:
-            if (h <= model.TimeUpLeft_initial[u]):
+            if h <= model.TimeUpLeft_initial[u]:
                 return sum(1 - model.Committed[u, h] for h in model.h) >= 0
             else:
                 return Constraint.Skip
-
 
             ###################################################################################################################################################################################################################################################################
 
@@ -362,13 +395,17 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     def EQ_Minimum_Time_up_JustStarted(model, u, h):
         idx_h = range(h, int(model.TimeUpLeft_JustStarted[u, h]) + h, 1)
-        if (model.TimeUpLeft_JustStarted[u, h] > 0 and h > 0):
-            return sum(model.Committed[u, h] for h in idx_h) >= model.TimeUpLeft_JustStarted[u, h] * model.Committed[
-                u, h] - model.TimeUpLeft_JustStarted[u, h] * model.Committed[u, h - 1]
-        elif (model.TimeUpLeft_JustStarted[u, h] > 0 and h == 0):
+        if model.TimeUpLeft_JustStarted[u, h] > 0 and h > 0:
+            return (
+                sum(model.Committed[u, h] for h in idx_h)
+                >= model.TimeUpLeft_JustStarted[u, h] * model.Committed[u, h] - model.TimeUpLeft_JustStarted[u, h] * model.Committed[u, h - 1]
+            )
+        elif model.TimeUpLeft_JustStarted[u, h] > 0 and h == 0:
             # return sum(model.Committed[u,h] for h in idx_h) >= model.TimeUpLeft_JustStarted[u,h]*(model.Committed[u,h]-model.CommittedInitial[u])
-            return sum(model.Committed[u, h] for h in idx_h) >= model.TimeUpLeft_JustStarted[u, h] * model.Committed[
-                u, h] - model.TimeUpLeft_JustStarted[u, h] * model.CommittedInitial[u]
+            return (
+                sum(model.Committed[u, h] for h in idx_h)
+                >= model.TimeUpLeft_JustStarted[u, h] * model.Committed[u, h] - model.TimeUpLeft_JustStarted[u, h] * model.CommittedInitial[u]
+            )
         else:
             return Constraint.Skip
 
@@ -379,7 +416,7 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     def EQ_Minimum_time_down_A(model, u):
         for h in model.h:
-            if (h <= model.TimeDownLeft_initial[u]):
+            if h <= model.TimeDownLeft_initial[u]:
                 return sum(model.Committed[u, h] for h in model.h) >= 0
             else:
                 return Constraint.Skip
@@ -393,14 +430,16 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
         if model.TimeDownLeft_initial[u] <= h:
             if model.TimeDownLeft_JustStopped[u, h] > 0 and h == 0:
-                return (sum(1 - model.Committed[u, h] for h in range(h, model.TimeDownLeft_JustStopped[u, h] + h, 1)) >=
-                       model.TimeDownLeft_JustStopped[u, h] * model.CommittedInitial[u] -
-                       model.TimeDownLeft_JustStopped[u, h] * model.Committed[u, h])
+                return (
+                    sum(1 - model.Committed[u, h] for h in range(h, model.TimeDownLeft_JustStopped[u, h] + h, 1))
+                    >= model.TimeDownLeft_JustStopped[u, h] * model.CommittedInitial[u] - model.TimeDownLeft_JustStopped[u, h] * model.Committed[u, h]
+                )
 
             elif model.TimeDownLeft_JustStopped[u, h] > 0 and h > 0:
-                return (sum(1 - model.Committed[u, h] for h in range(h, model.TimeDownLeft_JustStopped[u, h] + h, 1)) >=
-                       model.TimeDownLeft_JustStopped[u, h] * model.Committed[u, h - 1] -
-                       model.TimeDownLeft_JustStopped[u, h] * model.Committed[u, h] )
+                return (
+                    sum(1 - model.Committed[u, h] for h in range(h, model.TimeDownLeft_JustStopped[u, h] + h, 1))
+                    >= model.TimeDownLeft_JustStopped[u, h] * model.Committed[u, h - 1] - model.TimeDownLeft_JustStopped[u, h] * model.Committed[u, h]
+                )
 
             else:
                 return Constraint.Skip
@@ -414,8 +453,7 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     def EQ_Max_RampUp1(model, u, h):
         if all(model.Technology[u, tr] == 0 for tr in model.tr):
-            return (model.MaxRamp2U[u, h] <=
-                   model.RampUpMaximum[u] * model.Committed[u, h] + model.FlexibilityUp[u] * (1 - model.Committed[u, h]))
+            return model.MaxRamp2U[u, h] <= model.RampUpMaximum[u] * model.Committed[u, h] + model.FlexibilityUp[u] * (1 - model.Committed[u, h])
         else:
             return Constraint.Skip
 
@@ -426,8 +464,7 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     def EQ_Max_RampUp2(model, u, h):
         if all(model.Technology[u, tr] == 0 for tr in model.tr):
-            return (model.MaxRamp2U[u, h] <=
-                   (model.PowerCapacity[u] * model.LoadMaximum[u, h] - model.Power[u, h]) * 4 )
+            return model.MaxRamp2U[u, h] <= (model.PowerCapacity[u] * model.LoadMaximum[u, h] - model.Power[u, h]) * 4
         else:
             return Constraint.Skip
 
@@ -438,8 +475,7 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     def EQ_Max_RampDown1(model, u, h):
         if all(model.Technology[u, tr] == 0 for tr in model.tr):
-            return (model.MaxRamp2D[u, h] <= \
-                   max(float(model.RampDownMaximum[u]), float(model.FlexibilityDown[u])) * model.Committed[u, h] )
+            return model.MaxRamp2D[u, h] <= max(float(model.RampDownMaximum[u]), float(model.FlexibilityDown[u])) * model.Committed[u, h]
         else:
             return Constraint.Skip
 
@@ -450,7 +486,7 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     def EQ_Max_RampDown2(model, u, h):
         if all(model.Technology[u, tr] == 0 for tr in model.tr):
-            if (float(model.RampShutDownMaximum[u]) < float(model.PowerMinStable[u]) * 4):
+            if float(model.RampShutDownMaximum[u]) < float(model.PowerMinStable[u]) * 4:
                 return model.MaxRamp2D[u, h] <= (model.Power[u, h] - model.PowerMinStable[u] * model.Committed[u, h]) * 4
             else:
                 return model.MaxRamp2D[u, h] <= model.Power[u, h] * 4
@@ -487,8 +523,13 @@ def DispOptim(sets, parameters, LPFormulation=False):
     ###################################################################################################################################################################################################################################################################
 
     def EQ_Storage_MaxDischarge(model, s, h):
-        return model.Power[s, h] / max(float(model.StorageDischargeEfficiency[s]), 0.0001) + model.StorageOutflow[
-            s, h] + model.Spillage[s, h] - model.StorageInflow[s, h] <= model.StorageLevel[s, h]
+        return (
+            model.Power[s, h] / max(float(model.StorageDischargeEfficiency[s]), 0.0001)
+            + model.StorageOutflow[s, h]
+            + model.Spillage[s, h]
+            - model.StorageInflow[s, h]
+            <= model.StorageLevel[s, h]
+        )
 
     ###################################################################################################################################################################################################################################################################
 
@@ -496,8 +537,13 @@ def DispOptim(sets, parameters, LPFormulation=False):
     ###################################################################################################################################################################################################################################################################
 
     def EQ_Storage_MaxCharge(model, s, h):
-        return model.StorageInput[s, h] * model.StorageChargingEfficiency[s] - model.StorageOutflow[s, h] - \
-               model.Spillage[s, h] + model.StorageInflow[s, h] <= model.StorageCapacity[s] - model.StorageLevel[s, h]
+        return (
+            model.StorageInput[s, h] * model.StorageChargingEfficiency[s]
+            - model.StorageOutflow[s, h]
+            - model.Spillage[s, h]
+            + model.StorageInflow[s, h]
+            <= model.StorageCapacity[s] - model.StorageLevel[s, h]
+        )
 
     ###################################################################################################################################################################################################################################################################
 
@@ -505,19 +551,19 @@ def DispOptim(sets, parameters, LPFormulation=False):
     ###################################################################################################################################################################################################################################################################
 
     def EQ_Storage_balance(model, s, h):
-        if (h == 0):
-            return (model.StorageInitial[s] + model.StorageInflow[s, h] +
-                    model.StorageInput[s, h] * model.StorageChargingEfficiency[s] ==
-                    model.StorageLevel[s, h] + model.StorageOutflow[s, h] +
-                    model.Spillage[s, h] +
-                    model.Power[s, h] / max(float(model.StorageDischargeEfficiency[s]), 0.0001) )
+        if h == 0:
+            return model.StorageInitial[s] + model.StorageInflow[s, h] + model.StorageInput[s, h] * model.StorageChargingEfficiency[
+                s
+            ] == model.StorageLevel[s, h] + model.StorageOutflow[s, h] + model.Spillage[s, h] + model.Power[s, h] / max(
+                float(model.StorageDischargeEfficiency[s]), 0.0001
+            )
 
-        elif (h > 0):
-            return (model.StorageLevel[s, h - 1] + model.StorageInflow[s, h] +
-                    model.StorageInput[s, h] * model.StorageChargingEfficiency[s] ==
-                    model.StorageLevel[s, h] + model.StorageOutflow[s, h] +
-                    model.Spillage[s, h] +
-                    model.Power[s, h] / max(float(model.StorageDischargeEfficiency[s]), 0.0001) )
+        elif h > 0:
+            return model.StorageLevel[s, h - 1] + model.StorageInflow[s, h] + model.StorageInput[s, h] * model.StorageChargingEfficiency[
+                s
+            ] == model.StorageLevel[s, h] + model.StorageOutflow[s, h] + model.Spillage[s, h] + model.Power[s, h] / max(
+                float(model.StorageDischargeEfficiency[s]), 0.0001
+            )
 
         ###################################################################################################################################################################################################################################################################
 
@@ -525,11 +571,10 @@ def DispOptim(sets, parameters, LPFormulation=False):
         ###################################################################################################################################################################################################################################################################
 
     def EQ_Storage_boundaries(model, s, h):
-        if (h == len(model.h) - 1):
+        if h == len(model.h) - 1:
             return model.StorageLevel[s, h] >= model.StorageFinalMin[s]
         else:
             return Constraint.Skip
-
 
         ###################################################################################################################################################################################################################################################################
 
@@ -565,7 +610,7 @@ def DispOptim(sets, parameters, LPFormulation=False):
         ###################################################################################################################################################################################################################################################################
 
     def EQ_Force_DeCommitment(model, u, h):
-        if (model.LoadMaximum[u, h] == 0):
+        if model.LoadMaximum[u, h] == 0:
             return model.Committed[u, h] == 0
         else:
             return Constraint.Skip
@@ -583,7 +628,6 @@ def DispOptim(sets, parameters, LPFormulation=False):
     #######################################################################################################################
     ######################################## Definition of model ##########################################################
     #######################################################################################################################
-
 
     model.EQ_Objective_Function = Objective(rule=EQ_Objective_function, sense=minimize)
 
@@ -634,22 +678,24 @@ def DispOptim(sets, parameters, LPFormulation=False):
 
     return model
 
-def try_solvers(prefered_solver,path_cplex=''):
+
+def try_solvers(prefered_solver, path_cplex=""):
     """ Initialize solver engine, trying different solvers. Faster solvers are tried first """
-    for solver in [prefered_solver, 'cplex', 'gurobi', 'cbc', 'glpk']:
-        if solver=='cplex' and os.path.isfile(path_cplex):
-            s = SolverFactory(solver,executable=path_cplex)
+    for solver in [prefered_solver, "cplex", "gurobi", "cbc", "glpk"]:
+        if solver == "cplex" and os.path.isfile(path_cplex):
+            s = SolverFactory(solver, executable=path_cplex)
         else:
             s = SolverFactory(solver)
         if s.available():
-            logging.info('Solver %s will be used' % solver)
+            logging.info("Solver %s will be used" % solver)
             return s
     logging.error("No solvers found on this machine")
     sys.exit(1)
 
-def run_solver(instance, solver="cplex", solver_manager="serial", options_string="", path_cplex=''):
+
+def run_solver(instance, solver="cplex", solver_manager="serial", options_string="", path_cplex=""):
     # initialize the solver / solver manager.
-    solver = try_solvers(solver,path_cplex=path_cplex)
+    solver = try_solvers(solver, path_cplex=path_cplex)
     solver_manager = SolverManagerFactory(solver_manager)  # serial or pyro
 
     results = solver.solve(instance, options_string=options_string, tee=True)
@@ -671,7 +717,8 @@ def after_solver(results):
 ############################### Main wrapper (rolling horizon optimization) ###########################################
 #######################################################################################################################
 
-def DispaSolve(sets, parameters, LPFormulation=False, path_cplex = ''):
+
+def DispaSolve(sets, parameters, LPFormulation=False, path_cplex=""):
     """
     The DispaSolve function defines the rolling horizon optimization and saves each result variable in a pandas dataframe
     The definition of the rolling horizon must be included into the DispaSET Config parameter'
@@ -685,129 +732,121 @@ def DispaSolve(sets, parameters, LPFormulation=False, path_cplex = ''):
     # Initialize the results dictionnary:
 
     # Load the config parameter in the pyomo format (easier to read):
-    config = pyomo_format(sets, parameters['Config'])
+    config = pyomo_format(sets, parameters["Config"])
 
     # Time parameters:
-    Nhours = len(sets['h'])
+    Nhours = len(sets["h"])
 
     # Build pandas indexes based on the config variables:
-    first = pd.datetime(config['FirstDay', 'year'], config['FirstDay', 'month'], config['FirstDay', 'day'], 0, 0, 0)
-    last = pd.datetime(config['LastDay', 'year'], config['LastDay', 'month'], config['LastDay', 'day'], 23, 59, 59)
+    first = pd.datetime(config["FirstDay", "year"], config["FirstDay", "month"], config["FirstDay", "day"], 0, 0, 0)
+    last = pd.datetime(config["LastDay", "year"], config["LastDay", "month"], config["LastDay", "day"], 23, 59, 59)
 
     # Index corresponding to the data:
-    index_all = pd.DatetimeIndex(start=first, end=last, freq='h')
+    index_all = pd.DatetimeIndex(start=first, end=last, freq="h")
     if len(index_all) != Nhours:
-        logging.error('The interval length in the Config parameter (' + str(
-            len(index_all) + ' does not correspond to the number of hours in the data (' + str(Nhours)))
+        logging.error(
+            "The interval length in the Config parameter ("
+            + str(len(index_all) + " does not correspond to the number of hours in the data (" + str(Nhours))
+        )
         sys.exit(1)
 
     # Index of the selected slice for simulation:
-    index_sim = pd.DatetimeIndex(start=first, end=last, freq='h')
+    index_sim = pd.DatetimeIndex(start=first, end=last, freq="h")
     Nhours_sim = len(index_sim)
 
-    Nunits = len(sets['u'])
-    parameters['Demand']['val'][1:2, :, :] = np.zeros(parameters['Demand']['val'][1:2, :, :].shape)
+    Nunits = len(sets["u"])
+    parameters["Demand"]["val"][1:2, :, :] = np.zeros(parameters["Demand"]["val"][1:2, :, :].shape)
 
     # Pre-processing of model parameters:
     # Forecasted upwards reserve margin (UCTE). Only if not provided in the parameters
     # Forecasted downwards reserve margin (UCTE)
-    if (parameters['Demand']['val'][1:2, :,
-        :] == 0).all():  # only applys if all upward/downard reserve requirement are zero!!!
-        shape = parameters['Demand']['val'][1, :, :].shape
-        maximum = np.max(parameters['Demand']['val'])
-        parameters['Demand']['val'][1, :, :] = 1 * (np.sqrt(10 * maximum + pow(150, 2))
-                                                    - 150 * np.ones(shape))  # reserve up
-        parameters['Demand']['val'][2, :, :] = 0.5 * (np.sqrt(10 * maximum + pow(150, 2))
-                                                      - 150 * np.ones(shape))  # reserve down
+    if (parameters["Demand"]["val"][1:2, :, :] == 0).all():  # only applys if all upward/downard reserve requirement are zero!!!
+        shape = parameters["Demand"]["val"][1, :, :].shape
+        maximum = np.max(parameters["Demand"]["val"])
+        parameters["Demand"]["val"][1, :, :] = 1 * (np.sqrt(10 * maximum + pow(150, 2)) - 150 * np.ones(shape))  # reserve up
+        parameters["Demand"]["val"][2, :, :] = 0.5 * (np.sqrt(10 * maximum + pow(150, 2)) - 150 * np.ones(shape))  # reserve down
 
     # Definition of the minimum stable load
-    parameters['PowerMinStable'] = {'sets': ['u'],
-                                    'val': parameters['PowerCapacity']['val'] * parameters['PartLoadMin']['val']}
+    parameters["PowerMinStable"] = {"sets": ["u"], "val": parameters["PowerCapacity"]["val"] * parameters["PartLoadMin"]["val"]}
 
     # Update of the Availability factor, taking into account the outage factor:
-    parameters['LoadMaximum'] = {'sets': ['u', 'h'],
-                                 'val': parameters['AvailabilityFactor']['val'] * (1 - parameters['OutageFactor']['val'])}
+    parameters["LoadMaximum"] = {"sets": ["u", "h"], "val": parameters["AvailabilityFactor"]["val"] * (1 - parameters["OutageFactor"]["val"])}
 
     # Start-up and Shutdown ramping constraints (minimum value is the PowerMinStable)
-    parameters['RampShutDownMaximum']['val'] = np.maximum(parameters['RampShutDownMaximum']['val'],
-                                                          parameters['PowerMinStable']['val'])
-    parameters['RampStartUpMaximum']['val'] = np.maximum(parameters['RampStartUpMaximum']['val'],
-                                                         parameters['PowerMinStable']['val'])
+    parameters["RampShutDownMaximum"]["val"] = np.maximum(parameters["RampShutDownMaximum"]["val"], parameters["PowerMinStable"]["val"])
+    parameters["RampStartUpMaximum"]["val"] = np.maximum(parameters["RampStartUpMaximum"]["val"], parameters["PowerMinStable"]["val"])
 
     # If the plant is stopped, its 15-min ramp-up capability is RampStartUpMaximum if it can start in this timeframe
-    parameters['FlexibilityUp'] = {'sets': parameters['RampShutDownMaximum']['sets'],
-                                   'val': np.zeros(parameters['RampStartUpMaximum']['val'].shape)}
-    flexible_plants_up = parameters['RampStartUpMaximum']['val'] >= 4 * parameters['PowerMinStable']['val']
-    parameters['FlexibilityUp']['val'][flexible_plants_up] = parameters['RampStartUpMaximum']['val'][flexible_plants_up]
+    parameters["FlexibilityUp"] = {"sets": parameters["RampShutDownMaximum"]["sets"], "val": np.zeros(parameters["RampStartUpMaximum"]["val"].shape)}
+    flexible_plants_up = parameters["RampStartUpMaximum"]["val"] >= 4 * parameters["PowerMinStable"]["val"]
+    parameters["FlexibilityUp"]["val"][flexible_plants_up] = parameters["RampStartUpMaximum"]["val"][flexible_plants_up]
 
     # If the plant is started, its 15-min ramp-down capability is either RampShutDownMaximum if it is fast enough, or RampDownMaximum otherwise
-    parameters['FlexibilityDown'] = {'sets': parameters['RampShutDownMaximum']['sets'],
-                                     'val': np.zeros(parameters['RampShutDownMaximum']['val'].shape)}
-    flexible_plants_down = parameters['RampShutDownMaximum']['val'] >= 4 * parameters['PowerMinStable']['val']
-    parameters['FlexibilityDown']['val'][flexible_plants_down] = parameters['RampShutDownMaximum']['val'][flexible_plants_up]
+    parameters["FlexibilityDown"] = {
+        "sets": parameters["RampShutDownMaximum"]["sets"],
+        "val": np.zeros(parameters["RampShutDownMaximum"]["val"].shape),
+    }
+    flexible_plants_down = parameters["RampShutDownMaximum"]["val"] >= 4 * parameters["PowerMinStable"]["val"]
+    parameters["FlexibilityDown"]["val"][flexible_plants_down] = parameters["RampShutDownMaximum"]["val"][flexible_plants_up]
 
     # Set the ramping costs to zero if not defined:
-    if not 'CostRampUp' in parameters:
-        parameters['CostRampUp'] = {'sets': parameters['PowerCapacity']['sets'],
-                                    'val': np.zeros(parameters['PowerCapacity']['val'].shape)}
-    if not 'CostRampDown' in parameters:
-        parameters['CostRampDown'] = {'sets': parameters['PowerCapacity']['sets'],
-                                      'val': np.zeros(parameters['PowerCapacity']['val'].shape)}
+    if not "CostRampUp" in parameters:
+        parameters["CostRampUp"] = {"sets": parameters["PowerCapacity"]["sets"], "val": np.zeros(parameters["PowerCapacity"]["val"].shape)}
+    if not "CostRampDown" in parameters:
+        parameters["CostRampDown"] = {"sets": parameters["PowerCapacity"]["sets"], "val": np.zeros(parameters["PowerCapacity"]["val"].shape)}
 
     # Initialize CostLoadShedding:
-    parameters['CostLoadShedding'] = {'sets': ['n', 'h'],
-                                      'val': 1000 * np.ones([len(sets['n']), Nhours])}
+    parameters["CostLoadShedding"] = {"sets": ["n", "h"], "val": 1000 * np.ones([len(sets["n"]), Nhours])}
 
     # calculate the minimum must run power for renewable technologies
-    parameters['PowerMustRun'] = {'sets': ['u', 'h'],
-                                  'val': np.zeros([Nunits, Nhours])}
+    parameters["PowerMustRun"] = {"sets": ["u", "h"], "val": np.zeros([Nunits, Nhours])}
     for u in range(Nunits):
         # find technology:
-        tech = sets['t'][np.where(parameters['Technology']['val'][u, :] == 1)[0][0]]
-        loc = np.where(parameters['Location']['val'][u, :] == 1)[0][0]
-        curt = parameters['Curtailment']['val'][loc]
-        if tech in sets['tr'] and curt != 1:
-            parameters['PowerMustRun']['val'][u, :] = parameters['PowerCapacity']['val'][u] * \
-                                                      parameters['AvailabilityFactor']['val'][u, :]
+        tech = sets["t"][np.where(parameters["Technology"]["val"][u, :] == 1)[0][0]]
+        loc = np.where(parameters["Location"]["val"][u, :] == 1)[0][0]
+        curt = parameters["Curtailment"]["val"][loc]
+        if tech in sets["tr"] and curt != 1:
+            parameters["PowerMustRun"]["val"][u, :] = parameters["PowerCapacity"]["val"][u] * parameters["AvailabilityFactor"]["val"][u, :]
 
     # Converting boolean array to integers (pyomo does not like booleans)
     for p in parameters:
-        if 'val' in parameters[p]:
-            if parameters[p]['val'].dtype == np.dtype('bool'):
-                parameters[p]['val'] = np.array(parameters[p]['val'], dtype='int')
+        if "val" in parameters[p]:
+            if parameters[p]["val"].dtype == np.dtype("bool"):
+                parameters[p]["val"] = np.array(parameters[p]["val"], dtype="int")
 
     range_start = index_all.get_loc(first)
-    days = range(range_start / 24, Nhours_sim / 24 - 1 - config['RollingHorizon LookAhead', 'day'],
-                 config['RollingHorizon Length', 'day'])
+    days = range(range_start / 24, Nhours_sim / 24 - 1 - config["RollingHorizon LookAhead", "day"], config["RollingHorizon Length", "day"])
 
     results = {}
 
     for d in days:
         range_start = d * 24
-        range_stop = np.minimum(range_start + config['RollingHorizon Length', 'day'] * 24 +
-                                config['RollingHorizon LookAhead', 'day'] * 24,
-                                Nhours)
+        range_stop = np.minimum(range_start + config["RollingHorizon Length", "day"] * 24 + config["RollingHorizon LookAhead", "day"] * 24, Nhours)
         h_range = range(range_start, range_stop, 1)  # Time indexes of for the current horizon
-        h_kept = range(range_start, range_stop - config['RollingHorizon LookAhead', 'day'] * 24)  # Time indexes of the values that will be kept and stored
+        h_kept = range(
+            range_start, range_stop - config["RollingHorizon LookAhead", "day"] * 24
+        )  # Time indexes of the values that will be kept and stored
         index_range = index_all[h_range]
         index_kept = index_all[h_kept]
-        logging.info('Optimizing time interval ' + str(index_range[0]) + ' to ' + str(index_range[-1]))
-        logging.info('Conserving only the interval ' + str(index_kept[0]) + ' to ' + str(index_kept[-1]))
-        # Slice the time-dependent parameters to the right horizon: 
+        logging.info("Optimizing time interval " + str(index_range[0]) + " to " + str(index_range[-1]))
+        logging.info("Conserving only the interval " + str(index_kept[0]) + " to " + str(index_kept[-1]))
+        # Slice the time-dependent parameters to the right horizon:
         parameters_sliced = {}
         for var in parameters:
-            if parameters[var]['sets'][-1] == 'h':  # if the last set of the parameter is time
-                dim = len(parameters[var]['sets'])
+            if parameters[var]["sets"][-1] == "h":  # if the last set of the parameter is time
+                dim = len(parameters[var]["sets"])
                 var_sliced = {}
-                var_sliced['sets'] = parameters[var]['sets']
+                var_sliced["sets"] = parameters[var]["sets"]
                 if dim == 1:
-                    var_sliced['val'] = parameters[var]['val'][h_range]
+                    var_sliced["val"] = parameters[var]["val"][h_range]
                 elif dim == 2:
-                    var_sliced['val'] = parameters[var]['val'][:, h_range]
+                    var_sliced["val"] = parameters[var]["val"][:, h_range]
                 elif dim == 3:
-                    var_sliced['val'] = parameters[var]['val'][:, :, h_range]
+                    var_sliced["val"] = parameters[var]["val"][:, :, h_range]
                 else:
-                    logging.error('Variables with more than 3 dimensions are not allowed. ' + parameters[var]['name'] + ' has ' + str(dim) + ' Dimensions')
+                    logging.error(
+                        "Variables with more than 3 dimensions are not allowed. " + parameters[var]["name"] + " has " + str(dim) + " Dimensions"
+                    )
                     sys.exit(1)
                 parameters_sliced[var] = var_sliced
             else:
@@ -815,71 +854,76 @@ def DispaSolve(sets, parameters, LPFormulation=False, path_cplex = ''):
 
         # Copy the sets dictionnary and slice the 'h' set:
         sets_sliced = sets.copy()
-        sets_sliced['h'] = sets_sliced['h'] = range(len(h_range))
+        sets_sliced["h"] = sets_sliced["h"] = range(len(h_range))
 
         # Add the parameters specific to the optimization of a single time horizon:
         # parameters_sliced['PowerInitial'] =
-        parameters_sliced['CommittedInitial'] = {'sets': ['u'], 'val': parameters_sliced['PowerInitial']['val'] > 0}
+        parameters_sliced["CommittedInitial"] = {"sets": ["u"], "val": parameters_sliced["PowerInitial"]["val"] > 0}
 
-        parameters_sliced['TimeUpLeft_initial'] = {'sets': ['u'], 'val': parameters_sliced['TimeUpMinimum']['val'] -
-                                                                         parameters_sliced['TimeUpInitial']['val'] *
-                                                                         parameters_sliced['CommittedInitial']['val']}
+        parameters_sliced["TimeUpLeft_initial"] = {
+            "sets": ["u"],
+            "val": parameters_sliced["TimeUpMinimum"]["val"]
+            - parameters_sliced["TimeUpInitial"]["val"] * parameters_sliced["CommittedInitial"]["val"],
+        }
 
-        parameters_sliced['TimeDownLeft_initial'] = {'sets': ['u'],
-                                                     'val': (parameters_sliced['TimeDownMinimum']['val'] -
-                                                            parameters_sliced['TimeDownInitial']['val'] *
-                                                            (1 - parameters_sliced['CommittedInitial']['val'])) }
+        parameters_sliced["TimeDownLeft_initial"] = {
+            "sets": ["u"],
+            "val": (
+                parameters_sliced["TimeDownMinimum"]["val"]
+                - parameters_sliced["TimeDownInitial"]["val"] * (1 - parameters_sliced["CommittedInitial"]["val"])
+            ),
+        }
 
-        parameters_sliced['TimeUpLeft_JustStarted'] = {'sets': ['u', 'h'],
-                                                       'val': np.zeros([Nunits, len(h_range)], dtype='int')}
-        parameters_sliced['TimeDownLeft_JustStopped'] = {'sets': ['u', 'h'],
-                                                         'val': np.zeros([Nunits, len(h_range)], dtype='int')}
+        parameters_sliced["TimeUpLeft_JustStarted"] = {"sets": ["u", "h"], "val": np.zeros([Nunits, len(h_range)], dtype="int")}
+        parameters_sliced["TimeDownLeft_JustStopped"] = {"sets": ["u", "h"], "val": np.zeros([Nunits, len(h_range)], dtype="int")}
         for u in range(Nunits):
-            parameters_sliced['TimeUpLeft_JustStarted']['val'][u, :] = np.minimum(
-                len(h_range) - 1 - np.arange(len(h_range)),
-                parameters_sliced['TimeUpMinimum']['val'][u] * np.ones(len(h_range))).astype('int')
-            parameters_sliced['TimeDownLeft_JustStopped']['val'][u, :] = np.minimum(
-                len(h_range) - 1 - np.arange(len(h_range)),
-                parameters_sliced['TimeDownMinimum']['val'][u] * np.ones(len(h_range))).astype('int')
+            parameters_sliced["TimeUpLeft_JustStarted"]["val"][u, :] = np.minimum(
+                len(h_range) - 1 - np.arange(len(h_range)), parameters_sliced["TimeUpMinimum"]["val"][u] * np.ones(len(h_range))
+            ).astype("int")
+            parameters_sliced["TimeDownLeft_JustStopped"]["val"][u, :] = np.minimum(
+                len(h_range) - 1 - np.arange(len(h_range)), parameters_sliced["TimeDownMinimum"]["val"][u] * np.ones(len(h_range))
+            ).astype("int")
 
-        parameters_sliced['StorageFinalMin'] = {'sets': ['s'], 'val': np.zeros(len(sets['s']))}
-        for s in range(len(sets['s'])):
-            parameters_sliced['StorageFinalMin']['val'][s] = np.minimum(parameters_sliced['StorageInitial']['val'][s] +
-                                                                        parameters_sliced['StorageInflow']['val'][s, :].sum() -
-                                                                        parameters_sliced['StorageOutflow']['val'][s, :].sum(),
-                                                                        parameters_sliced['StorageProfile']['val'][s, -1] *
-                                                                        parameters_sliced['StorageCapacity']['val'][s] *
-                                                                        parameters_sliced['AvailabilityFactor']['val'][s, -1])
+        parameters_sliced["StorageFinalMin"] = {"sets": ["s"], "val": np.zeros(len(sets["s"]))}
+        for s in range(len(sets["s"])):
+            parameters_sliced["StorageFinalMin"]["val"][s] = np.minimum(
+                parameters_sliced["StorageInitial"]["val"][s]
+                + parameters_sliced["StorageInflow"]["val"][s, :].sum()
+                - parameters_sliced["StorageOutflow"]["val"][s, :].sum(),
+                parameters_sliced["StorageProfile"]["val"][s, -1]
+                * parameters_sliced["StorageCapacity"]["val"][s]
+                * parameters_sliced["AvailabilityFactor"]["val"][s, -1],
+            )
 
-        # Optimize: 
+        # Optimize:
         instance = DispOptim(sets_sliced, parameters_sliced, LPFormulation)
         if not LPFormulation:
-            opt = run_solver(instance, options_string="mipgap=0.01",path_cplex=path_cplex)
+            opt = run_solver(instance, options_string="mipgap=0.01", path_cplex=path_cplex)
         else:
-            opt = run_solver(instance,path_cplex=path_cplex)
+            opt = run_solver(instance, path_cplex=path_cplex)
 
         results_sliced = {}
         # TDO Iterate all VARs instead of listing everything. Can we?
-        #for v in instance.component_objects(Var):  # FIXME: Seems like this loops does the same as the lines below
+        # for v in instance.component_objects(Var):  # FIXME: Seems like this loops does the same as the lines below
         #    results_sliced[v] = pyomo_to_pandas(opt, v.getname())
 
-        results_sliced['Committed'] = pyomo_to_pandas(opt, 'Committed')
-        results_sliced['CostStartUpH'] = pyomo_to_pandas(opt, 'CostStartUpH')
-        results_sliced['CostShutDownH'] = pyomo_to_pandas(opt, 'CostShutDownH')
-        results_sliced['CostRampUpH'] = pyomo_to_pandas(opt, 'CostRampUpH')
-        results_sliced['CostRampDownH'] = pyomo_to_pandas(opt, 'CostRampDownH')
-        results_sliced['Flow'] = pyomo_to_pandas(opt, 'Flow')
-        results_sliced['Power'] = pyomo_to_pandas(opt, 'Power')
-        results_sliced['ShedLoad'] = pyomo_to_pandas(opt, 'ShedLoad')
-        results_sliced['StorageInput'] = pyomo_to_pandas(opt, 'StorageInput')
-        results_sliced['StorageLevel'] = pyomo_to_pandas(opt, 'StorageLevel')
-        results_sliced['SystemCost'] = pyomo_to_pandas(opt, 'SystemCost')
-        results_sliced['LostLoad_MaxPower'] = pyomo_to_pandas(opt, 'LostLoad_MaxPower')
-        results_sliced['LostLoad_RampUp'] = pyomo_to_pandas(opt, 'LostLoad_RampUp')
-        results_sliced['LostLoad_RampDown'] = pyomo_to_pandas(opt, 'LostLoad_RampDown')
-        results_sliced['LostLoad_MinPower'] = pyomo_to_pandas(opt, 'LostLoad_MinPower')
-        results_sliced['LostLoad_Reserve2U'] = pyomo_to_pandas(opt, 'LostLoad_Reserve2U')
-        results_sliced['LostLoad_Reserve2D'] = pyomo_to_pandas(opt, 'LostLoad_Reserve2D')
+        results_sliced["Committed"] = pyomo_to_pandas(opt, "Committed")
+        results_sliced["CostStartUpH"] = pyomo_to_pandas(opt, "CostStartUpH")
+        results_sliced["CostShutDownH"] = pyomo_to_pandas(opt, "CostShutDownH")
+        results_sliced["CostRampUpH"] = pyomo_to_pandas(opt, "CostRampUpH")
+        results_sliced["CostRampDownH"] = pyomo_to_pandas(opt, "CostRampDownH")
+        results_sliced["Flow"] = pyomo_to_pandas(opt, "Flow")
+        results_sliced["Power"] = pyomo_to_pandas(opt, "Power")
+        results_sliced["ShedLoad"] = pyomo_to_pandas(opt, "ShedLoad")
+        results_sliced["StorageInput"] = pyomo_to_pandas(opt, "StorageInput")
+        results_sliced["StorageLevel"] = pyomo_to_pandas(opt, "StorageLevel")
+        results_sliced["SystemCost"] = pyomo_to_pandas(opt, "SystemCost")
+        results_sliced["LostLoad_MaxPower"] = pyomo_to_pandas(opt, "LostLoad_MaxPower")
+        results_sliced["LostLoad_RampUp"] = pyomo_to_pandas(opt, "LostLoad_RampUp")
+        results_sliced["LostLoad_RampDown"] = pyomo_to_pandas(opt, "LostLoad_RampDown")
+        results_sliced["LostLoad_MinPower"] = pyomo_to_pandas(opt, "LostLoad_MinPower")
+        results_sliced["LostLoad_Reserve2U"] = pyomo_to_pandas(opt, "LostLoad_Reserve2U")
+        results_sliced["LostLoad_Reserve2D"] = pyomo_to_pandas(opt, "LostLoad_Reserve2D")
         # Defining the main results dictionnary:
         if len(results) == 0:
             for r in results_sliced:
@@ -894,28 +938,26 @@ def DispaSolve(sets, parameters, LPFormulation=False, path_cplex = ''):
         TimeUp = np.zeros(Nunits)
         TimeDown = np.zeros(Nunits)
         for u in range(Nunits):
-            for i in index_kept.sort_values(
-                    ascending=False):  # take the inverse #FIXME new pandas : index.kept.sort_values()
-                if results['Power'].loc[i, sets['u'][u]] > 0:
+            for i in index_kept.sort_values(ascending=False):  # take the inverse #FIXME new pandas : index.kept.sort_values()
+                if results["Power"].loc[i, sets["u"][u]] > 0:
                     TimeUp[u] += 1
                 else:
                     break
-            for i in index_kept.sort_values(
-                    ascending=False):  # take the inverse #FIXME new pandas : index.kept.sort_values()
-                if results['Committed'].loc[i, sets['u'][u]] == 0:
+            for i in index_kept.sort_values(ascending=False):  # take the inverse #FIXME new pandas : index.kept.sort_values()
+                if results["Committed"].loc[i, sets["u"][u]] == 0:
                     TimeDown[u] += 1
                 else:
                     break
             if TimeUp[u] == len(h_kept):
-                TimeUp[u] += parameters['TimeUpInitial']['val'][u]
+                TimeUp[u] += parameters["TimeUpInitial"]["val"][u]
             if TimeDown[u] == len(h_kept):
-                TimeDown[u] += parameters['TimeDownInitial']['val'][u]
+                TimeDown[u] += parameters["TimeDownInitial"]["val"][u]
 
                 # Updating the initial values for the next optimization:
-        parameters['StorageInitial']['val'] = results['StorageLevel'].loc[index_kept[-1], :].values.astype('float')
-        parameters['PowerInitial']['val'] = results['Power'].loc[index_kept[-1], :].values.astype('float')
-        parameters['TimeUpInitial']['val'] = TimeUp
-        parameters['TimeDownInitial']['val'] = TimeDown
+        parameters["StorageInitial"]["val"] = results["StorageLevel"].loc[index_kept[-1], :].values.astype("float")
+        parameters["PowerInitial"]["val"] = results["Power"].loc[index_kept[-1], :].values.astype("float")
+        parameters["TimeUpInitial"]["val"] = TimeUp
+        parameters["TimeDownInitial"]["val"] = TimeDown
 
         for v in opt.component_objects(Var, active=True):
             if v.name not in results:

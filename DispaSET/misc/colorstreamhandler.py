@@ -54,11 +54,11 @@ import logging
 
 
 class _AnsiColorStreamHandler(logging.StreamHandler):
-    DEFAULT = '\x1b[0m'
-    RED = '\x1b[31m'
-    GREEN = '\x1b[32m'
-    YELLOW = '\x1b[33m'
-    CYAN = '\x1b[36m'
+    DEFAULT = "\x1b[0m"
+    RED = "\x1b[31m"
+    GREEN = "\x1b[32m"
+    YELLOW = "\x1b[33m"
+    CYAN = "\x1b[36m"
 
     CRITICAL = RED
     ERROR = RED
@@ -137,12 +137,14 @@ class _WinColorStreamHandler(logging.StreamHandler):
 
     def _set_color(self, code):
         import ctypes
+
         ctypes.windll.kernel32.SetConsoleTextAttribute(self._outhdl, code)
 
     def __init__(self, stream=None):
         logging.StreamHandler.__init__(self, stream)
         # get file handle for the stream
         import ctypes, ctypes.util
+
         # for some reason find_msvcrt() sometimes doesn't find msvcrt.dll on my system?
         crtname = ctypes.util.find_msvcrt()
         if not crtname:
@@ -160,7 +162,7 @@ class _WinColorStreamHandler(logging.StreamHandler):
 # select ColorStreamHandler based on platform
 import platform
 
-if platform.system() == 'Windows':
+if platform.system() == "Windows":
     ColorStreamHandler = _WinColorStreamHandler
 else:
     ColorStreamHandler = _AnsiColorStreamHandler

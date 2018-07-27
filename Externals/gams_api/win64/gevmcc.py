@@ -5,26 +5,28 @@
 # the SWIG interface file instead.
 
 
-
-
-
 from sys import version_info
-if version_info >= (2,6,0):
+
+if version_info >= (2, 6, 0):
+
     def swig_import_helper():
         from os.path import dirname
         import imp
+
         fp = None
         try:
-            fp, pathname, description = imp.find_module('_gevmcc', [dirname(__file__)])
+            fp, pathname, description = imp.find_module("_gevmcc", [dirname(__file__)])
         except ImportError:
             import _gevmcc
+
             return _gevmcc
         if fp is not None:
             try:
-                _mod = imp.load_module('_gevmcc', fp, pathname, description)
+                _mod = imp.load_module("_gevmcc", fp, pathname, description)
             finally:
                 fp.close()
             return _mod
+
     _gevmcc = swig_import_helper()
     del swig_import_helper
 else:
@@ -33,39 +35,54 @@ del version_info
 try:
     _swig_property = property
 except NameError:
-    pass # Python < 2.2 doesn't have 'property'.
-def _swig_setattr_nondynamic(self,class_type,name,value,static=1):
-    if (name == "thisown"): return self.this.own(value)
-    if (name == "this"):
-        if type(value).__name__ == 'SwigPyObject':
+    pass  # Python < 2.2 doesn't have 'property'.
+
+
+def _swig_setattr_nondynamic(self, class_type, name, value, static=1):
+    if name == "thisown":
+        return self.this.own(value)
+    if name == "this":
+        if type(value).__name__ == "SwigPyObject":
             self.__dict__[name] = value
             return
-    method = class_type.__swig_setmethods__.get(name,None)
-    if method: return method(self,value)
-    if (not static):
+    method = class_type.__swig_setmethods__.get(name, None)
+    if method:
+        return method(self, value)
+    if not static:
         self.__dict__[name] = value
     else:
         raise AttributeError("You cannot add attributes to %s" % self)
 
-def _swig_setattr(self,class_type,name,value):
-    return _swig_setattr_nondynamic(self,class_type,name,value,0)
 
-def _swig_getattr(self,class_type,name):
-    if (name == "thisown"): return self.this.own()
-    method = class_type.__swig_getmethods__.get(name,None)
-    if method: return method(self)
+def _swig_setattr(self, class_type, name, value):
+    return _swig_setattr_nondynamic(self, class_type, name, value, 0)
+
+
+def _swig_getattr(self, class_type, name):
+    if name == "thisown":
+        return self.this.own()
+    method = class_type.__swig_getmethods__.get(name, None)
+    if method:
+        return method(self)
     raise AttributeError(name)
 
+
 def _swig_repr(self):
-    try: strthis = "proxy of " + self.this.__repr__()
-    except: strthis = ""
-    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis,)
+    try:
+        strthis = "proxy of " + self.this.__repr__()
+    except:
+        strthis = ""
+    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis)
+
 
 try:
     _object = object
     _newclass = 1
 except AttributeError:
-    class _object : pass
+
+    class _object:
+        pass
+
     _newclass = 0
 
 
@@ -136,29 +153,49 @@ gevNameParams = _gevmcc.gevNameParams
 gevNameScrExt = _gevmcc.gevNameScrExt
 gevNameScenFile = _gevmcc.gevNameScenFile
 gevNameExtFFile = _gevmcc.gevNameExtFFile
+
+
 class intArray(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, intArray, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, intArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _gevmcc.new_intArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _gevmcc.delete_intArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _gevmcc.intArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _gevmcc.intArray___setitem__(self, *args)
-    def cast(self): return _gevmcc.intArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _gevmcc.intArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _gevmcc.intArray___setitem__(self, *args)
+
+    def cast(self):
+        return _gevmcc.intArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _gevmcc.intArray_frompointer
-    if _newclass:frompointer = staticmethod(_gevmcc.intArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_gevmcc.intArray_frompointer)
+
+
 intArray_swigregister = _gevmcc.intArray_swigregister
 intArray_swigregister(intArray)
 
+
 def intArray_frompointer(*args):
-  return _gevmcc.intArray_frompointer(*args)
+    return _gevmcc.intArray_frompointer(*args)
+
+
 intArray_frompointer = _gevmcc.intArray_frompointer
+
 
 class doubleArray(_object):
     __swig_setmethods__ = {}
@@ -166,523 +203,705 @@ class doubleArray(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, doubleArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _gevmcc.new_doubleArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _gevmcc.delete_doubleArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _gevmcc.doubleArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _gevmcc.doubleArray___setitem__(self, *args)
-    def cast(self): return _gevmcc.doubleArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _gevmcc.doubleArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _gevmcc.doubleArray___setitem__(self, *args)
+
+    def cast(self):
+        return _gevmcc.doubleArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _gevmcc.doubleArray_frompointer
-    if _newclass:frompointer = staticmethod(_gevmcc.doubleArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_gevmcc.doubleArray_frompointer)
+
+
 doubleArray_swigregister = _gevmcc.doubleArray_swigregister
 doubleArray_swigregister(doubleArray)
 
+
 def doubleArray_frompointer(*args):
-  return _gevmcc.doubleArray_frompointer(*args)
+    return _gevmcc.doubleArray_frompointer(*args)
+
+
 doubleArray_frompointer = _gevmcc.doubleArray_frompointer
 
 
 def new_intp():
-  return _gevmcc.new_intp()
+    return _gevmcc.new_intp()
+
+
 new_intp = _gevmcc.new_intp
 
+
 def copy_intp(*args):
-  return _gevmcc.copy_intp(*args)
+    return _gevmcc.copy_intp(*args)
+
+
 copy_intp = _gevmcc.copy_intp
 
+
 def delete_intp(*args):
-  return _gevmcc.delete_intp(*args)
+    return _gevmcc.delete_intp(*args)
+
+
 delete_intp = _gevmcc.delete_intp
 
+
 def intp_assign(*args):
-  return _gevmcc.intp_assign(*args)
+    return _gevmcc.intp_assign(*args)
+
+
 intp_assign = _gevmcc.intp_assign
 
+
 def intp_value(*args):
-  return _gevmcc.intp_value(*args)
+    return _gevmcc.intp_value(*args)
+
+
 intp_value = _gevmcc.intp_value
 
+
 def new_doublep():
-  return _gevmcc.new_doublep()
+    return _gevmcc.new_doublep()
+
+
 new_doublep = _gevmcc.new_doublep
 
+
 def copy_doublep(*args):
-  return _gevmcc.copy_doublep(*args)
+    return _gevmcc.copy_doublep(*args)
+
+
 copy_doublep = _gevmcc.copy_doublep
 
+
 def delete_doublep(*args):
-  return _gevmcc.delete_doublep(*args)
+    return _gevmcc.delete_doublep(*args)
+
+
 delete_doublep = _gevmcc.delete_doublep
 
+
 def doublep_assign(*args):
-  return _gevmcc.doublep_assign(*args)
+    return _gevmcc.doublep_assign(*args)
+
+
 doublep_assign = _gevmcc.doublep_assign
 
+
 def doublep_value(*args):
-  return _gevmcc.doublep_value(*args)
+    return _gevmcc.doublep_value(*args)
+
+
 doublep_value = _gevmcc.doublep_value
 
+
 def new_gevHandle_tp():
-  return _gevmcc.new_gevHandle_tp()
+    return _gevmcc.new_gevHandle_tp()
+
+
 new_gevHandle_tp = _gevmcc.new_gevHandle_tp
 
+
 def copy_gevHandle_tp(*args):
-  return _gevmcc.copy_gevHandle_tp(*args)
+    return _gevmcc.copy_gevHandle_tp(*args)
+
+
 copy_gevHandle_tp = _gevmcc.copy_gevHandle_tp
 
+
 def delete_gevHandle_tp(*args):
-  return _gevmcc.delete_gevHandle_tp(*args)
+    return _gevmcc.delete_gevHandle_tp(*args)
+
+
 delete_gevHandle_tp = _gevmcc.delete_gevHandle_tp
 
+
 def gevHandle_tp_assign(*args):
-  return _gevmcc.gevHandle_tp_assign(*args)
+    return _gevmcc.gevHandle_tp_assign(*args)
+
+
 gevHandle_tp_assign = _gevmcc.gevHandle_tp_assign
 
+
 def gevHandle_tp_value(*args):
-  return _gevmcc.gevHandle_tp_value(*args)
+    return _gevmcc.gevHandle_tp_value(*args)
+
+
 gevHandle_tp_value = _gevmcc.gevHandle_tp_value
 
+
 def new_Tgevlswrite_tp():
-  return _gevmcc.new_Tgevlswrite_tp()
+    return _gevmcc.new_Tgevlswrite_tp()
+
+
 new_Tgevlswrite_tp = _gevmcc.new_Tgevlswrite_tp
 
+
 def copy_Tgevlswrite_tp(*args):
-  return _gevmcc.copy_Tgevlswrite_tp(*args)
+    return _gevmcc.copy_Tgevlswrite_tp(*args)
+
+
 copy_Tgevlswrite_tp = _gevmcc.copy_Tgevlswrite_tp
 
+
 def delete_Tgevlswrite_tp(*args):
-  return _gevmcc.delete_Tgevlswrite_tp(*args)
+    return _gevmcc.delete_Tgevlswrite_tp(*args)
+
+
 delete_Tgevlswrite_tp = _gevmcc.delete_Tgevlswrite_tp
 
+
 def Tgevlswrite_tp_assign(*args):
-  return _gevmcc.Tgevlswrite_tp_assign(*args)
+    return _gevmcc.Tgevlswrite_tp_assign(*args)
+
+
 Tgevlswrite_tp_assign = _gevmcc.Tgevlswrite_tp_assign
 
+
 def Tgevlswrite_tp_value(*args):
-  return _gevmcc.Tgevlswrite_tp_value(*args)
+    return _gevmcc.Tgevlswrite_tp_value(*args)
+
+
 Tgevlswrite_tp_value = _gevmcc.Tgevlswrite_tp_value
 
+
 def gevHandleToPtr(*args):
-  """gevHandleToPtr(pgev) -> void *"""
-  return _gevmcc.gevHandleToPtr(*args)
+    """gevHandleToPtr(pgev) -> void *"""
+    return _gevmcc.gevHandleToPtr(*args)
+
 
 def ptrTogevHandle(*args):
-  """ptrTogevHandle(vptr) -> gevHandle_t"""
-  return _gevmcc.ptrTogevHandle(*args)
+    """ptrTogevHandle(vptr) -> gevHandle_t"""
+    return _gevmcc.ptrTogevHandle(*args)
+
 
 def gevGetReady(*args):
-  """gevGetReady(msgBufSize) -> int"""
-  return _gevmcc.gevGetReady(*args)
+    """gevGetReady(msgBufSize) -> int"""
+    return _gevmcc.gevGetReady(*args)
+
 
 def gevGetReadyD(*args):
-  """gevGetReadyD(dirName, msgBufSize) -> int"""
-  return _gevmcc.gevGetReadyD(*args)
+    """gevGetReadyD(dirName, msgBufSize) -> int"""
+    return _gevmcc.gevGetReadyD(*args)
+
 
 def gevGetReadyL(*args):
-  """gevGetReadyL(libName, msgBufSize) -> int"""
-  return _gevmcc.gevGetReadyL(*args)
+    """gevGetReadyL(libName, msgBufSize) -> int"""
+    return _gevmcc.gevGetReadyL(*args)
+
 
 def gevCreate(*args):
-  """gevCreate(pgev, msgBufSize) -> int"""
-  return _gevmcc.gevCreate(*args)
+    """gevCreate(pgev, msgBufSize) -> int"""
+    return _gevmcc.gevCreate(*args)
+
 
 def gevCreateD(*args):
-  """gevCreateD(pgev, dirName, msgBufSize) -> int"""
-  return _gevmcc.gevCreateD(*args)
+    """gevCreateD(pgev, dirName, msgBufSize) -> int"""
+    return _gevmcc.gevCreateD(*args)
+
 
 def gevCreateDD(*args):
-  """gevCreateDD(pgev, dirName, msgBufSize) -> int"""
-  return _gevmcc.gevCreateDD(*args)
+    """gevCreateDD(pgev, dirName, msgBufSize) -> int"""
+    return _gevmcc.gevCreateDD(*args)
+
 
 def gevCreateL(*args):
-  """gevCreateL(pgev, libName, msgBufSize) -> int"""
-  return _gevmcc.gevCreateL(*args)
+    """gevCreateL(pgev, libName, msgBufSize) -> int"""
+    return _gevmcc.gevCreateL(*args)
+
 
 def gevFree(*args):
-  """gevFree(pgev) -> int"""
-  return _gevmcc.gevFree(*args)
+    """gevFree(pgev) -> int"""
+    return _gevmcc.gevFree(*args)
+
 
 def gevLibraryLoaded():
-  """gevLibraryLoaded() -> int"""
-  return _gevmcc.gevLibraryLoaded()
+    """gevLibraryLoaded() -> int"""
+    return _gevmcc.gevLibraryLoaded()
+
 
 def gevLibraryUnload():
-  """gevLibraryUnload() -> int"""
-  return _gevmcc.gevLibraryUnload()
+    """gevLibraryUnload() -> int"""
+    return _gevmcc.gevLibraryUnload()
+
 
 def gevGetScreenIndicator():
-  """gevGetScreenIndicator() -> int"""
-  return _gevmcc.gevGetScreenIndicator()
+    """gevGetScreenIndicator() -> int"""
+    return _gevmcc.gevGetScreenIndicator()
+
 
 def gevSetScreenIndicator(*args):
-  """gevSetScreenIndicator(scrind)"""
-  return _gevmcc.gevSetScreenIndicator(*args)
+    """gevSetScreenIndicator(scrind)"""
+    return _gevmcc.gevSetScreenIndicator(*args)
+
 
 def gevGetExceptionIndicator():
-  """gevGetExceptionIndicator() -> int"""
-  return _gevmcc.gevGetExceptionIndicator()
+    """gevGetExceptionIndicator() -> int"""
+    return _gevmcc.gevGetExceptionIndicator()
+
 
 def gevSetExceptionIndicator(*args):
-  """gevSetExceptionIndicator(excind)"""
-  return _gevmcc.gevSetExceptionIndicator(*args)
+    """gevSetExceptionIndicator(excind)"""
+    return _gevmcc.gevSetExceptionIndicator(*args)
+
 
 def gevGetExitIndicator():
-  """gevGetExitIndicator() -> int"""
-  return _gevmcc.gevGetExitIndicator()
+    """gevGetExitIndicator() -> int"""
+    return _gevmcc.gevGetExitIndicator()
+
 
 def gevSetExitIndicator(*args):
-  """gevSetExitIndicator(extind)"""
-  return _gevmcc.gevSetExitIndicator(*args)
+    """gevSetExitIndicator(extind)"""
+    return _gevmcc.gevSetExitIndicator(*args)
+
 
 def gevGetErrorCallback():
-  """gevGetErrorCallback() -> gevErrorCallback_t"""
-  return _gevmcc.gevGetErrorCallback()
+    """gevGetErrorCallback() -> gevErrorCallback_t"""
+    return _gevmcc.gevGetErrorCallback()
+
 
 def gevSetErrorCallback(*args):
-  """gevSetErrorCallback(func)"""
-  return _gevmcc.gevSetErrorCallback(*args)
+    """gevSetErrorCallback(func)"""
+    return _gevmcc.gevSetErrorCallback(*args)
+
 
 def gevGetAPIErrorCount():
-  """gevGetAPIErrorCount() -> int"""
-  return _gevmcc.gevGetAPIErrorCount()
+    """gevGetAPIErrorCount() -> int"""
+    return _gevmcc.gevGetAPIErrorCount()
+
 
 def gevSetAPIErrorCount(*args):
-  """gevSetAPIErrorCount(ecnt)"""
-  return _gevmcc.gevSetAPIErrorCount(*args)
+    """gevSetAPIErrorCount(ecnt)"""
+    return _gevmcc.gevSetAPIErrorCount(*args)
+
 
 def gevErrorHandling(*args):
-  """gevErrorHandling(msg)"""
-  return _gevmcc.gevErrorHandling(*args)
+    """gevErrorHandling(msg)"""
+    return _gevmcc.gevErrorHandling(*args)
+
 
 def gevRegisterWriteCallback(*args):
-  """gevRegisterWriteCallback(pgev, lsw, logenabled, usrmem)"""
-  return _gevmcc.gevRegisterWriteCallback(*args)
+    """gevRegisterWriteCallback(pgev, lsw, logenabled, usrmem)"""
+    return _gevmcc.gevRegisterWriteCallback(*args)
+
 
 def gevCompleteEnvironment(*args):
-  """gevCompleteEnvironment(pgev, palg, ivec, rvec, svec)"""
-  return _gevmcc.gevCompleteEnvironment(*args)
+    """gevCompleteEnvironment(pgev, palg, ivec, rvec, svec)"""
+    return _gevmcc.gevCompleteEnvironment(*args)
+
 
 def gevInitEnvironmentLegacy(*args):
-  """gevInitEnvironmentLegacy(pgev, cntrfn) -> int"""
-  return _gevmcc.gevInitEnvironmentLegacy(*args)
+    """gevInitEnvironmentLegacy(pgev, cntrfn) -> int"""
+    return _gevmcc.gevInitEnvironmentLegacy(*args)
+
 
 def gevSwitchLogStat(*args):
-  """gevSwitchLogStat(pgev, lo, logfn, logappend, statfn, statappend, lsw, usrmem, lshandle) -> int"""
-  return _gevmcc.gevSwitchLogStat(*args)
+    """gevSwitchLogStat(pgev, lo, logfn, logappend, statfn, statappend, lsw, usrmem, lshandle) -> int"""
+    return _gevmcc.gevSwitchLogStat(*args)
+
 
 def gevGetLShandle(*args):
-  """gevGetLShandle(pgev) -> void *"""
-  return _gevmcc.gevGetLShandle(*args)
+    """gevGetLShandle(pgev) -> void *"""
+    return _gevmcc.gevGetLShandle(*args)
+
 
 def gevRestoreLogStat(*args):
-  """gevRestoreLogStat(pgev, lshandle) -> int"""
-  return _gevmcc.gevRestoreLogStat(*args)
+    """gevRestoreLogStat(pgev, lshandle) -> int"""
+    return _gevmcc.gevRestoreLogStat(*args)
+
 
 def gevRestoreLogStatRewrite(*args):
-  """gevRestoreLogStatRewrite(pgev, lshandle) -> int"""
-  return _gevmcc.gevRestoreLogStatRewrite(*args)
+    """gevRestoreLogStatRewrite(pgev, lshandle) -> int"""
+    return _gevmcc.gevRestoreLogStatRewrite(*args)
+
 
 def gevLog(*args):
-  """gevLog(pgev, s)"""
-  return _gevmcc.gevLog(*args)
+    """gevLog(pgev, s)"""
+    return _gevmcc.gevLog(*args)
+
 
 def gevLogPChar(*args):
-  """gevLogPChar(pgev, p)"""
-  return _gevmcc.gevLogPChar(*args)
+    """gevLogPChar(pgev, p)"""
+    return _gevmcc.gevLogPChar(*args)
+
 
 def gevStat(*args):
-  """gevStat(pgev, s)"""
-  return _gevmcc.gevStat(*args)
+    """gevStat(pgev, s)"""
+    return _gevmcc.gevStat(*args)
+
 
 def gevStatC(*args):
-  """gevStatC(pgev, s)"""
-  return _gevmcc.gevStatC(*args)
+    """gevStatC(pgev, s)"""
+    return _gevmcc.gevStatC(*args)
+
 
 def gevStatPChar(*args):
-  """gevStatPChar(pgev, p)"""
-  return _gevmcc.gevStatPChar(*args)
+    """gevStatPChar(pgev, p)"""
+    return _gevmcc.gevStatPChar(*args)
+
 
 def gevStatAudit(*args):
-  """gevStatAudit(pgev, s)"""
-  return _gevmcc.gevStatAudit(*args)
+    """gevStatAudit(pgev, s)"""
+    return _gevmcc.gevStatAudit(*args)
+
 
 def gevStatCon(*args):
-  """gevStatCon(pgev)"""
-  return _gevmcc.gevStatCon(*args)
+    """gevStatCon(pgev)"""
+    return _gevmcc.gevStatCon(*args)
+
 
 def gevStatCoff(*args):
-  """gevStatCoff(pgev)"""
-  return _gevmcc.gevStatCoff(*args)
+    """gevStatCoff(pgev)"""
+    return _gevmcc.gevStatCoff(*args)
+
 
 def gevStatEOF(*args):
-  """gevStatEOF(pgev)"""
-  return _gevmcc.gevStatEOF(*args)
+    """gevStatEOF(pgev)"""
+    return _gevmcc.gevStatEOF(*args)
+
 
 def gevStatSysout(*args):
-  """gevStatSysout(pgev)"""
-  return _gevmcc.gevStatSysout(*args)
+    """gevStatSysout(pgev)"""
+    return _gevmcc.gevStatSysout(*args)
+
 
 def gevStatAddE(*args):
-  """gevStatAddE(pgev, mi, s)"""
-  return _gevmcc.gevStatAddE(*args)
+    """gevStatAddE(pgev, mi, s)"""
+    return _gevmcc.gevStatAddE(*args)
+
 
 def gevStatAddV(*args):
-  """gevStatAddV(pgev, mj, s)"""
-  return _gevmcc.gevStatAddV(*args)
+    """gevStatAddV(pgev, mj, s)"""
+    return _gevmcc.gevStatAddV(*args)
+
 
 def gevStatAddJ(*args):
-  """gevStatAddJ(pgev, mi, mj, s)"""
-  return _gevmcc.gevStatAddJ(*args)
+    """gevStatAddJ(pgev, mi, mj, s)"""
+    return _gevmcc.gevStatAddJ(*args)
+
 
 def gevStatEject(*args):
-  """gevStatEject(pgev)"""
-  return _gevmcc.gevStatEject(*args)
+    """gevStatEject(pgev)"""
+    return _gevmcc.gevStatEject(*args)
+
 
 def gevStatEdit(*args):
-  """gevStatEdit(pgev, C)"""
-  return _gevmcc.gevStatEdit(*args)
+    """gevStatEdit(pgev, C)"""
+    return _gevmcc.gevStatEdit(*args)
+
 
 def gevStatE(*args):
-  """gevStatE(pgev, s, mi, s2)"""
-  return _gevmcc.gevStatE(*args)
+    """gevStatE(pgev, s, mi, s2)"""
+    return _gevmcc.gevStatE(*args)
+
 
 def gevStatV(*args):
-  """gevStatV(pgev, s, mj, s2)"""
-  return _gevmcc.gevStatV(*args)
+    """gevStatV(pgev, s, mj, s2)"""
+    return _gevmcc.gevStatV(*args)
+
 
 def gevStatT(*args):
-  """gevStatT(pgev)"""
-  return _gevmcc.gevStatT(*args)
+    """gevStatT(pgev)"""
+    return _gevmcc.gevStatT(*args)
+
 
 def gevStatA(*args):
-  """gevStatA(pgev, s)"""
-  return _gevmcc.gevStatA(*args)
+    """gevStatA(pgev, s)"""
+    return _gevmcc.gevStatA(*args)
+
 
 def gevStatB(*args):
-  """gevStatB(pgev, s)"""
-  return _gevmcc.gevStatB(*args)
+    """gevStatB(pgev, s)"""
+    return _gevmcc.gevStatB(*args)
+
 
 def gevLogStat(*args):
-  """gevLogStat(pgev, s)"""
-  return _gevmcc.gevLogStat(*args)
+    """gevLogStat(pgev, s)"""
+    return _gevmcc.gevLogStat(*args)
+
 
 def gevLogStatNoC(*args):
-  """gevLogStatNoC(pgev, s)"""
-  return _gevmcc.gevLogStatNoC(*args)
+    """gevLogStatNoC(pgev, s)"""
+    return _gevmcc.gevLogStatNoC(*args)
+
 
 def gevLogStatPChar(*args):
-  """gevLogStatPChar(pgev, p)"""
-  return _gevmcc.gevLogStatPChar(*args)
+    """gevLogStatPChar(pgev, p)"""
+    return _gevmcc.gevLogStatPChar(*args)
+
 
 def gevLogStatFlush(*args):
-  """gevLogStatFlush(pgev)"""
-  return _gevmcc.gevLogStatFlush(*args)
+    """gevLogStatFlush(pgev)"""
+    return _gevmcc.gevLogStatFlush(*args)
+
 
 def gevGetAnchor(*args):
-  """gevGetAnchor(pgev, s) -> char *"""
-  return _gevmcc.gevGetAnchor(*args)
+    """gevGetAnchor(pgev, s) -> char *"""
+    return _gevmcc.gevGetAnchor(*args)
+
 
 def gevStatAppend(*args):
-  """gevStatAppend(pgev, statfn) -> int"""
-  return _gevmcc.gevStatAppend(*args)
+    """gevStatAppend(pgev, statfn) -> int"""
+    return _gevmcc.gevStatAppend(*args)
+
 
 def gevMIPReport(*args):
-  """gevMIPReport(pgev, gmoptr, fixobj, fixiter, agap, rgap)"""
-  return _gevmcc.gevMIPReport(*args)
+    """gevMIPReport(pgev, gmoptr, fixobj, fixiter, agap, rgap)"""
+    return _gevmcc.gevMIPReport(*args)
+
 
 def gevGetSlvExeInfo(*args):
-  """gevGetSlvExeInfo(pgev, solvername) -> int"""
-  return _gevmcc.gevGetSlvExeInfo(*args)
+    """gevGetSlvExeInfo(pgev, solvername) -> int"""
+    return _gevmcc.gevGetSlvExeInfo(*args)
+
 
 def gevGetSlvLibInfo(*args):
-  """gevGetSlvLibInfo(pgev, solvername) -> int"""
-  return _gevmcc.gevGetSlvLibInfo(*args)
+    """gevGetSlvLibInfo(pgev, solvername) -> int"""
+    return _gevmcc.gevGetSlvLibInfo(*args)
+
 
 def gevCapabilityCheck(*args):
-  """gevCapabilityCheck(pgev, modeltype, solvername, capable) -> int"""
-  return _gevmcc.gevCapabilityCheck(*args)
+    """gevCapabilityCheck(pgev, modeltype, solvername, capable) -> int"""
+    return _gevmcc.gevCapabilityCheck(*args)
+
 
 def gevNumSolvers(*args):
-  """gevNumSolvers(pgev) -> int"""
-  return _gevmcc.gevNumSolvers(*args)
+    """gevNumSolvers(pgev) -> int"""
+    return _gevmcc.gevNumSolvers(*args)
+
 
 def gevGetSolver(*args):
-  """gevGetSolver(pgev, modeltype) -> char *"""
-  return _gevmcc.gevGetSolver(*args)
+    """gevGetSolver(pgev, modeltype) -> char *"""
+    return _gevmcc.gevGetSolver(*args)
+
 
 def gevGetCurrentSolver(*args):
-  """gevGetCurrentSolver(pgev, gmoptr) -> char *"""
-  return _gevmcc.gevGetCurrentSolver(*args)
+    """gevGetCurrentSolver(pgev, gmoptr) -> char *"""
+    return _gevmcc.gevGetCurrentSolver(*args)
+
 
 def gevGetSolverDefault(*args):
-  """gevGetSolverDefault(pgev, modeltype) -> char *"""
-  return _gevmcc.gevGetSolverDefault(*args)
+    """gevGetSolverDefault(pgev, modeltype) -> char *"""
+    return _gevmcc.gevGetSolverDefault(*args)
+
 
 def gevSolver2Id(*args):
-  """gevSolver2Id(pgev, solvername) -> int"""
-  return _gevmcc.gevSolver2Id(*args)
+    """gevSolver2Id(pgev, solvername) -> int"""
+    return _gevmcc.gevSolver2Id(*args)
+
 
 def gevId2Solver(*args):
-  """gevId2Solver(pgev, solverid) -> char *"""
-  return _gevmcc.gevId2Solver(*args)
+    """gevId2Solver(pgev, solverid) -> char *"""
+    return _gevmcc.gevId2Solver(*args)
+
 
 def gevCallSolverNextGridDir(*args):
-  """gevCallSolverNextGridDir(pgev) -> char *"""
-  return _gevmcc.gevCallSolverNextGridDir(*args)
+    """gevCallSolverNextGridDir(pgev) -> char *"""
+    return _gevmcc.gevCallSolverNextGridDir(*args)
+
 
 def gevCallSolver(*args):
-  """
+    """
     gevCallSolver(pgev, gmoptr, cntrfn, solvername, solvelink, Logging, logfn, statfn, reslim, iterlim, 
         domlim, optcr, optca, jobhandle) -> int
     """
-  return _gevmcc.gevCallSolver(*args)
+    return _gevmcc.gevCallSolver(*args)
+
 
 def gevCallSolverHandleStatus(*args):
-  """gevCallSolverHandleStatus(pgev, jobhandle) -> int"""
-  return _gevmcc.gevCallSolverHandleStatus(*args)
+    """gevCallSolverHandleStatus(pgev, jobhandle) -> int"""
+    return _gevmcc.gevCallSolverHandleStatus(*args)
+
 
 def gevCallSolverHandleDelete(*args):
-  """gevCallSolverHandleDelete(pgev, jobhandle) -> int"""
-  return _gevmcc.gevCallSolverHandleDelete(*args)
+    """gevCallSolverHandleDelete(pgev, jobhandle) -> int"""
+    return _gevmcc.gevCallSolverHandleDelete(*args)
+
 
 def gevCallSolverHandleCollect(*args):
-  """gevCallSolverHandleCollect(pgev, jobhandle, gmoptr) -> int"""
-  return _gevmcc.gevCallSolverHandleCollect(*args)
+    """gevCallSolverHandleCollect(pgev, jobhandle, gmoptr) -> int"""
+    return _gevmcc.gevCallSolverHandleCollect(*args)
+
 
 def gevGetIntOpt(*args):
-  """gevGetIntOpt(pgev, optname) -> int"""
-  return _gevmcc.gevGetIntOpt(*args)
+    """gevGetIntOpt(pgev, optname) -> int"""
+    return _gevmcc.gevGetIntOpt(*args)
+
 
 def gevGetDblOpt(*args):
-  """gevGetDblOpt(pgev, optname) -> double"""
-  return _gevmcc.gevGetDblOpt(*args)
+    """gevGetDblOpt(pgev, optname) -> double"""
+    return _gevmcc.gevGetDblOpt(*args)
+
 
 def gevGetStrOpt(*args):
-  """gevGetStrOpt(pgev, optname) -> char *"""
-  return _gevmcc.gevGetStrOpt(*args)
+    """gevGetStrOpt(pgev, optname) -> char *"""
+    return _gevmcc.gevGetStrOpt(*args)
+
 
 def gevSetIntOpt(*args):
-  """gevSetIntOpt(pgev, optname, ival)"""
-  return _gevmcc.gevSetIntOpt(*args)
+    """gevSetIntOpt(pgev, optname, ival)"""
+    return _gevmcc.gevSetIntOpt(*args)
+
 
 def gevSetDblOpt(*args):
-  """gevSetDblOpt(pgev, optname, rval)"""
-  return _gevmcc.gevSetDblOpt(*args)
+    """gevSetDblOpt(pgev, optname, rval)"""
+    return _gevmcc.gevSetDblOpt(*args)
+
 
 def gevSetStrOpt(*args):
-  """gevSetStrOpt(pgev, optname, sval)"""
-  return _gevmcc.gevSetStrOpt(*args)
+    """gevSetStrOpt(pgev, optname, sval)"""
+    return _gevmcc.gevSetStrOpt(*args)
+
 
 def gevSynchronizeOpt(*args):
-  """gevSynchronizeOpt(pgev, optptr)"""
-  return _gevmcc.gevSynchronizeOpt(*args)
+    """gevSynchronizeOpt(pgev, optptr)"""
+    return _gevmcc.gevSynchronizeOpt(*args)
+
 
 def gevTimeJNow(*args):
-  """gevTimeJNow(pgev) -> double"""
-  return _gevmcc.gevTimeJNow(*args)
+    """gevTimeJNow(pgev) -> double"""
+    return _gevmcc.gevTimeJNow(*args)
+
 
 def gevTimeDiff(*args):
-  """gevTimeDiff(pgev) -> double"""
-  return _gevmcc.gevTimeDiff(*args)
+    """gevTimeDiff(pgev) -> double"""
+    return _gevmcc.gevTimeDiff(*args)
+
 
 def gevTimeDiffStart(*args):
-  """gevTimeDiffStart(pgev) -> double"""
-  return _gevmcc.gevTimeDiffStart(*args)
+    """gevTimeDiffStart(pgev) -> double"""
+    return _gevmcc.gevTimeDiffStart(*args)
+
 
 def gevTimeSetStart(*args):
-  """gevTimeSetStart(pgev)"""
-  return _gevmcc.gevTimeSetStart(*args)
+    """gevTimeSetStart(pgev)"""
+    return _gevmcc.gevTimeSetStart(*args)
+
 
 def gevTerminateUninstall(*args):
-  """gevTerminateUninstall(pgev)"""
-  return _gevmcc.gevTerminateUninstall(*args)
+    """gevTerminateUninstall(pgev)"""
+    return _gevmcc.gevTerminateUninstall(*args)
+
 
 def gevTerminateInstall(*args):
-  """gevTerminateInstall(pgev)"""
-  return _gevmcc.gevTerminateInstall(*args)
+    """gevTerminateInstall(pgev)"""
+    return _gevmcc.gevTerminateInstall(*args)
+
 
 def gevTerminateSet(*args):
-  """gevTerminateSet(pgev, intr, ehdler)"""
-  return _gevmcc.gevTerminateSet(*args)
+    """gevTerminateSet(pgev, intr, ehdler)"""
+    return _gevmcc.gevTerminateSet(*args)
+
 
 def gevTerminateGet(*args):
-  """gevTerminateGet(pgev) -> int"""
-  return _gevmcc.gevTerminateGet(*args)
+    """gevTerminateGet(pgev) -> int"""
+    return _gevmcc.gevTerminateGet(*args)
+
 
 def gevTerminateClear(*args):
-  """gevTerminateClear(pgev)"""
-  return _gevmcc.gevTerminateClear(*args)
+    """gevTerminateClear(pgev)"""
+    return _gevmcc.gevTerminateClear(*args)
+
 
 def gevTerminateRaise(*args):
-  """gevTerminateRaise(pgev)"""
-  return _gevmcc.gevTerminateRaise(*args)
+    """gevTerminateRaise(pgev)"""
+    return _gevmcc.gevTerminateRaise(*args)
+
 
 def gevTerminateGetHandler(*args):
-  """gevTerminateGetHandler(pgev, intr, ehdler)"""
-  return _gevmcc.gevTerminateGetHandler(*args)
+    """gevTerminateGetHandler(pgev, intr, ehdler)"""
+    return _gevmcc.gevTerminateGetHandler(*args)
+
 
 def gevGetScratchName(*args):
-  """gevGetScratchName(pgev, s) -> char *"""
-  return _gevmcc.gevGetScratchName(*args)
+    """gevGetScratchName(pgev, s) -> char *"""
+    return _gevmcc.gevGetScratchName(*args)
+
 
 def gevWriteModelInstance(*args):
-  """gevWriteModelInstance(pgev, mifn, gmoptr, INOUT) -> int"""
-  return _gevmcc.gevWriteModelInstance(*args)
+    """gevWriteModelInstance(pgev, mifn, gmoptr, INOUT) -> int"""
+    return _gevmcc.gevWriteModelInstance(*args)
+
 
 def gevDuplicateScratchDir(*args):
-  """gevDuplicateScratchDir(pgev, scrdir, logfn) -> int"""
-  return _gevmcc.gevDuplicateScratchDir(*args)
+    """gevDuplicateScratchDir(pgev, scrdir, logfn) -> int"""
+    return _gevmcc.gevDuplicateScratchDir(*args)
+
 
 def gevInitJacLegacy(*args):
-  """gevInitJacLegacy(pgev, evalptr, gmoptr) -> int"""
-  return _gevmcc.gevInitJacLegacy(*args)
+    """gevInitJacLegacy(pgev, evalptr, gmoptr) -> int"""
+    return _gevmcc.gevInitJacLegacy(*args)
+
 
 def gevSetColRowPermLegacy(*args):
-  """gevSetColRowPermLegacy(pgev, evalptr, n, cgms2slv, m, rgms2slv)"""
-  return _gevmcc.gevSetColRowPermLegacy(*args)
+    """gevSetColRowPermLegacy(pgev, evalptr, n, cgms2slv, m, rgms2slv)"""
+    return _gevmcc.gevSetColRowPermLegacy(*args)
+
 
 def gevSetJacPermLegacy(*args):
-  """gevSetJacPermLegacy(pgev, evalptr, njacs, jacs, jgms2slv)"""
-  return _gevmcc.gevSetJacPermLegacy(*args)
+    """gevSetJacPermLegacy(pgev, evalptr, njacs, jacs, jgms2slv)"""
+    return _gevmcc.gevSetJacPermLegacy(*args)
+
 
 def gevEvalNewPointLegacy(*args):
-  """gevEvalNewPointLegacy(pgev, evalptr, x) -> int"""
-  return _gevmcc.gevEvalNewPointLegacy(*args)
+    """gevEvalNewPointLegacy(pgev, evalptr, x) -> int"""
+    return _gevmcc.gevEvalNewPointLegacy(*args)
+
 
 def gevEvalJacLegacy(*args):
-  """gevEvalJacLegacy(pgev, evalptr, si, x, INOUT, jac, INOUT, INOUT) -> int"""
-  return _gevmcc.gevEvalJacLegacy(*args)
+    """gevEvalJacLegacy(pgev, evalptr, si, x, INOUT, jac, INOUT, INOUT) -> int"""
+    return _gevmcc.gevEvalJacLegacy(*args)
+
 
 def gevEvalJacLegacyX(*args):
-  """gevEvalJacLegacyX(pgev, evalptr, cnt, rowidx, x, fvec, jac, INOUT, INOUT) -> int"""
-  return _gevmcc.gevEvalJacLegacyX(*args)
+    """gevEvalJacLegacyX(pgev, evalptr, cnt, rowidx, x, fvec, jac, INOUT, INOUT) -> int"""
+    return _gevmcc.gevEvalJacLegacyX(*args)
+
 
 def gevNextNLLegacy(*args):
-  """gevNextNLLegacy(pgev, evalptr, si) -> int"""
-  return _gevmcc.gevNextNLLegacy(*args)
+    """gevNextNLLegacy(pgev, evalptr, si) -> int"""
+    return _gevmcc.gevNextNLLegacy(*args)
+
 
 def gevRowGms2SlvLegacy(*args):
-  """gevRowGms2SlvLegacy(pgev, evalptr, si) -> int"""
-  return _gevmcc.gevRowGms2SlvLegacy(*args)
+    """gevRowGms2SlvLegacy(pgev, evalptr, si) -> int"""
+    return _gevmcc.gevRowGms2SlvLegacy(*args)
+
 
 def gevFreeJacLegacy(*args):
-  """gevFreeJacLegacy(pgev, evalptr)"""
-  return _gevmcc.gevFreeJacLegacy(*args)
+    """gevFreeJacLegacy(pgev, evalptr)"""
+    return _gevmcc.gevFreeJacLegacy(*args)
+
 
 def gevGetALGX(*args):
-  """gevGetALGX(pgev) -> void *"""
-  return _gevmcc.gevGetALGX(*args)
+    """gevGetALGX(pgev) -> void *"""
+    return _gevmcc.gevGetALGX(*args)
+
 
 def gevSkipIOLegacySet(*args):
-  """gevSkipIOLegacySet(pgev, x)"""
-  return _gevmcc.gevSkipIOLegacySet(*args)
+    """gevSkipIOLegacySet(pgev, x)"""
+    return _gevmcc.gevSkipIOLegacySet(*args)
+
 
 def gevThreads(*args):
-  """gevThreads(pgev) -> int"""
-  return _gevmcc.gevThreads(*args)
+    """gevThreads(pgev) -> int"""
+    return _gevmcc.gevThreads(*args)
+
+
 GLOBAL_MAX_INDEX_DIM = _gevmcc.GLOBAL_MAX_INDEX_DIM
 GLOBAL_UEL_IDENT_SIZE = _gevmcc.GLOBAL_UEL_IDENT_SIZE
 ITERLIM_INFINITY = _gevmcc.ITERLIM_INFINITY
@@ -747,5 +966,3 @@ GMS_SV_EPS = _gevmcc.GMS_SV_EPS
 GMS_SV_ACR = _gevmcc.GMS_SV_ACR
 GMS_SV_NAINT = _gevmcc.GMS_SV_NAINT
 # This file is compatible with both classic and new-style classes.
-
-

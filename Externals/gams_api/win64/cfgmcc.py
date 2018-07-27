@@ -5,26 +5,28 @@
 # the SWIG interface file instead.
 
 
-
-
-
 from sys import version_info
-if version_info >= (2,6,0):
+
+if version_info >= (2, 6, 0):
+
     def swig_import_helper():
         from os.path import dirname
         import imp
+
         fp = None
         try:
-            fp, pathname, description = imp.find_module('_cfgmcc', [dirname(__file__)])
+            fp, pathname, description = imp.find_module("_cfgmcc", [dirname(__file__)])
         except ImportError:
             import _cfgmcc
+
             return _cfgmcc
         if fp is not None:
             try:
-                _mod = imp.load_module('_cfgmcc', fp, pathname, description)
+                _mod = imp.load_module("_cfgmcc", fp, pathname, description)
             finally:
                 fp.close()
             return _mod
+
     _cfgmcc = swig_import_helper()
     del swig_import_helper
 else:
@@ -33,39 +35,54 @@ del version_info
 try:
     _swig_property = property
 except NameError:
-    pass # Python < 2.2 doesn't have 'property'.
-def _swig_setattr_nondynamic(self,class_type,name,value,static=1):
-    if (name == "thisown"): return self.this.own(value)
-    if (name == "this"):
-        if type(value).__name__ == 'SwigPyObject':
+    pass  # Python < 2.2 doesn't have 'property'.
+
+
+def _swig_setattr_nondynamic(self, class_type, name, value, static=1):
+    if name == "thisown":
+        return self.this.own(value)
+    if name == "this":
+        if type(value).__name__ == "SwigPyObject":
             self.__dict__[name] = value
             return
-    method = class_type.__swig_setmethods__.get(name,None)
-    if method: return method(self,value)
-    if (not static):
+    method = class_type.__swig_setmethods__.get(name, None)
+    if method:
+        return method(self, value)
+    if not static:
         self.__dict__[name] = value
     else:
         raise AttributeError("You cannot add attributes to %s" % self)
 
-def _swig_setattr(self,class_type,name,value):
-    return _swig_setattr_nondynamic(self,class_type,name,value,0)
 
-def _swig_getattr(self,class_type,name):
-    if (name == "thisown"): return self.this.own()
-    method = class_type.__swig_getmethods__.get(name,None)
-    if method: return method(self)
+def _swig_setattr(self, class_type, name, value):
+    return _swig_setattr_nondynamic(self, class_type, name, value, 0)
+
+
+def _swig_getattr(self, class_type, name):
+    if name == "thisown":
+        return self.this.own()
+    method = class_type.__swig_getmethods__.get(name, None)
+    if method:
+        return method(self)
     raise AttributeError(name)
 
+
 def _swig_repr(self):
-    try: strthis = "proxy of " + self.this.__repr__()
-    except: strthis = ""
-    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis,)
+    try:
+        strthis = "proxy of " + self.this.__repr__()
+    except:
+        strthis = ""
+    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis)
+
 
 try:
     _object = object
     _newclass = 1
 except AttributeError:
-    class _object : pass
+
+    class _object:
+        pass
+
     _newclass = 0
 
 
@@ -86,29 +103,49 @@ cfgProc_miqcp = _cfgmcc.cfgProc_miqcp
 cfgProc_rmiqcp = _cfgmcc.cfgProc_rmiqcp
 cfgProc_emp = _cfgmcc.cfgProc_emp
 cfgProc_nrofmodeltypes = _cfgmcc.cfgProc_nrofmodeltypes
+
+
 class intArray(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, intArray, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, intArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _cfgmcc.new_intArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _cfgmcc.delete_intArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _cfgmcc.intArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _cfgmcc.intArray___setitem__(self, *args)
-    def cast(self): return _cfgmcc.intArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _cfgmcc.intArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _cfgmcc.intArray___setitem__(self, *args)
+
+    def cast(self):
+        return _cfgmcc.intArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _cfgmcc.intArray_frompointer
-    if _newclass:frompointer = staticmethod(_cfgmcc.intArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_cfgmcc.intArray_frompointer)
+
+
 intArray_swigregister = _cfgmcc.intArray_swigregister
 intArray_swigregister(intArray)
 
+
 def intArray_frompointer(*args):
-  return _cfgmcc.intArray_frompointer(*args)
+    return _cfgmcc.intArray_frompointer(*args)
+
+
 intArray_frompointer = _cfgmcc.intArray_frompointer
+
 
 class doubleArray(_object):
     __swig_setmethods__ = {}
@@ -116,236 +153,337 @@ class doubleArray(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, doubleArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _cfgmcc.new_doubleArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _cfgmcc.delete_doubleArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _cfgmcc.doubleArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _cfgmcc.doubleArray___setitem__(self, *args)
-    def cast(self): return _cfgmcc.doubleArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _cfgmcc.doubleArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _cfgmcc.doubleArray___setitem__(self, *args)
+
+    def cast(self):
+        return _cfgmcc.doubleArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _cfgmcc.doubleArray_frompointer
-    if _newclass:frompointer = staticmethod(_cfgmcc.doubleArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_cfgmcc.doubleArray_frompointer)
+
+
 doubleArray_swigregister = _cfgmcc.doubleArray_swigregister
 doubleArray_swigregister(doubleArray)
 
+
 def doubleArray_frompointer(*args):
-  return _cfgmcc.doubleArray_frompointer(*args)
+    return _cfgmcc.doubleArray_frompointer(*args)
+
+
 doubleArray_frompointer = _cfgmcc.doubleArray_frompointer
 
 
 def new_intp():
-  return _cfgmcc.new_intp()
+    return _cfgmcc.new_intp()
+
+
 new_intp = _cfgmcc.new_intp
 
+
 def copy_intp(*args):
-  return _cfgmcc.copy_intp(*args)
+    return _cfgmcc.copy_intp(*args)
+
+
 copy_intp = _cfgmcc.copy_intp
 
+
 def delete_intp(*args):
-  return _cfgmcc.delete_intp(*args)
+    return _cfgmcc.delete_intp(*args)
+
+
 delete_intp = _cfgmcc.delete_intp
 
+
 def intp_assign(*args):
-  return _cfgmcc.intp_assign(*args)
+    return _cfgmcc.intp_assign(*args)
+
+
 intp_assign = _cfgmcc.intp_assign
 
+
 def intp_value(*args):
-  return _cfgmcc.intp_value(*args)
+    return _cfgmcc.intp_value(*args)
+
+
 intp_value = _cfgmcc.intp_value
 
+
 def new_doublep():
-  return _cfgmcc.new_doublep()
+    return _cfgmcc.new_doublep()
+
+
 new_doublep = _cfgmcc.new_doublep
 
+
 def copy_doublep(*args):
-  return _cfgmcc.copy_doublep(*args)
+    return _cfgmcc.copy_doublep(*args)
+
+
 copy_doublep = _cfgmcc.copy_doublep
 
+
 def delete_doublep(*args):
-  return _cfgmcc.delete_doublep(*args)
+    return _cfgmcc.delete_doublep(*args)
+
+
 delete_doublep = _cfgmcc.delete_doublep
 
+
 def doublep_assign(*args):
-  return _cfgmcc.doublep_assign(*args)
+    return _cfgmcc.doublep_assign(*args)
+
+
 doublep_assign = _cfgmcc.doublep_assign
 
+
 def doublep_value(*args):
-  return _cfgmcc.doublep_value(*args)
+    return _cfgmcc.doublep_value(*args)
+
+
 doublep_value = _cfgmcc.doublep_value
 
+
 def new_cfgHandle_tp():
-  return _cfgmcc.new_cfgHandle_tp()
+    return _cfgmcc.new_cfgHandle_tp()
+
+
 new_cfgHandle_tp = _cfgmcc.new_cfgHandle_tp
 
+
 def copy_cfgHandle_tp(*args):
-  return _cfgmcc.copy_cfgHandle_tp(*args)
+    return _cfgmcc.copy_cfgHandle_tp(*args)
+
+
 copy_cfgHandle_tp = _cfgmcc.copy_cfgHandle_tp
 
+
 def delete_cfgHandle_tp(*args):
-  return _cfgmcc.delete_cfgHandle_tp(*args)
+    return _cfgmcc.delete_cfgHandle_tp(*args)
+
+
 delete_cfgHandle_tp = _cfgmcc.delete_cfgHandle_tp
 
+
 def cfgHandle_tp_assign(*args):
-  return _cfgmcc.cfgHandle_tp_assign(*args)
+    return _cfgmcc.cfgHandle_tp_assign(*args)
+
+
 cfgHandle_tp_assign = _cfgmcc.cfgHandle_tp_assign
 
+
 def cfgHandle_tp_value(*args):
-  return _cfgmcc.cfgHandle_tp_value(*args)
+    return _cfgmcc.cfgHandle_tp_value(*args)
+
+
 cfgHandle_tp_value = _cfgmcc.cfgHandle_tp_value
 
+
 def cfgHandleToPtr(*args):
-  """cfgHandleToPtr(pcfg) -> void *"""
-  return _cfgmcc.cfgHandleToPtr(*args)
+    """cfgHandleToPtr(pcfg) -> void *"""
+    return _cfgmcc.cfgHandleToPtr(*args)
+
 
 def ptrTocfgHandle(*args):
-  """ptrTocfgHandle(vptr) -> cfgHandle_t"""
-  return _cfgmcc.ptrTocfgHandle(*args)
+    """ptrTocfgHandle(vptr) -> cfgHandle_t"""
+    return _cfgmcc.ptrTocfgHandle(*args)
+
 
 def cfgGetReady(*args):
-  """cfgGetReady(msgBufSize) -> int"""
-  return _cfgmcc.cfgGetReady(*args)
+    """cfgGetReady(msgBufSize) -> int"""
+    return _cfgmcc.cfgGetReady(*args)
+
 
 def cfgGetReadyD(*args):
-  """cfgGetReadyD(dirName, msgBufSize) -> int"""
-  return _cfgmcc.cfgGetReadyD(*args)
+    """cfgGetReadyD(dirName, msgBufSize) -> int"""
+    return _cfgmcc.cfgGetReadyD(*args)
+
 
 def cfgGetReadyL(*args):
-  """cfgGetReadyL(libName, msgBufSize) -> int"""
-  return _cfgmcc.cfgGetReadyL(*args)
+    """cfgGetReadyL(libName, msgBufSize) -> int"""
+    return _cfgmcc.cfgGetReadyL(*args)
+
 
 def cfgCreate(*args):
-  """cfgCreate(pcfg, msgBufSize) -> int"""
-  return _cfgmcc.cfgCreate(*args)
+    """cfgCreate(pcfg, msgBufSize) -> int"""
+    return _cfgmcc.cfgCreate(*args)
+
 
 def cfgCreateD(*args):
-  """cfgCreateD(pcfg, dirName, msgBufSize) -> int"""
-  return _cfgmcc.cfgCreateD(*args)
+    """cfgCreateD(pcfg, dirName, msgBufSize) -> int"""
+    return _cfgmcc.cfgCreateD(*args)
+
 
 def cfgCreateL(*args):
-  """cfgCreateL(pcfg, libName, msgBufSize) -> int"""
-  return _cfgmcc.cfgCreateL(*args)
+    """cfgCreateL(pcfg, libName, msgBufSize) -> int"""
+    return _cfgmcc.cfgCreateL(*args)
+
 
 def cfgFree(*args):
-  """cfgFree(pcfg) -> int"""
-  return _cfgmcc.cfgFree(*args)
+    """cfgFree(pcfg) -> int"""
+    return _cfgmcc.cfgFree(*args)
+
 
 def cfgLibraryLoaded():
-  """cfgLibraryLoaded() -> int"""
-  return _cfgmcc.cfgLibraryLoaded()
+    """cfgLibraryLoaded() -> int"""
+    return _cfgmcc.cfgLibraryLoaded()
+
 
 def cfgLibraryUnload():
-  """cfgLibraryUnload() -> int"""
-  return _cfgmcc.cfgLibraryUnload()
+    """cfgLibraryUnload() -> int"""
+    return _cfgmcc.cfgLibraryUnload()
+
 
 def cfgGetScreenIndicator():
-  """cfgGetScreenIndicator() -> int"""
-  return _cfgmcc.cfgGetScreenIndicator()
+    """cfgGetScreenIndicator() -> int"""
+    return _cfgmcc.cfgGetScreenIndicator()
+
 
 def cfgSetScreenIndicator(*args):
-  """cfgSetScreenIndicator(scrind)"""
-  return _cfgmcc.cfgSetScreenIndicator(*args)
+    """cfgSetScreenIndicator(scrind)"""
+    return _cfgmcc.cfgSetScreenIndicator(*args)
+
 
 def cfgGetExceptionIndicator():
-  """cfgGetExceptionIndicator() -> int"""
-  return _cfgmcc.cfgGetExceptionIndicator()
+    """cfgGetExceptionIndicator() -> int"""
+    return _cfgmcc.cfgGetExceptionIndicator()
+
 
 def cfgSetExceptionIndicator(*args):
-  """cfgSetExceptionIndicator(excind)"""
-  return _cfgmcc.cfgSetExceptionIndicator(*args)
+    """cfgSetExceptionIndicator(excind)"""
+    return _cfgmcc.cfgSetExceptionIndicator(*args)
+
 
 def cfgGetExitIndicator():
-  """cfgGetExitIndicator() -> int"""
-  return _cfgmcc.cfgGetExitIndicator()
+    """cfgGetExitIndicator() -> int"""
+    return _cfgmcc.cfgGetExitIndicator()
+
 
 def cfgSetExitIndicator(*args):
-  """cfgSetExitIndicator(extind)"""
-  return _cfgmcc.cfgSetExitIndicator(*args)
+    """cfgSetExitIndicator(extind)"""
+    return _cfgmcc.cfgSetExitIndicator(*args)
+
 
 def cfgGetErrorCallback():
-  """cfgGetErrorCallback() -> cfgErrorCallback_t"""
-  return _cfgmcc.cfgGetErrorCallback()
+    """cfgGetErrorCallback() -> cfgErrorCallback_t"""
+    return _cfgmcc.cfgGetErrorCallback()
+
 
 def cfgSetErrorCallback(*args):
-  """cfgSetErrorCallback(func)"""
-  return _cfgmcc.cfgSetErrorCallback(*args)
+    """cfgSetErrorCallback(func)"""
+    return _cfgmcc.cfgSetErrorCallback(*args)
+
 
 def cfgGetAPIErrorCount():
-  """cfgGetAPIErrorCount() -> int"""
-  return _cfgmcc.cfgGetAPIErrorCount()
+    """cfgGetAPIErrorCount() -> int"""
+    return _cfgmcc.cfgGetAPIErrorCount()
+
 
 def cfgSetAPIErrorCount(*args):
-  """cfgSetAPIErrorCount(ecnt)"""
-  return _cfgmcc.cfgSetAPIErrorCount(*args)
+    """cfgSetAPIErrorCount(ecnt)"""
+    return _cfgmcc.cfgSetAPIErrorCount(*args)
+
 
 def cfgErrorHandling(*args):
-  """cfgErrorHandling(msg)"""
-  return _cfgmcc.cfgErrorHandling(*args)
+    """cfgErrorHandling(msg)"""
+    return _cfgmcc.cfgErrorHandling(*args)
+
 
 def cfgReadConfig(*args):
-  """cfgReadConfig(pcfg, filename) -> int"""
-  return _cfgmcc.cfgReadConfig(*args)
+    """cfgReadConfig(pcfg, filename) -> int"""
+    return _cfgmcc.cfgReadConfig(*args)
+
 
 def cfgNumAlgs(*args):
-  """cfgNumAlgs(pcfg) -> int"""
-  return _cfgmcc.cfgNumAlgs(*args)
+    """cfgNumAlgs(pcfg) -> int"""
+    return _cfgmcc.cfgNumAlgs(*args)
+
 
 def cfgDefaultAlg(*args):
-  """cfgDefaultAlg(pcfg, proc) -> int"""
-  return _cfgmcc.cfgDefaultAlg(*args)
+    """cfgDefaultAlg(pcfg, proc) -> int"""
+    return _cfgmcc.cfgDefaultAlg(*args)
+
 
 def cfgAlgName(*args):
-  """cfgAlgName(pcfg, alg) -> char *"""
-  return _cfgmcc.cfgAlgName(*args)
+    """cfgAlgName(pcfg, alg) -> char *"""
+    return _cfgmcc.cfgAlgName(*args)
+
 
 def cfgAlgAllowsModifyProblem(*args):
-  """cfgAlgAllowsModifyProblem(pcfg, alg) -> int"""
-  return _cfgmcc.cfgAlgAllowsModifyProblem(*args)
+    """cfgAlgAllowsModifyProblem(pcfg, alg) -> int"""
+    return _cfgmcc.cfgAlgAllowsModifyProblem(*args)
+
 
 def cfgAlgNumber(*args):
-  """cfgAlgNumber(pcfg, id) -> int"""
-  return _cfgmcc.cfgAlgNumber(*args)
+    """cfgAlgNumber(pcfg, id) -> int"""
+    return _cfgmcc.cfgAlgNumber(*args)
+
 
 def cfgAlgCapability(*args):
-  """cfgAlgCapability(pcfg, alg, proc) -> int"""
-  return _cfgmcc.cfgAlgCapability(*args)
+    """cfgAlgCapability(pcfg, alg, proc) -> int"""
+    return _cfgmcc.cfgAlgCapability(*args)
+
 
 def cfgAlgCreate(*args):
-  """cfgAlgCreate(pcfg, alg, psl, sysDir) -> int"""
-  return _cfgmcc.cfgAlgCreate(*args)
+    """cfgAlgCreate(pcfg, alg, psl, sysDir) -> int"""
+    return _cfgmcc.cfgAlgCreate(*args)
+
 
 def cfgAlgReadyAPI(*args):
-  """cfgAlgReadyAPI(pcfg, alg, psl, gmo, opt) -> int"""
-  return _cfgmcc.cfgAlgReadyAPI(*args)
+    """cfgAlgReadyAPI(pcfg, alg, psl, gmo, opt) -> int"""
+    return _cfgmcc.cfgAlgReadyAPI(*args)
+
 
 def cfgAlgModifyProblem(*args):
-  """cfgAlgModifyProblem(pcfg, alg, psl) -> int"""
-  return _cfgmcc.cfgAlgModifyProblem(*args)
+    """cfgAlgModifyProblem(pcfg, alg, psl) -> int"""
+    return _cfgmcc.cfgAlgModifyProblem(*args)
+
 
 def cfgAlgCallSolver(*args):
-  """cfgAlgCallSolver(pcfg, alg, psl, gmo) -> int"""
-  return _cfgmcc.cfgAlgCallSolver(*args)
+    """cfgAlgCallSolver(pcfg, alg, psl, gmo) -> int"""
+    return _cfgmcc.cfgAlgCallSolver(*args)
+
 
 def cfgAlgFree(*args):
-  """cfgAlgFree(pcfg, alg, vpsl)"""
-  return _cfgmcc.cfgAlgFree(*args)
+    """cfgAlgFree(pcfg, alg, vpsl)"""
+    return _cfgmcc.cfgAlgFree(*args)
+
 
 def cfgModelTypeName(*args):
-  """cfgModelTypeName(pcfg, proc) -> char *"""
-  return _cfgmcc.cfgModelTypeName(*args)
+    """cfgModelTypeName(pcfg, proc) -> char *"""
+    return _cfgmcc.cfgModelTypeName(*args)
+
 
 def cfgModelTypeNumber(*args):
-  """cfgModelTypeNumber(pcfg, id) -> int"""
-  return _cfgmcc.cfgModelTypeNumber(*args)
+    """cfgModelTypeNumber(pcfg, id) -> int"""
+    return _cfgmcc.cfgModelTypeNumber(*args)
+
 
 def cfgNumMsg(*args):
-  """cfgNumMsg(pcfg) -> int"""
-  return _cfgmcc.cfgNumMsg(*args)
+    """cfgNumMsg(pcfg) -> int"""
+    return _cfgmcc.cfgNumMsg(*args)
+
 
 def cfgGetMsg(*args):
-  """cfgGetMsg(pcfg) -> char *"""
-  return _cfgmcc.cfgGetMsg(*args)
+    """cfgGetMsg(pcfg) -> char *"""
+    return _cfgmcc.cfgGetMsg(*args)
+
+
 GLOBAL_MAX_INDEX_DIM = _cfgmcc.GLOBAL_MAX_INDEX_DIM
 GLOBAL_UEL_IDENT_SIZE = _cfgmcc.GLOBAL_UEL_IDENT_SIZE
 ITERLIM_INFINITY = _cfgmcc.ITERLIM_INFINITY
@@ -410,5 +548,3 @@ GMS_SV_EPS = _cfgmcc.GMS_SV_EPS
 GMS_SV_ACR = _cfgmcc.GMS_SV_ACR
 GMS_SV_NAINT = _cfgmcc.GMS_SV_NAINT
 # This file is compatible with both classic and new-style classes.
-
-

@@ -5,26 +5,28 @@
 # the SWIG interface file instead.
 
 
-
-
-
 from sys import version_info
-if version_info >= (2,6,0):
+
+if version_info >= (2, 6, 0):
+
     def swig_import_helper():
         from os.path import dirname
         import imp
+
         fp = None
         try:
-            fp, pathname, description = imp.find_module('_dctmcc', [dirname(__file__)])
+            fp, pathname, description = imp.find_module("_dctmcc", [dirname(__file__)])
         except ImportError:
             import _dctmcc
+
             return _dctmcc
         if fp is not None:
             try:
-                _mod = imp.load_module('_dctmcc', fp, pathname, description)
+                _mod = imp.load_module("_dctmcc", fp, pathname, description)
             finally:
                 fp.close()
             return _mod
+
     _dctmcc = swig_import_helper()
     del swig_import_helper
 else:
@@ -33,39 +35,54 @@ del version_info
 try:
     _swig_property = property
 except NameError:
-    pass # Python < 2.2 doesn't have 'property'.
-def _swig_setattr_nondynamic(self,class_type,name,value,static=1):
-    if (name == "thisown"): return self.this.own(value)
-    if (name == "this"):
-        if type(value).__name__ == 'SwigPyObject':
+    pass  # Python < 2.2 doesn't have 'property'.
+
+
+def _swig_setattr_nondynamic(self, class_type, name, value, static=1):
+    if name == "thisown":
+        return self.this.own(value)
+    if name == "this":
+        if type(value).__name__ == "SwigPyObject":
             self.__dict__[name] = value
             return
-    method = class_type.__swig_setmethods__.get(name,None)
-    if method: return method(self,value)
-    if (not static):
+    method = class_type.__swig_setmethods__.get(name, None)
+    if method:
+        return method(self, value)
+    if not static:
         self.__dict__[name] = value
     else:
         raise AttributeError("You cannot add attributes to %s" % self)
 
-def _swig_setattr(self,class_type,name,value):
-    return _swig_setattr_nondynamic(self,class_type,name,value,0)
 
-def _swig_getattr(self,class_type,name):
-    if (name == "thisown"): return self.this.own()
-    method = class_type.__swig_getmethods__.get(name,None)
-    if method: return method(self)
+def _swig_setattr(self, class_type, name, value):
+    return _swig_setattr_nondynamic(self, class_type, name, value, 0)
+
+
+def _swig_getattr(self, class_type, name):
+    if name == "thisown":
+        return self.this.own()
+    method = class_type.__swig_getmethods__.get(name, None)
+    if method:
+        return method(self)
     raise AttributeError(name)
 
+
 def _swig_repr(self):
-    try: strthis = "proxy of " + self.this.__repr__()
-    except: strthis = ""
-    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis,)
+    try:
+        strthis = "proxy of " + self.this.__repr__()
+    except:
+        strthis = ""
+    return "<%s.%s; %s >" % (self.__class__.__module__, self.__class__.__name__, strthis)
+
 
 try:
     _object = object
     _newclass = 1
 except AttributeError:
-    class _object : pass
+
+    class _object:
+        pass
+
     _newclass = 0
 
 
@@ -77,29 +94,49 @@ dctparmSymType = _dctmcc.dctparmSymType
 dctvarSymType = _dctmcc.dctvarSymType
 dcteqnSymType = _dctmcc.dcteqnSymType
 dctaliasSymType = _dctmcc.dctaliasSymType
+
+
 class intArray(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, intArray, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, intArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _dctmcc.new_intArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _dctmcc.delete_intArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _dctmcc.intArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _dctmcc.intArray___setitem__(self, *args)
-    def cast(self): return _dctmcc.intArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _dctmcc.intArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _dctmcc.intArray___setitem__(self, *args)
+
+    def cast(self):
+        return _dctmcc.intArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _dctmcc.intArray_frompointer
-    if _newclass:frompointer = staticmethod(_dctmcc.intArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_dctmcc.intArray_frompointer)
+
+
 intArray_swigregister = _dctmcc.intArray_swigregister
 intArray_swigregister(intArray)
 
+
 def intArray_frompointer(*args):
-  return _dctmcc.intArray_frompointer(*args)
+    return _dctmcc.intArray_frompointer(*args)
+
+
 intArray_frompointer = _dctmcc.intArray_frompointer
+
 
 class doubleArray(_object):
     __swig_setmethods__ = {}
@@ -107,300 +144,417 @@ class doubleArray(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, doubleArray, name)
     __repr__ = _swig_repr
-    def __init__(self, *args): 
+
+    def __init__(self, *args):
         this = _dctmcc.new_doubleArray(*args)
-        try: self.this.append(this)
-        except: self.this = this
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+
     __swig_destroy__ = _dctmcc.delete_doubleArray
-    __del__ = lambda self : None;
-    def __getitem__(self, *args): return _dctmcc.doubleArray___getitem__(self, *args)
-    def __setitem__(self, *args): return _dctmcc.doubleArray___setitem__(self, *args)
-    def cast(self): return _dctmcc.doubleArray_cast(self)
+    __del__ = lambda self: None
+
+    def __getitem__(self, *args):
+        return _dctmcc.doubleArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        return _dctmcc.doubleArray___setitem__(self, *args)
+
+    def cast(self):
+        return _dctmcc.doubleArray_cast(self)
+
     __swig_getmethods__["frompointer"] = lambda x: _dctmcc.doubleArray_frompointer
-    if _newclass:frompointer = staticmethod(_dctmcc.doubleArray_frompointer)
+    if _newclass:
+        frompointer = staticmethod(_dctmcc.doubleArray_frompointer)
+
+
 doubleArray_swigregister = _dctmcc.doubleArray_swigregister
 doubleArray_swigregister(doubleArray)
 
+
 def doubleArray_frompointer(*args):
-  return _dctmcc.doubleArray_frompointer(*args)
+    return _dctmcc.doubleArray_frompointer(*args)
+
+
 doubleArray_frompointer = _dctmcc.doubleArray_frompointer
 
 
 def new_intp():
-  return _dctmcc.new_intp()
+    return _dctmcc.new_intp()
+
+
 new_intp = _dctmcc.new_intp
 
+
 def copy_intp(*args):
-  return _dctmcc.copy_intp(*args)
+    return _dctmcc.copy_intp(*args)
+
+
 copy_intp = _dctmcc.copy_intp
 
+
 def delete_intp(*args):
-  return _dctmcc.delete_intp(*args)
+    return _dctmcc.delete_intp(*args)
+
+
 delete_intp = _dctmcc.delete_intp
 
+
 def intp_assign(*args):
-  return _dctmcc.intp_assign(*args)
+    return _dctmcc.intp_assign(*args)
+
+
 intp_assign = _dctmcc.intp_assign
 
+
 def intp_value(*args):
-  return _dctmcc.intp_value(*args)
+    return _dctmcc.intp_value(*args)
+
+
 intp_value = _dctmcc.intp_value
 
+
 def new_doublep():
-  return _dctmcc.new_doublep()
+    return _dctmcc.new_doublep()
+
+
 new_doublep = _dctmcc.new_doublep
 
+
 def copy_doublep(*args):
-  return _dctmcc.copy_doublep(*args)
+    return _dctmcc.copy_doublep(*args)
+
+
 copy_doublep = _dctmcc.copy_doublep
 
+
 def delete_doublep(*args):
-  return _dctmcc.delete_doublep(*args)
+    return _dctmcc.delete_doublep(*args)
+
+
 delete_doublep = _dctmcc.delete_doublep
 
+
 def doublep_assign(*args):
-  return _dctmcc.doublep_assign(*args)
+    return _dctmcc.doublep_assign(*args)
+
+
 doublep_assign = _dctmcc.doublep_assign
 
+
 def doublep_value(*args):
-  return _dctmcc.doublep_value(*args)
+    return _dctmcc.doublep_value(*args)
+
+
 doublep_value = _dctmcc.doublep_value
 
+
 def new_dctHandle_tp():
-  return _dctmcc.new_dctHandle_tp()
+    return _dctmcc.new_dctHandle_tp()
+
+
 new_dctHandle_tp = _dctmcc.new_dctHandle_tp
 
+
 def copy_dctHandle_tp(*args):
-  return _dctmcc.copy_dctHandle_tp(*args)
+    return _dctmcc.copy_dctHandle_tp(*args)
+
+
 copy_dctHandle_tp = _dctmcc.copy_dctHandle_tp
 
+
 def delete_dctHandle_tp(*args):
-  return _dctmcc.delete_dctHandle_tp(*args)
+    return _dctmcc.delete_dctHandle_tp(*args)
+
+
 delete_dctHandle_tp = _dctmcc.delete_dctHandle_tp
 
+
 def dctHandle_tp_assign(*args):
-  return _dctmcc.dctHandle_tp_assign(*args)
+    return _dctmcc.dctHandle_tp_assign(*args)
+
+
 dctHandle_tp_assign = _dctmcc.dctHandle_tp_assign
 
+
 def dctHandle_tp_value(*args):
-  return _dctmcc.dctHandle_tp_value(*args)
+    return _dctmcc.dctHandle_tp_value(*args)
+
+
 dctHandle_tp_value = _dctmcc.dctHandle_tp_value
 
+
 def dctHandleToPtr(*args):
-  """dctHandleToPtr(pdct) -> void *"""
-  return _dctmcc.dctHandleToPtr(*args)
+    """dctHandleToPtr(pdct) -> void *"""
+    return _dctmcc.dctHandleToPtr(*args)
+
 
 def ptrTodctHandle(*args):
-  """ptrTodctHandle(vptr) -> dctHandle_t"""
-  return _dctmcc.ptrTodctHandle(*args)
+    """ptrTodctHandle(vptr) -> dctHandle_t"""
+    return _dctmcc.ptrTodctHandle(*args)
+
 
 def dctGetReady(*args):
-  """dctGetReady(msgBufSize) -> int"""
-  return _dctmcc.dctGetReady(*args)
+    """dctGetReady(msgBufSize) -> int"""
+    return _dctmcc.dctGetReady(*args)
+
 
 def dctGetReadyD(*args):
-  """dctGetReadyD(dirName, msgBufSize) -> int"""
-  return _dctmcc.dctGetReadyD(*args)
+    """dctGetReadyD(dirName, msgBufSize) -> int"""
+    return _dctmcc.dctGetReadyD(*args)
+
 
 def dctGetReadyL(*args):
-  """dctGetReadyL(libName, msgBufSize) -> int"""
-  return _dctmcc.dctGetReadyL(*args)
+    """dctGetReadyL(libName, msgBufSize) -> int"""
+    return _dctmcc.dctGetReadyL(*args)
+
 
 def dctCreate(*args):
-  """dctCreate(pdct, msgBufSize) -> int"""
-  return _dctmcc.dctCreate(*args)
+    """dctCreate(pdct, msgBufSize) -> int"""
+    return _dctmcc.dctCreate(*args)
+
 
 def dctCreateD(*args):
-  """dctCreateD(pdct, dirName, msgBufSize) -> int"""
-  return _dctmcc.dctCreateD(*args)
+    """dctCreateD(pdct, dirName, msgBufSize) -> int"""
+    return _dctmcc.dctCreateD(*args)
+
 
 def dctCreateDD(*args):
-  """dctCreateDD(pdct, dirName, msgBufSize) -> int"""
-  return _dctmcc.dctCreateDD(*args)
+    """dctCreateDD(pdct, dirName, msgBufSize) -> int"""
+    return _dctmcc.dctCreateDD(*args)
+
 
 def dctCreateL(*args):
-  """dctCreateL(pdct, libName, msgBufSize) -> int"""
-  return _dctmcc.dctCreateL(*args)
+    """dctCreateL(pdct, libName, msgBufSize) -> int"""
+    return _dctmcc.dctCreateL(*args)
+
 
 def dctFree(*args):
-  """dctFree(pdct) -> int"""
-  return _dctmcc.dctFree(*args)
+    """dctFree(pdct) -> int"""
+    return _dctmcc.dctFree(*args)
+
 
 def dctLibraryLoaded():
-  """dctLibraryLoaded() -> int"""
-  return _dctmcc.dctLibraryLoaded()
+    """dctLibraryLoaded() -> int"""
+    return _dctmcc.dctLibraryLoaded()
+
 
 def dctLibraryUnload():
-  """dctLibraryUnload() -> int"""
-  return _dctmcc.dctLibraryUnload()
+    """dctLibraryUnload() -> int"""
+    return _dctmcc.dctLibraryUnload()
+
 
 def dctGetScreenIndicator():
-  """dctGetScreenIndicator() -> int"""
-  return _dctmcc.dctGetScreenIndicator()
+    """dctGetScreenIndicator() -> int"""
+    return _dctmcc.dctGetScreenIndicator()
+
 
 def dctSetScreenIndicator(*args):
-  """dctSetScreenIndicator(scrind)"""
-  return _dctmcc.dctSetScreenIndicator(*args)
+    """dctSetScreenIndicator(scrind)"""
+    return _dctmcc.dctSetScreenIndicator(*args)
+
 
 def dctGetExceptionIndicator():
-  """dctGetExceptionIndicator() -> int"""
-  return _dctmcc.dctGetExceptionIndicator()
+    """dctGetExceptionIndicator() -> int"""
+    return _dctmcc.dctGetExceptionIndicator()
+
 
 def dctSetExceptionIndicator(*args):
-  """dctSetExceptionIndicator(excind)"""
-  return _dctmcc.dctSetExceptionIndicator(*args)
+    """dctSetExceptionIndicator(excind)"""
+    return _dctmcc.dctSetExceptionIndicator(*args)
+
 
 def dctGetExitIndicator():
-  """dctGetExitIndicator() -> int"""
-  return _dctmcc.dctGetExitIndicator()
+    """dctGetExitIndicator() -> int"""
+    return _dctmcc.dctGetExitIndicator()
+
 
 def dctSetExitIndicator(*args):
-  """dctSetExitIndicator(extind)"""
-  return _dctmcc.dctSetExitIndicator(*args)
+    """dctSetExitIndicator(extind)"""
+    return _dctmcc.dctSetExitIndicator(*args)
+
 
 def dctGetErrorCallback():
-  """dctGetErrorCallback() -> dctErrorCallback_t"""
-  return _dctmcc.dctGetErrorCallback()
+    """dctGetErrorCallback() -> dctErrorCallback_t"""
+    return _dctmcc.dctGetErrorCallback()
+
 
 def dctSetErrorCallback(*args):
-  """dctSetErrorCallback(func)"""
-  return _dctmcc.dctSetErrorCallback(*args)
+    """dctSetErrorCallback(func)"""
+    return _dctmcc.dctSetErrorCallback(*args)
+
 
 def dctGetAPIErrorCount():
-  """dctGetAPIErrorCount() -> int"""
-  return _dctmcc.dctGetAPIErrorCount()
+    """dctGetAPIErrorCount() -> int"""
+    return _dctmcc.dctGetAPIErrorCount()
+
 
 def dctSetAPIErrorCount(*args):
-  """dctSetAPIErrorCount(ecnt)"""
-  return _dctmcc.dctSetAPIErrorCount(*args)
+    """dctSetAPIErrorCount(ecnt)"""
+    return _dctmcc.dctSetAPIErrorCount(*args)
+
 
 def dctErrorHandling(*args):
-  """dctErrorHandling(msg)"""
-  return _dctmcc.dctErrorHandling(*args)
+    """dctErrorHandling(msg)"""
+    return _dctmcc.dctErrorHandling(*args)
+
 
 def dctLoadEx(*args):
-  """dctLoadEx(pdct, fName, Msg_i) -> int"""
-  return _dctmcc.dctLoadEx(*args)
+    """dctLoadEx(pdct, fName, Msg_i) -> int"""
+    return _dctmcc.dctLoadEx(*args)
+
 
 def dctLoadWithHandle(*args):
-  """dctLoadWithHandle(pdct, gdxptr, Msg_i) -> int"""
-  return _dctmcc.dctLoadWithHandle(*args)
+    """dctLoadWithHandle(pdct, gdxptr, Msg_i) -> int"""
+    return _dctmcc.dctLoadWithHandle(*args)
+
 
 def dctNUels(*args):
-  """dctNUels(pdct) -> int"""
-  return _dctmcc.dctNUels(*args)
+    """dctNUels(pdct) -> int"""
+    return _dctmcc.dctNUels(*args)
+
 
 def dctUelIndex(*args):
-  """dctUelIndex(pdct, uelLabel) -> int"""
-  return _dctmcc.dctUelIndex(*args)
+    """dctUelIndex(pdct, uelLabel) -> int"""
+    return _dctmcc.dctUelIndex(*args)
+
 
 def dctUelLabel(*args):
-  """dctUelLabel(pdct, uelIndex, q_mut, uelLabel_i) -> int"""
-  return _dctmcc.dctUelLabel(*args)
+    """dctUelLabel(pdct, uelIndex, q_mut, uelLabel_i) -> int"""
+    return _dctmcc.dctUelLabel(*args)
+
 
 def dctNLSyms(*args):
-  """dctNLSyms(pdct) -> int"""
-  return _dctmcc.dctNLSyms(*args)
+    """dctNLSyms(pdct) -> int"""
+    return _dctmcc.dctNLSyms(*args)
+
 
 def dctSymDim(*args):
-  """dctSymDim(pdct, symIndex) -> int"""
-  return _dctmcc.dctSymDim(*args)
+    """dctSymDim(pdct, symIndex) -> int"""
+    return _dctmcc.dctSymDim(*args)
+
 
 def dctSymIndex(*args):
-  """dctSymIndex(pdct, symName) -> int"""
-  return _dctmcc.dctSymIndex(*args)
+    """dctSymIndex(pdct, symName) -> int"""
+    return _dctmcc.dctSymIndex(*args)
+
 
 def dctSymName(*args):
-  """dctSymName(pdct, symIndex, symName_i) -> int"""
-  return _dctmcc.dctSymName(*args)
+    """dctSymName(pdct, symIndex, symName_i) -> int"""
+    return _dctmcc.dctSymName(*args)
+
 
 def dctSymText(*args):
-  """dctSymText(pdct, symIndex, q_mut, symTxt_i) -> int"""
-  return _dctmcc.dctSymText(*args)
+    """dctSymText(pdct, symIndex, q_mut, symTxt_i) -> int"""
+    return _dctmcc.dctSymText(*args)
+
 
 def dctSymType(*args):
-  """dctSymType(pdct, symIndex) -> int"""
-  return _dctmcc.dctSymType(*args)
+    """dctSymType(pdct, symIndex) -> int"""
+    return _dctmcc.dctSymType(*args)
+
 
 def dctSymUserInfo(*args):
-  """dctSymUserInfo(pdct, symIndex) -> int"""
-  return _dctmcc.dctSymUserInfo(*args)
+    """dctSymUserInfo(pdct, symIndex) -> int"""
+    return _dctmcc.dctSymUserInfo(*args)
+
 
 def dctSymEntries(*args):
-  """dctSymEntries(pdct, symIndex) -> int"""
-  return _dctmcc.dctSymEntries(*args)
+    """dctSymEntries(pdct, symIndex) -> int"""
+    return _dctmcc.dctSymEntries(*args)
+
 
 def dctSymOffset(*args):
-  """dctSymOffset(pdct, symIndex) -> int"""
-  return _dctmcc.dctSymOffset(*args)
+    """dctSymOffset(pdct, symIndex) -> int"""
+    return _dctmcc.dctSymOffset(*args)
+
 
 def dctColIndex(*args):
-  """dctColIndex(pdct, symIndex, uelIndices) -> int"""
-  return _dctmcc.dctColIndex(*args)
+    """dctColIndex(pdct, symIndex, uelIndices) -> int"""
+    return _dctmcc.dctColIndex(*args)
+
 
 def dctRowIndex(*args):
-  """dctRowIndex(pdct, symIndex, uelIndices) -> int"""
-  return _dctmcc.dctRowIndex(*args)
+    """dctRowIndex(pdct, symIndex, uelIndices) -> int"""
+    return _dctmcc.dctRowIndex(*args)
+
 
 def dctColUels(*args):
-  """dctColUels(pdct, j) -> int"""
-  return _dctmcc.dctColUels(*args)
+    """dctColUels(pdct, j) -> int"""
+    return _dctmcc.dctColUels(*args)
+
 
 def dctRowUels(*args):
-  """dctRowUels(pdct, i) -> int"""
-  return _dctmcc.dctRowUels(*args)
+    """dctRowUels(pdct, i) -> int"""
+    return _dctmcc.dctRowUels(*args)
+
 
 def dctFindFirstRowCol(*args):
-  """dctFindFirstRowCol(pdct, symIndex, uelIndices) -> void *"""
-  return _dctmcc.dctFindFirstRowCol(*args)
+    """dctFindFirstRowCol(pdct, symIndex, uelIndices) -> void *"""
+    return _dctmcc.dctFindFirstRowCol(*args)
+
 
 def dctFindNextRowCol(*args):
-  """dctFindNextRowCol(pdct, findHandle) -> int"""
-  return _dctmcc.dctFindNextRowCol(*args)
+    """dctFindNextRowCol(pdct, findHandle) -> int"""
+    return _dctmcc.dctFindNextRowCol(*args)
+
 
 def dctFindClose(*args):
-  """dctFindClose(pdct, findHandle)"""
-  return _dctmcc.dctFindClose(*args)
+    """dctFindClose(pdct, findHandle)"""
+    return _dctmcc.dctFindClose(*args)
+
 
 def dctMemUsed(*args):
-  """dctMemUsed(pdct) -> double"""
-  return _dctmcc.dctMemUsed(*args)
+    """dctMemUsed(pdct) -> double"""
+    return _dctmcc.dctMemUsed(*args)
+
 
 def dctSetBasicCounts(*args):
-  """dctSetBasicCounts(pdct, NRows, NCols, NBlocks)"""
-  return _dctmcc.dctSetBasicCounts(*args)
+    """dctSetBasicCounts(pdct, NRows, NCols, NBlocks)"""
+    return _dctmcc.dctSetBasicCounts(*args)
+
 
 def dctAddUel(*args):
-  """dctAddUel(pdct, uelLabel, q)"""
-  return _dctmcc.dctAddUel(*args)
+    """dctAddUel(pdct, uelLabel, q)"""
+    return _dctmcc.dctAddUel(*args)
+
 
 def dctAddSymbol(*args):
-  """dctAddSymbol(pdct, symName, symTyp, symDim, userInfo, symTxt)"""
-  return _dctmcc.dctAddSymbol(*args)
+    """dctAddSymbol(pdct, symName, symTyp, symDim, userInfo, symTxt)"""
+    return _dctmcc.dctAddSymbol(*args)
+
 
 def dctAddSymbolData(*args):
-  """dctAddSymbolData(pdct, uelIndices)"""
-  return _dctmcc.dctAddSymbolData(*args)
+    """dctAddSymbolData(pdct, uelIndices)"""
+    return _dctmcc.dctAddSymbolData(*args)
+
 
 def dctWriteGDX(*args):
-  """dctWriteGDX(pdct, fName)"""
-  return _dctmcc.dctWriteGDX(*args)
+    """dctWriteGDX(pdct, fName)"""
+    return _dctmcc.dctWriteGDX(*args)
+
 
 def dctWriteGDXWithHandle(*args):
-  """dctWriteGDXWithHandle(pdct, gdxptr)"""
-  return _dctmcc.dctWriteGDXWithHandle(*args)
+    """dctWriteGDXWithHandle(pdct, gdxptr)"""
+    return _dctmcc.dctWriteGDXWithHandle(*args)
+
 
 def dctNRows(*args):
-  """dctNRows(pdct) -> int"""
-  return _dctmcc.dctNRows(*args)
+    """dctNRows(pdct) -> int"""
+    return _dctmcc.dctNRows(*args)
+
 
 def dctNCols(*args):
-  """dctNCols(pdct) -> int"""
-  return _dctmcc.dctNCols(*args)
+    """dctNCols(pdct) -> int"""
+    return _dctmcc.dctNCols(*args)
+
 
 def dctLrgDim(*args):
-  """dctLrgDim(pdct) -> int"""
-  return _dctmcc.dctLrgDim(*args)
+    """dctLrgDim(pdct) -> int"""
+    return _dctmcc.dctLrgDim(*args)
+
+
 GLOBAL_MAX_INDEX_DIM = _dctmcc.GLOBAL_MAX_INDEX_DIM
 GLOBAL_UEL_IDENT_SIZE = _dctmcc.GLOBAL_UEL_IDENT_SIZE
 ITERLIM_INFINITY = _dctmcc.ITERLIM_INFINITY
@@ -465,5 +619,3 @@ GMS_SV_EPS = _dctmcc.GMS_SV_EPS
 GMS_SV_ACR = _dctmcc.GMS_SV_ACR
 GMS_SV_NAINT = _dctmcc.GMS_SV_NAINT
 # This file is compatible with both classic and new-style classes.
-
-

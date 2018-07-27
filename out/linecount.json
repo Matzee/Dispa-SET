@@ -1,0 +1,3300 @@
+{
+    "extension": "linecount",
+    "version": "0.1.7",
+    "workspace": "c:\\Users\\PC-HP\\Dispa-SET",
+    "linecount": [
+        {
+            "version": "0.1.7",
+            "counttime": "2018-06-09 10:37:21",
+            "filesum": 514,
+            "codesum": 216,
+            "commentsum": 13,
+            "blanksum": 145,
+            "filelist": [
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": ".gitattributes"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": ".gitattributes"
+                },
+                {
+                    "blank": 0,
+                    "code": 11,
+                    "comment": 7,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 0,
+                    "code": 11,
+                    "comment": 7,
+                    "filename": ".gitignore"
+                },
+                {
+                    "filename": ".pickle\\Database-AvailabilityFactors-AT-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-AvailabilityFactors-BE-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-AvailabilityFactors-CH-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-AvailabilityFactors-DE-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-AvailabilityFactors-FR-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-AvailabilityFactors-NL-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-CrossBorderFlows-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DayAheadNTC-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-AvailabilityFactors-Z1-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-AvailabilityFactors-Z2-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-CrossBorderFlows.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-HeatDemand.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-Load_RealTime-Z1-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-Load_RealTime-Z2-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-NTCs.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-Outages.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-ReservoirLevels.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-ScaledInflows.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-DummyData-Units_testcase.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-FuelPrices-Biomass-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-FuelPrices-CO2-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-FuelPrices-Coal-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-FuelPrices-Gas-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-FuelPrices-Lignite-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-FuelPrices-Oil-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ReservoirLevel-AT-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ReservoirLevel-BE-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ReservoirLevel-CH-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ReservoirLevel-DE-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ReservoirLevel-FR-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ReservoirLevel-NL-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ScaledInflows-AT-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ScaledInflows-BE-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ScaledInflows-CH-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ScaledInflows-DE-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ScaledInflows-FR-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-HydroData-ScaledInflows-NL-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-Load_RealTime-AT-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-Load_RealTime-BE-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-Load_RealTime-CH-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-Load_RealTime-DE-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-Load_RealTime-FR-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-Load_RealTime-NL-1h-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-PowerPlants-AT-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-PowerPlants-BE-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-PowerPlants-CH-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-PowerPlants-DE-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-PowerPlants-FR-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": ".pickle\\Database-PowerPlants-NL-2015.csv-.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 3,
+                    "code": 303,
+                    "comment": 0,
+                    "filename": "225a\\gamscntr.dat"
+                },
+                {
+                    "filename": "225a\\gamsdict.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "225a\\gamsmatr.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "225a\\gamsnext.cmd"
+                },
+                {
+                    "filename": "225a\\gamssolu.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 2,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "225a\\gamsstat.dat"
+                },
+                {
+                    "filename": "225a\\gamswrk0.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "225a\\gmsprmNT.dat"
+                },
+                {
+                    "blank": 3,
+                    "code": 303,
+                    "comment": 0,
+                    "filename": "225b\\gamscntr.dat"
+                },
+                {
+                    "filename": "225b\\gamsdict.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "225b\\gamsmatr.dat"
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "225b\\gamsnext.cmd"
+                },
+                {
+                    "filename": "225b\\gamssolu.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 13,
+                    "code": 425,
+                    "comment": 0,
+                    "filename": "225b\\gamsstat.dat"
+                },
+                {
+                    "blank": 0,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "225b\\gmsprmNT.dat"
+                },
+                {
+                    "filename": "Changes.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Changes.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "clustered.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "clustered.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "command.txt"
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "command.txt"
+                },
+                {
+                    "filename": "ConfigFiles\\Config.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 73,
+                    "comment": 0,
+                    "filename": "ConfigFiles\\config_EL.yml"
+                },
+                {
+                    "filename": "ConfigFiles\\Config_integer.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\Config_noclustering (version 1).xlsb.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\Config_noclustering.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\Config_noclusteringMZ.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\ConfigBE.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\ConfigCY.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\ConfigEL.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\ConfigIE.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\ConfigNL.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\ConfigTest.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\~$Config_noclustering.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "ConfigFiles\\~$Config_noclusteringMZ.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 35041,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\AT\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\AT\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35041,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\BE\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\BE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35041,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\CH\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\CH\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\CY\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35041,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\DE\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\DE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\DE\\1h\\2015_.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\EL\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35041,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\FR\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\FR\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\IE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35041,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\NL\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\NL\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\AvailabilityFactors\\NL\\1h\\2015_withBEVS.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\CrossBorderFlows\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DayAheadNTC\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\00 - These data files are used for testing purposes only.txt"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\AvailabilityFactors\\Z1\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\AvailabilityFactors\\Z2\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\CrossBorderFlows.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\HeatDemand.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\load.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\Load_RealTime\\Z1\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\Load_RealTime\\Z2\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\NTCs.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\Outages.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\ReservoirLevels.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\ScaledInflows.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "Database\\DummyData\\Units_testcase.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\FuelPrices\\Biomass\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\FuelPrices\\CO2\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\FuelPrices\\Coal\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\FuelPrices\\Gas\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\FuelPrices\\Gas\\2015_.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\FuelPrices\\Gas\\EL\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\FuelPrices\\Lignite\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\FuelPrices\\Oil\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\Heat_demand\\CY\\Vassilikos_CCP2.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\Heat_demand\\CY\\Vassilikos_CCP2_80.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\Heat_demand\\CY\\vassilikos_chp_p2h.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\Inflows\\EL\\average.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\Inflows\\EL\\dry.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\Inflows\\EL\\wet.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ReservoirLevel\\AT\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ReservoirLevel\\BE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ReservoirLevel\\CH\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ReservoirLevel\\DE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ReservoirLevel\\EL\\1h\\average.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ReservoirLevel\\EL\\1h\\dry.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ReservoirLevel\\FR\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ReservoirLevel\\NL\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ScaledInflows\\AT\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ScaledInflows\\CH\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ScaledInflows\\FR\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\HydroData\\ScaledInflows\\NL\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\AT\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\AT\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\BE\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\BE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\CH\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\CH\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\DE\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\DE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\FR\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\FR\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\NL\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_DayAhead\\NL\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\AT\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\AT\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\BE\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\BE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\CH\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\CH\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\CY\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\DE\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\DE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\EL\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\FR\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\FR\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\IE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 35040,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\NL\\15min\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8760,
+                    "comment": 0,
+                    "filename": "Database\\Load_RealTime\\NL\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8762,
+                    "comment": 0,
+                    "filename": "Database\\OutageFactors\\EL\\outages_EL_final.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 8761,
+                    "comment": 0,
+                    "filename": "Database\\OutageFactors\\IE\\1h\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 47,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\AT\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\BE\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 29,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\BE\\simplified.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\CH\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\CY\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\CY\\2015_heat.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\CY\\2015_heatpump.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 295,
+                    "comment": 40,
+                    "filename": "Database\\PowerPlants\\DE\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 888,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\DE\\2015_.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 669,
+                    "comment": 116,
+                    "filename": "Database\\PowerPlants\\DE\\2015_2105.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 141,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\DE\\2015__.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 888,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\DE\\2015____.csv"
+                },
+                {
+                    "blank": 11,
+                    "code": 859,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\DE\\2015_____.csv"
+                },
+                {
+                    "filename": "Database\\PowerPlants\\DE\\2015_excel.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Database\\PowerPlants\\DE\\2015_old.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Database\\PowerPlants\\DE\\conventional_power_plants_DE (version 1).xlsb.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Database\\PowerPlants\\DE\\conventional_power_plants_DE.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Database\\PowerPlants\\DE\\~$2015_excel.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 54,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\EL\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 143,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\FR\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 77,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\IE\\2015_Lucy.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 47,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\NL\\2015.csv"
+                },
+                {
+                    "blank": 0,
+                    "code": 58,
+                    "comment": 0,
+                    "filename": "Database\\PowerPlants\\NL\\2015_BEVS.csv"
+                },
+                {
+                    "filename": "Dispa_Result.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Dispa_Result.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "dispaset.egg-info\\dependency_links.txt"
+                },
+                {
+                    "blank": 1,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "dispaset.egg-info\\entry_points.txt"
+                },
+                {
+                    "blank": 18,
+                    "code": 60,
+                    "comment": 6,
+                    "filename": "dispaset.egg-info\\PKG-INFO"
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "dispaset.egg-info\\requires.txt"
+                },
+                {
+                    "blank": 0,
+                    "code": 35,
+                    "comment": 0,
+                    "filename": "dispaset.egg-info\\SOURCES.txt"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "dispaset.egg-info\\top_level.txt"
+                },
+                {
+                    "blank": 10,
+                    "code": 64,
+                    "comment": 9,
+                    "filename": "DispaSET\\__init__.py"
+                },
+                {
+                    "filename": "DispaSET\\__init__.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\__pycache__\\__init__.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\__pycache__\\_version.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\__pycache__\\cli.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\__pycache__\\common.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\__pycache__\\solve.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "DispaSET\\_version.py"
+                },
+                {
+                    "filename": "DispaSET\\_version.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 13,
+                    "code": 43,
+                    "comment": 3,
+                    "filename": "DispaSET\\cli.py"
+                },
+                {
+                    "filename": "DispaSET\\cli.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 4,
+                    "code": 19,
+                    "comment": 14,
+                    "filename": "DispaSET\\common.py"
+                },
+                {
+                    "filename": "DispaSET\\common.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 4,
+                    "comment": 0,
+                    "filename": "DispaSET\\GAMS\\cplex.opt"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "DispaSET\\GAMS\\gams_path.txt"
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "DispaSET\\GAMS\\makeGDX.bat"
+                },
+                {
+                    "blank": 134,
+                    "code": 925,
+                    "comment": 8,
+                    "filename": "DispaSET\\GAMS\\UCM_GUSS.gms"
+                },
+                {
+                    "blank": 125,
+                    "code": 912,
+                    "comment": 8,
+                    "filename": "DispaSET\\GAMS\\UCM_h.gms"
+                },
+                {
+                    "blank": 121,
+                    "code": 910,
+                    "comment": 8,
+                    "filename": "DispaSET\\GAMS\\UCM_MZ.gms"
+                },
+                {
+                    "blank": 139,
+                    "code": 1005,
+                    "comment": 8,
+                    "filename": "DispaSET\\GAMS\\UCM_v22.gms"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "DispaSET\\GAMS\\writeresults.gms"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "DispaSET\\misc\\__init__.py"
+                },
+                {
+                    "filename": "DispaSET\\misc\\__init__.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\misc\\__pycache__\\__init__.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\misc\\__pycache__\\colorstreamhandler.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\misc\\__pycache__\\gdx_handler.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\misc\\__pycache__\\gms_handler.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\misc\\__pycache__\\str_handler.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 58,
+                    "code": 240,
+                    "comment": 13,
+                    "filename": "DispaSET\\misc\\checks.py"
+                },
+                {
+                    "blank": 20,
+                    "code": 93,
+                    "comment": 55,
+                    "filename": "DispaSET\\misc\\colorstreamhandler.py"
+                },
+                {
+                    "filename": "DispaSET\\misc\\colorstreamhandler.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 57,
+                    "code": 293,
+                    "comment": 23,
+                    "filename": "DispaSET\\misc\\gdx_handler.py"
+                },
+                {
+                    "filename": "DispaSET\\misc\\gdx_handler.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 13,
+                    "code": 70,
+                    "comment": 3,
+                    "filename": "DispaSET\\misc\\gms_handler.py"
+                },
+                {
+                    "filename": "DispaSET\\misc\\gms_handler.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 12,
+                    "code": 50,
+                    "comment": 8,
+                    "filename": "DispaSET\\misc\\str_handler.py"
+                },
+                {
+                    "filename": "DispaSET\\misc\\str_handler.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "DispaSET\\postprocessing\\__init__.py"
+                },
+                {
+                    "filename": "DispaSET\\postprocessing\\__init__.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\postprocessing\\__pycache__\\__init__.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\postprocessing\\__pycache__\\postprocessing.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 166,
+                    "code": 724,
+                    "comment": 100,
+                    "filename": "DispaSET\\postprocessing\\postprocessing.py"
+                },
+                {
+                    "filename": "DispaSET\\postprocessing\\postprocessing.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "DispaSET\\postprocessing\\warn.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "DispaSET\\preprocessing\\__init__.py"
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\__init__.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\__pycache__\\__init__.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\__pycache__\\data_check.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\__pycache__\\data_handler.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\__pycache__\\preprocessing.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\__pycache__\\utils.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 66,
+                    "code": 412,
+                    "comment": 43,
+                    "filename": "DispaSET\\preprocessing\\data_check.py"
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\data_check.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 85,
+                    "code": 393,
+                    "comment": 66,
+                    "filename": "DispaSET\\preprocessing\\data_handler.py"
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\data_handler.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 135,
+                    "code": 614,
+                    "comment": 153,
+                    "filename": "DispaSET\\preprocessing\\preprocessing.py"
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\preprocessing.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 84,
+                    "code": 273,
+                    "comment": 46,
+                    "filename": "DispaSET\\preprocessing\\utils.py"
+                },
+                {
+                    "filename": "DispaSET\\preprocessing\\utils.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "DispaSET\\pyomo\\__init__.py"
+                },
+                {
+                    "blank": 190,
+                    "code": 545,
+                    "comment": 253,
+                    "filename": "DispaSET\\pyomo\\model.py"
+                },
+                {
+                    "blank": 15,
+                    "code": 76,
+                    "comment": 2,
+                    "filename": "DispaSET\\pyomo\\utils.py"
+                },
+                {
+                    "blank": 17,
+                    "code": 72,
+                    "comment": 25,
+                    "filename": "DispaSET\\solve.py"
+                },
+                {
+                    "filename": "DispaSET\\solve.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 11,
+                    "code": 21,
+                    "comment": 1,
+                    "filename": "DispaSET\\test\\preprocessing_test.py"
+                },
+                {
+                    "filename": "DispaSET\\test\\preprocessing_test.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "DispaSET\\warn.log"
+                },
+                {
+                    "blank": 73,
+                    "code": 45,
+                    "comment": 162,
+                    "filename": "Docs\\conf.py"
+                },
+                {
+                    "blank": 89,
+                    "code": 241,
+                    "comment": 0,
+                    "filename": "Docs\\data.rst"
+                },
+                {
+                    "blank": 1,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "Docs\\developers.rst"
+                },
+                {
+                    "blank": 10,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "Docs\\DispaSET.misc.rst"
+                },
+                {
+                    "blank": 6,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "Docs\\DispaSET.postprocessing.rst"
+                },
+                {
+                    "blank": 12,
+                    "code": 34,
+                    "comment": 0,
+                    "filename": "Docs\\DispaSET.preprocessing.rst"
+                },
+                {
+                    "blank": 8,
+                    "code": 22,
+                    "comment": 0,
+                    "filename": "Docs\\DispaSET.pyomo.rst"
+                },
+                {
+                    "blank": 9,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "Docs\\DispaSET.rst"
+                },
+                {
+                    "filename": "Docs\\figures\\backpressure.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\CHP_flows.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\cli.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\clustering.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\config.gif",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\database.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\extraction.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\Flow-chart.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\logo.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\p2h.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\report2.jpg",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\resolution_flow.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\result_analysis.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\results_aggreg.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\results_balance.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\results_congestion.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\results_dispatch.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\results_rug.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\results_zones.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\rolling_horizon.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Docs\\figures\\spyder_config.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 71,
+                    "code": 155,
+                    "comment": 0,
+                    "filename": "Docs\\implementation.rst"
+                },
+                {
+                    "blank": 23,
+                    "code": 51,
+                    "comment": 4,
+                    "filename": "Docs\\index.rst"
+                },
+                {
+                    "blank": 7,
+                    "code": 51,
+                    "comment": 0,
+                    "filename": "Docs\\make.bat"
+                },
+                {
+                    "blank": 2,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Docs\\Makefile"
+                },
+                {
+                    "blank": 329,
+                    "code": 499,
+                    "comment": 0,
+                    "filename": "Docs\\model.rst"
+                },
+                {
+                    "blank": 21,
+                    "code": 55,
+                    "comment": 0,
+                    "filename": "Docs\\overview.rst"
+                },
+                {
+                    "blank": 23,
+                    "code": 25,
+                    "comment": 3,
+                    "filename": "Docs\\releases.rst"
+                },
+                {
+                    "blank": 74,
+                    "code": 91,
+                    "comment": 1,
+                    "filename": "Docs\\workflow.rst"
+                },
+                {
+                    "blank": 1,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "environment.yml"
+                },
+                {
+                    "blank": 1,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "environment.yml"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win32\\GAMS-1.0-py2.7.egg-info"
+                },
+                {
+                    "blank": 2,
+                    "code": 8,
+                    "comment": 1,
+                    "filename": "Externals\\gams_api\\win32\\gams\\__init__.py"
+                },
+                {
+                    "filename": "Externals\\gams_api\\win32\\gams\\database.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win32\\gams\\execution.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win32\\gams\\options.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win32\\gams\\workspace.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win32\\gamsxcc-1-py2.7.egg-info"
+                },
+                {
+                    "blank": 142,
+                    "code": 337,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win32\\gamsxcc.py"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win32\\gdxcc-7-py2.7.egg-info"
+                },
+                {
+                    "blank": 265,
+                    "code": 470,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win32\\gdxcc.py"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win32\\gevmcc-6-py2.7.egg-info"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win32\\gmdcc-2-py2.7.egg-info"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win32\\gmomcc-14-py2.7.egg-info"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win32\\optcc-2-py2.7.egg-info"
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\__pycache__\\gdxcc.cpython-36.pyc",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\_cfgmcc.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\_dctmcc.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\_gamsxcc.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\_gdxcc.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\_gevmcc.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\_gmdcc.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\_gmomcc.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\_idxcc.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\_optcc.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win64\\cfgmcc-1-py2.7.egg-info"
+                },
+                {
+                    "blank": 108,
+                    "code": 300,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win64\\cfgmcc.py"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win64\\dctmcc-1-py2.7.egg-info"
+                },
+                {
+                    "blank": 140,
+                    "code": 323,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win64\\dctmcc.py"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win64\\GAMS-1.0-py2.7.egg-info"
+                },
+                {
+                    "blank": 2,
+                    "code": 8,
+                    "comment": 1,
+                    "filename": "Externals\\gams_api\\win64\\gams\\__init__.py"
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\gams\\database.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\gams\\execution.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\gams\\options.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Externals\\gams_api\\win64\\gams\\workspace.pyd",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win64\\gamsxcc-1-py2.7.egg-info"
+                },
+                {
+                    "blank": 142,
+                    "code": 337,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win64\\gamsxcc.py"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win64\\gdxcc-7-py2.7.egg-info"
+                },
+                {
+                    "blank": 265,
+                    "code": 470,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win64\\gdxcc.py"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win64\\gevmcc-6-py2.7.egg-info"
+                },
+                {
+                    "blank": 245,
+                    "code": 497,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win64\\gevmcc.py"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win64\\gmdcc-2-py2.7.egg-info"
+                },
+                {
+                    "blank": 216,
+                    "code": 408,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win64\\gmdcc.py"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win64\\gmomcc-14-py2.7.egg-info"
+                },
+                {
+                    "blank": 722,
+                    "code": 1000,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win64\\gmomcc.py"
+                },
+                {
+                    "blank": 120,
+                    "code": 295,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win64\\idxcc.py"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "Externals\\gams_api\\win64\\optcc-2-py2.7.egg-info"
+                },
+                {
+                    "blank": 252,
+                    "code": 458,
+                    "comment": 7,
+                    "filename": "Externals\\gams_api\\win64\\optcc.py"
+                },
+                {
+                    "blank": 118,
+                    "code": 83,
+                    "comment": 0,
+                    "filename": "LICENSE"
+                },
+                {
+                    "blank": 118,
+                    "code": 83,
+                    "comment": 0,
+                    "filename": "LICENSE"
+                },
+                {
+                    "blank": 0,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "MANIFEST.in"
+                },
+                {
+                    "blank": 0,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "MANIFEST.in"
+                },
+                {
+                    "blank": 18,
+                    "code": 51,
+                    "comment": 4,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 18,
+                    "code": 51,
+                    "comment": 4,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 0,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "requirements.txt"
+                },
+                {
+                    "blank": 0,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "requirements.txt"
+                },
+                {
+                    "filename": "reservoirlevels.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "scripts\\.gitignore"
+                },
+                {
+                    "blank": 34,
+                    "code": 592,
+                    "comment": 0,
+                    "filename": "scripts\\.ipynb_checkpoints\\check heating-checkpoint.ipynb"
+                },
+                {
+                    "blank": 130,
+                    "code": 5186,
+                    "comment": 0,
+                    "filename": "scripts\\.ipynb_checkpoints\\Read_results_notebook-checkpoint.ipynb"
+                },
+                {
+                    "blank": 0,
+                    "code": 6,
+                    "comment": 0,
+                    "filename": "scripts\\.ipynb_checkpoints\\Untitled-checkpoint.ipynb"
+                },
+                {
+                    "filename": "scripts\\.pickle\\04a1d3624b72022b3117f20ccb997f47.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "scripts\\.pickle\\08f8a94f4b49c554651e1cfc18ae935d.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "scripts\\.pickle\\12199521dcea900037347118cea5ba73.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "scripts\\.pickle\\33fb640e7e2fb926db432308b4659c51.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "scripts\\.pickle\\820b2e7d5e8781bccece4d3d8b5d176a.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "scripts\\.pickle\\96bf137bd3bd54b928a61f2472fe5e9b.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "scripts\\.pickle\\9f9c4b6a595ff0fb06de09c25db6f582.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "scripts\\.pickle\\d4e05180920d7bca0c643fc66a4ae5ba.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 6,
+                    "code": 6,
+                    "comment": 7,
+                    "filename": "scripts\\build_and_run.py"
+                },
+                {
+                    "blank": 15,
+                    "code": 32,
+                    "comment": 11,
+                    "filename": "scripts\\build_and_run_batch.py"
+                },
+                {
+                    "blank": 23,
+                    "code": 79,
+                    "comment": 36,
+                    "filename": "scripts\\build_and_run_hypercube.py"
+                },
+                {
+                    "blank": 33,
+                    "code": 583,
+                    "comment": 0,
+                    "filename": "scripts\\check heating.ipynb"
+                },
+                {
+                    "blank": 0,
+                    "code": 105194,
+                    "comment": 0,
+                    "filename": "scripts\\day_ahead_opsd.csv"
+                },
+                {
+                    "blank": 10,
+                    "code": 8,
+                    "comment": 11,
+                    "filename": "scripts\\read_results.py"
+                },
+                {
+                    "blank": 130,
+                    "code": 5186,
+                    "comment": 0,
+                    "filename": "scripts\\Read_results_notebook.ipynb"
+                },
+                {
+                    "filename": "scripts\\test.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "scripts\\test2.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 21,
+                    "code": 1148,
+                    "comment": 0,
+                    "filename": "scripts\\Untitled.ipynb"
+                },
+                {
+                    "blank": 0,
+                    "code": 4,
+                    "comment": 0,
+                    "filename": "scripts\\warn.log"
+                },
+                {
+                    "blank": 8,
+                    "code": 42,
+                    "comment": 2,
+                    "filename": "setup.py"
+                },
+                {
+                    "blank": 8,
+                    "code": 42,
+                    "comment": 2,
+                    "filename": "setup.py"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering\\UCM.gpr"
+                },
+                {
+                    "blank": 125,
+                    "code": 912,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering\\UCM_h.gms"
+                },
+                {
+                    "blank": 612,
+                    "code": 1198,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_Noclustering\\UCM_h.lst"
+                },
+                {
+                    "blank": 0,
+                    "code": 695,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 695,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering\\writeresults.gms"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP1105\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP1105\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP1105\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP1105\\UCM.gpr"
+                },
+                {
+                    "blank": 125,
+                    "code": 912,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_MIP1105\\UCM_h.gms"
+                },
+                {
+                    "blank": 612,
+                    "code": 1195,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_Noclustering_MIP1105\\UCM_h.lst"
+                },
+                {
+                    "blank": 0,
+                    "code": 695,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP1105\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 695,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP1105\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP1105\\writeresults.gms"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43234\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43234\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43234\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43234\\UCM.gpr"
+                },
+                {
+                    "blank": 125,
+                    "code": 912,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43234\\UCM_h.gms"
+                },
+                {
+                    "blank": 612,
+                    "code": 1195,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43234\\UCM_h.lst"
+                },
+                {
+                    "blank": 0,
+                    "code": 694,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43234\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 694,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43234\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43234\\writeresults.gms"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\Inputs.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\UCM.gpr"
+                },
+                {
+                    "blank": 125,
+                    "code": 912,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\UCM_h.gms"
+                },
+                {
+                    "blank": 612,
+                    "code": 1204,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\UCM_h.lst"
+                },
+                {
+                    "blank": 0,
+                    "code": 613,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 613,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43237\\writeresults.gms"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43240_LP\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43240_LP\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43240_LP\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43240_LP\\UCM.gpr"
+                },
+                {
+                    "blank": 125,
+                    "code": 912,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43240_LP\\UCM_h.gms"
+                },
+                {
+                    "blank": 612,
+                    "code": 1201,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43240_LP\\UCM_h.lst"
+                },
+                {
+                    "blank": 0,
+                    "code": 694,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43240_LP\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 694,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43240_LP\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43240_LP\\writeresults.gms"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\debug.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\UCM.gpr"
+                },
+                {
+                    "blank": 125,
+                    "code": 912,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\UCM_h.gms"
+                },
+                {
+                    "blank": 612,
+                    "code": 1201,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\UCM_h.lst"
+                },
+                {
+                    "blank": 0,
+                    "code": 695,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 695,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43243_\\writeresults.gms"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43245\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43245\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP43245\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43245\\UCM.gpr"
+                },
+                {
+                    "blank": 125,
+                    "code": 912,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43245\\UCM_h.gms"
+                },
+                {
+                    "blank": 612,
+                    "code": 1201,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43245\\UCM_h.lst"
+                },
+                {
+                    "blank": 0,
+                    "code": 695,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43245\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 695,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43245\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP43245\\writeresults.gms"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\Inputs.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\UCM.gpr"
+                },
+                {
+                    "blank": 118,
+                    "code": 890,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\UCM_h.gms"
+                },
+                {
+                    "blank": 3,
+                    "code": 32,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\UCM_h.log"
+                },
+                {
+                    "blank": 662,
+                    "code": 1386,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\UCM_h.lst"
+                },
+                {
+                    "blank": 0,
+                    "code": 192,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\UCM_h.lxi"
+                },
+                {
+                    "blank": 118,
+                    "code": 890,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\UCM_h.~gm"
+                },
+                {
+                    "blank": 0,
+                    "code": 335,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 335,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_MIP\\writeresults.gms"
+                },
+                {
+                    "blank": 3,
+                    "code": 303,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225a\\gamscntr.dat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225a\\gamsdict.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225a\\gamsmatr.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225a\\gamsnext.cmd"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225a\\gamssolu.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 9,
+                    "code": 297,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225a\\gamsstat.dat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225a\\gamswrk0.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225a\\gmsprmNT.dat"
+                },
+                {
+                    "blank": 3,
+                    "code": 303,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225b\\gamscntr.dat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225b\\gamsdict.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225b\\gamsmatr.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225b\\gamsnext.cmd"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225b\\gamssolu.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 9,
+                    "code": 297,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225b\\gamsstat.dat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225b\\gamswrk0.dat",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\225b\\gmsprmNT.dat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\Inputs.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_Noclustering_wip\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\UCM.gpr"
+                },
+                {
+                    "blank": 123,
+                    "code": 907,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\UCM_h.gms"
+                },
+                {
+                    "blank": 1,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\UCM_h.log"
+                },
+                {
+                    "blank": 16,
+                    "code": 49,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\UCM_h.lst"
+                },
+                {
+                    "blank": 0,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\UCM_h.lxi"
+                },
+                {
+                    "blank": 122,
+                    "code": 907,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\UCM_h.~gm"
+                },
+                {
+                    "blank": 0,
+                    "code": 335,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 335,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_Noclustering_wip\\writeresults.gms"
+                },
+                {
+                    "filename": "Simulations\\simulation_test\\Inputs.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Simulations\\simulation_test\\Inputs.p",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 5,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_test\\makeGDX.bat"
+                },
+                {
+                    "filename": "Simulations\\simulation_test\\Results.gdx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_test\\UCM.gpr"
+                },
+                {
+                    "blank": 125,
+                    "code": 912,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_test\\UCM_h.gms"
+                },
+                {
+                    "blank": 62,
+                    "code": 130,
+                    "comment": 2,
+                    "filename": "Simulations\\simulation_test\\UCM_h.lst"
+                },
+                {
+                    "blank": 118,
+                    "code": 890,
+                    "comment": 8,
+                    "filename": "Simulations\\simulation_test\\UCM_h.~gm"
+                },
+                {
+                    "blank": 0,
+                    "code": 34,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_test\\warn_preprocessing.log"
+                },
+                {
+                    "blank": 0,
+                    "code": 34,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_test\\warn_solve.log"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "Simulations\\simulation_test\\writeresults.gms"
+                },
+                {
+                    "filename": "test.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 335,
+                    "comment": 0,
+                    "filename": "warn.log"
+                },
+                {
+                    "filename": "~$test.xlsx",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                }
+            ]
+        }
+    ]
+}

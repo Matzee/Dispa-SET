@@ -24,55 +24,65 @@ import logging
 
 from .str_handler import shrink_to_64, force_str
 
+
 def package_exists(package):
     # http://stackoverflow.com/questions/14050281/how-to-check-if-a-python-module-exists-without-importing-it
     import pkgutil
+
     package_loader = pkgutil.find_loader(package)
     return package_loader is not None
 
 
 def import_local_lib(lib):
-    '''
+    """
     Try to import the GAMS api and gdxcc to write gdx files
-    '''
+    """
     # First define the path to the 'Externals' folder. This path must be defined relatively to the current script location
     path_script = os.path.dirname(__file__)
-    path_ext = os.path.join(path_script,'../../Externals')
+    path_ext = os.path.join(path_script, "../../Externals")
 
-    if sys.platform == 'win32' and platform.architecture()[0] == '32bit':
-        sys.path.append(os.path.join(path_ext,'gams_api/win32/'))
-    elif sys.platform == 'win32' and platform.architecture()[0] == '64bit':
-        sys.path.append(os.path.join(path_ext,'gams_api/win64/'))
+    if sys.platform == "win32" and platform.architecture()[0] == "32bit":
+        sys.path.append(os.path.join(path_ext, "gams_api/win32/"))
+    elif sys.platform == "win32" and platform.architecture()[0] == "64bit":
+        sys.path.append(os.path.join(path_ext, "gams_api/win64/"))
     else:
-        logging.error('Pre-compiled libraries are not available for platform ' + sys.platform + ' and '
-                      ' architecture ' + platform.architecture()[0] +
-                      'Please install the gams API from the /apifiles/Python/api/ folder in the GAMS directory')
+        logging.error(
+            "Pre-compiled libraries are not available for platform " + sys.platform + " and "
+            " architecture " + platform.architecture()[0] + "Please install the gams API from the /apifiles/Python/api/ folder in the GAMS directory"
+        )
         sys.exit(1)
 
-    if lib == 'gams':
+    if lib == "gams":
         try:
             import gams
+
             return True
         except ImportError:
-            logging.error('Could not find gams. The gams library is required to run the GAMS versions of DispaSET.'
-                          'Please install if from the /apifiles/Python/api/ folder in the GAMS directory')
+            logging.error(
+                "Could not find gams. The gams library is required to run the GAMS versions of DispaSET."
+                "Please install if from the /apifiles/Python/api/ folder in the GAMS directory"
+            )
             sys.exit(1)
-    elif lib == 'gdxcc':
+    elif lib == "gdxcc":
         try:
             import gdxcc
+
             return True
         except ImportError:
-            logging.critical("gdxcc module could not be imported from Externals. GDX cannot be produced or read"
-                            'Please install the gams API from the /apifiles/Python/api/ folder in the GAMS directory')
+            logging.critical(
+                "gdxcc module could not be imported from Externals. GDX cannot be produced or read"
+                "Please install the gams API from the /apifiles/Python/api/ folder in the GAMS directory"
+            )
             sys.exit(1)
     else:
         logging.error('Only "gams" and "gdxcc" are present')
 
-if package_exists('gdxcc'):
+
+if package_exists("gdxcc"):
     import gdxcc
 else:
-    logging.warning('Could not import gdxcc. Trying to use pre-compiled libraries')
-    if import_local_lib('gdxcc'):
+    logging.warning("Could not import gdxcc. Trying to use pre-compiled libraries")
+    if import_local_lib("gdxcc"):
         import gdxcc
 
 #####################
@@ -104,7 +114,7 @@ def _insert_symbols(gdxHandle, sets, parameters):
             except:
                 success = False
             if not success:
-                logging.error('Key ' + gdxKeys[0] + ' of set ' + s + ' could not be written')
+                logging.error("Key " + gdxKeys[0] + " of set " + s + " could not be written")
 
         gdxcc.gdxDataWriteDone(gdxHandle)
 
@@ -113,9 +123,9 @@ def _insert_symbols(gdxHandle, sets, parameters):
         variable = parameters[p]
 
         # Check that the required fields are present:
-        dims = len(variable['sets'])
-        shape = variable['val'].shape
-        Nrows = variable['val'].shape[0]
+        dims = len(variable["sets"])
+        shape = variable["val"].shape
+        Nrows = variable["val"].shape[0]
         gdxSymbolType = gdxcc.GMS_DT_PAR
 
         gdxcc.gdxDataWriteStrStart(gdxHandle, p, "", dims, gdxSymbolType, 0)
@@ -123,24 +133,29 @@ def _insert_symbols(gdxHandle, sets, parameters):
         gdxValues[gdxcc.GMS_VAL_LEVEL] = 0.0  # 0.0 == Y (explanatory text of set in gdx)
 
         if len(shape) != dims:
-            logging.error('Variable ' + p + ': The \'val\' data matrix has ' + str(
-                len(shape)) + ' dimensions and should have ' + str(dims))
+            logging.error("Variable " + p + ": The 'val' data matrix has " + str(len(shape)) + " dimensions and should have " + str(dims))
             sys.exit(1)
         for i in range(dims):
-            if shape[i] != len(sets[variable['sets'][i]]):
+            if shape[i] != len(sets[variable["sets"][i]]):
                 logging.error(
-                    'Variable ' + p + ': The \'val\' data matrix has ' + str(shape[i]) + ' elements for dimention ' +
-                    str(variable['sets'][i]) + ' while there are ' + str(
-                        len(variable['sets'])) + ' set values')
+                    "Variable "
+                    + p
+                    + ": The 'val' data matrix has "
+                    + str(shape[i])
+                    + " elements for dimention "
+                    + str(variable["sets"][i])
+                    + " while there are "
+                    + str(len(variable["sets"]))
+                    + " set values"
+                )
                 sys.exit(1)
 
-        for index, value in np.ndenumerate(variable['val']):
+        for index, value in np.ndenumerate(variable["val"]):
             # Write line by line if value is non null
             if value != 0 and not pd.isnull(value):
                 gdxKeys = []  # All the set values for this line
                 for i in range(dims):
-                    key = sets[variable['sets'][i]][
-                        index[i]]  # Get the string value of the set by using the indice in the val matrix
+                    key = sets[variable["sets"][i]][index[i]]  # Get the string value of the set by using the indice in the val matrix
                     gdxKeys.append(str(key))
                 gdxKeys = shrink_to_64(gdxKeys)  # Reduce the size if bigger than 64 characters
                 gdxValues[gdxcc.GMS_VAL_LEVEL] = float(value)
@@ -150,12 +165,11 @@ def _insert_symbols(gdxHandle, sets, parameters):
                     logging.error("Didn't work")
                     success = False
                 if not success:
-                    logging.error('Key ' + gdxKeys[0] + ' of parameter ' + p + ' could not be written')
+                    logging.error("Key " + gdxKeys[0] + " of parameter " + p + " could not be written")
         gdxcc.gdxDataWriteDone(gdxHandle)
-        logging.debug('Parameter ' + p + ' successfully written')
+        logging.debug("Parameter " + p + " successfully written")
 
-
-    logging.debug('Set ' + s + ' successfully written')
+    logging.debug("Set " + s + " successfully written")
 
 
 def write_variables(gams_dir, gdx_out, list_vars):
@@ -172,13 +186,13 @@ def write_variables(gams_dir, gdx_out, list_vars):
     if not os.path.isdir(gams_dir):
         gams_dir = get_gams_path()
     if not os.path.isdir(gams_dir):
-        logging.critical('GDXCC: Could not find the specified gams directory: ' + gams_dir)
+        logging.critical("GDXCC: Could not find the specified gams directory: " + gams_dir)
         sys.exit(1)
     gams_dir = force_str(gams_dir)
     gdx_out = force_str(gdx_out)
 
     gdxHandle = gdxcc.new_gdxHandle_tp()
-    gdxcc.gdxCreateD(gdxHandle, gams_dir, gdxcc.GMS_SSSIZE) #it accepts only str type
+    gdxcc.gdxCreateD(gdxHandle, gams_dir, gdxcc.GMS_SSSIZE)  # it accepts only str type
     gdxcc.gdxOpenWrite(gdxHandle, gdx_out, "")
 
     [sets, parameters] = list_vars
@@ -186,11 +200,10 @@ def write_variables(gams_dir, gdx_out, list_vars):
 
     gdxcc.gdxClose(gdxHandle)
 
-    logging.info('Data Successfully written to ' + gdx_out)
+    logging.info("Data Successfully written to " + gdx_out)
 
 
-
-def gdx_to_list(gams_dir, filename, varname='all', verbose=False):
+def gdx_to_list(gams_dir, filename, varname="all", verbose=False):
     """original
     This function loads the gdx with the results of the simulation
     All results are stored in an unordered list
@@ -201,17 +214,27 @@ def gdx_to_list(gams_dir, filename, varname='all', verbose=False):
     :returns:        Dictionary with all the collected values (within lists)
     """
 
+    from gdxcc import (
+        gdxSymbolInfo,
+        gdxCreateD,
+        gdxOpenRead,
+        GMS_SSSIZE,
+        gdxDataReadDone,
+        new_gdxHandle_tp,
+        gdxDataReadStr,
+        gdxFindSymbol,
+        gdxErrorStr,
+        gdxDataReadStrStart,
+        gdxGetLastError,
+    )
 
-
-    from gdxcc import gdxSymbolInfo, gdxCreateD, gdxOpenRead, GMS_SSSIZE, gdxDataReadDone, new_gdxHandle_tp, \
-        gdxDataReadStr, gdxFindSymbol, gdxErrorStr, gdxDataReadStrStart, gdxGetLastError
     out = {}
     tgdx = tm.time()
     gdxHandle = new_gdxHandle_tp()
     gdxCreateD(gdxHandle, gams_dir, GMS_SSSIZE)
 
     # make sure the file path is properly formatted:
-    filename = filename.replace('/', os.path.sep).replace('\\\\', os.path.sep).replace('\\', os.path.sep)
+    filename = filename.replace("/", os.path.sep).replace("\\\\", os.path.sep).replace("\\", os.path.sep)
     filename = str(filename)  # removing possible unicode formatting
 
     if not os.path.isfile(filename):
@@ -220,7 +243,7 @@ def gdx_to_list(gams_dir, filename, varname='all', verbose=False):
 
     gdxOpenRead(gdxHandle, filename)
 
-    if varname == 'all':
+    if varname == "all":
         # go through all the symbols one by one and add their data to the dict
         symNr = 0
         SymbolInfo = gdxSymbolInfo(gdxHandle, 0)
@@ -283,19 +306,19 @@ def gdx_to_dataframe(data, fixindex=False, verbose=False):
                             vars2[element[1]] = element[2]
                     vals[var1] = vars2
                 out[symbol] = pd.DataFrame(vals)
-                logging.debug('Successfully loaded variable ' + symbol)
+                logging.debug("Successfully loaded variable " + symbol)
             elif dim == 2:
                 vals = {}
                 for element in data[symbol]:
                     vals[element[0]] = element[1]
                 out[symbol] = pd.Series(vals)
-                logging.debug('Successfully loaded variable ' + symbol)
+                logging.debug("Successfully loaded variable " + symbol)
             elif dim == 1:
-                logging.warn('Variable ' + symbol + ' has dimension 0, which should not occur. Skipping')
+                logging.warn("Variable " + symbol + " has dimension 0, which should not occur. Skipping")
             elif dim > 3:
-                logging.warn('Variable ' + symbol + ' has more than 2 dimensions, which is very tiring. Skipping')
+                logging.warn("Variable " + symbol + " has more than 2 dimensions, which is very tiring. Skipping")
         else:
-             logging.debug('Variable ' + symbol + ' is empty. Skipping')
+            logging.debug("Variable " + symbol + " is empty. Skipping")
     for symbol in out:
         try:
             out[symbol].fillna(value=0, inplace=True)
@@ -322,9 +345,7 @@ def get_gdx(gams_dir, resultfile):
     :param resultfile:  Path to the gdx file to be read
     :returns:           dictionary of dataframes
     """
-    return gdx_to_dataframe(gdx_to_list(gams_dir, resultfile,
-                                        varname='all', verbose=True),
-                            fixindex=True, verbose=True)
+    return gdx_to_dataframe(gdx_to_list(gams_dir, resultfile, varname="all", verbose=True), fixindex=True, verbose=True)
 
 
 def get_gams_path():
@@ -336,81 +357,87 @@ def get_gams_path():
     Currently works for Windows, Linux and OSX. More searching rules and patterns should be added in the future
     """
     import subprocess
-    out = ''
-    if sys.platform == 'linux2' or sys.platform == 'linux':
+
+    out = ""
+    if sys.platform == "linux2" or sys.platform == "linux":
         try:
-            tmp = subprocess.check_output(['locate', '-i', 'libgamscall64.so']).decode()
+            tmp = subprocess.check_output(["locate", "-i", "libgamscall64.so"]).decode()
         except:
-            tmp = ''
-        lines = tmp.split('\n')
+            tmp = ""
+        lines = tmp.split("\n")
         for line in lines:
-            path = line.strip('libgamscall64.so')
+            path = line.strip("libgamscall64.so")
             if os.path.exists(path):
                 out = path
             break
-    elif sys.platform == 'win32':
-        paths = ['C:\\GAMS', 'C:\\Program Files\\GAMS', 'C:\\Program Files (x86)\\GAMS']
+    elif sys.platform == "win32":
+        paths = ["C:\\GAMS", "C:\\Program Files\\GAMS", "C:\\Program Files (x86)\\GAMS"]
         lines_32 = []
         lines_64 = []
         for path in paths:
             if os.path.exists(path):
-                paths_32 = [path + os.sep + tmp for tmp in os.listdir(path) if
-                          tmp.startswith('win32') and os.path.exists(path + os.sep + tmp)]
-                paths_64 = [path + os.sep + tmp for tmp in os.listdir(path) if
-                          tmp.startswith('win64') and os.path.exists(path + os.sep + tmp)]
+                paths_32 = [path + os.sep + tmp for tmp in os.listdir(path) if tmp.startswith("win32") and os.path.exists(path + os.sep + tmp)]
+                paths_64 = [path + os.sep + tmp for tmp in os.listdir(path) if tmp.startswith("win64") and os.path.exists(path + os.sep + tmp)]
                 for path1 in paths_32:
-                    lines_32 = lines_32 + [path1 + os.sep + tmp for tmp in os.listdir(path1) if
-                                     tmp.startswith('24') and os.path.isfile(
-                                         path1 + os.sep + tmp + os.sep + 'gams.exe')]
+                    lines_32 = lines_32 + [
+                        path1 + os.sep + tmp
+                        for tmp in os.listdir(path1)
+                        if tmp.startswith("24") and os.path.isfile(path1 + os.sep + tmp + os.sep + "gams.exe")
+                    ]
                 for path1 in paths_64:
-                    lines_64 = lines_64 + [path1 + os.sep + tmp for tmp in os.listdir(path1) if
-                                     tmp.startswith('24') and os.path.isfile(
-                                         path1 + os.sep + tmp + os.sep + 'gams.exe')]
+                    lines_64 = lines_64 + [
+                        path1 + os.sep + tmp
+                        for tmp in os.listdir(path1)
+                        if tmp.startswith("24") and os.path.isfile(path1 + os.sep + tmp + os.sep + "gams.exe")
+                    ]
         for line in lines_64:
             if os.path.exists(line):
                 out = line
             break
-        if out == '':    # The 32-bit version of gams should never be preferred
+        if out == "":  # The 32-bit version of gams should never be preferred
             for line in lines_32:
                 if os.path.exists(line):
                     out = line
-                    logging.critical('It seems that the installed version of gams is 32-bit, which might cause consol crashing and compatibility problems. Please consider using GAMS 64-bit')
+                    logging.critical(
+                        "It seems that the installed version of gams is 32-bit, which might cause consol crashing and compatibility problems. Please consider using GAMS 64-bit"
+                    )
                 break
-    elif sys.platform == 'darwin':
-        paths = ['/Applications/']
+    elif sys.platform == "darwin":
+        paths = ["/Applications/"]
         lines = []
         for path in paths:
             if os.path.exists(path):
-                paths1 = [path + os.sep + tmp for tmp in os.listdir(path) if
-                          tmp.startswith('GAMS') and os.path.exists(path + os.sep + tmp)]
+                paths1 = [path + os.sep + tmp for tmp in os.listdir(path) if tmp.startswith("GAMS") and os.path.exists(path + os.sep + tmp)]
                 for path1 in paths1:
-                    lines = lines + [path1 + os.sep + tmp for tmp in os.listdir(path1) if
-                                     tmp.startswith('sysdir') and os.path.isfile(
-                                         path1 + os.sep + tmp + os.sep + 'gams')]
+                    lines = lines + [
+                        path1 + os.sep + tmp
+                        for tmp in os.listdir(path1)
+                        if tmp.startswith("sysdir") and os.path.isfile(path1 + os.sep + tmp + os.sep + "gams")
+                    ]
         if len(lines) == 0:
-            tmp = subprocess.check_output(['mdfind', '-name', 'libgamscall64.dylib'])
-            lines = [x.strip('libgamscall64.dylib') for x in tmp.split('\n')]
+            tmp = subprocess.check_output(["mdfind", "-name", "libgamscall64.dylib"])
+            lines = [x.strip("libgamscall64.dylib") for x in tmp.split("\n")]
         for line in lines:
             if os.path.exists(line):
                 out = line
             break
 
-    if out != '':
-        logging.info('Detected ' + out + ' as GAMS path on this computer')
+    if out != "":
+        logging.info("Detected " + out + " as GAMS path on this computer")
     else:
         tmp = input('Specify the path to GAMS within quotes (e.g. "C:\\\\GAMS\\\\win64\\\\24.3"): ')
         if os.path.isdir(tmp):
-            if sys.platform == 'win32':
-                if os.path.isfile(tmp + os.sep + 'gams.exe'):
+            if sys.platform == "win32":
+                if os.path.isfile(tmp + os.sep + "gams.exe"):
                     out = tmp
                 else:
-                    logging.critical('The provided path is not a valid windows gams folder')
+                    logging.critical("The provided path is not a valid windows gams folder")
                     sys.exit(1)
-            elif sys.platform == 'linux2':
-                if os.path.isfile(tmp + os.sep + 'gamslib'):  # does not always work... gamslib_ml
+            elif sys.platform == "linux2":
+                if os.path.isfile(tmp + os.sep + "gamslib"):  # does not always work... gamslib_ml
                     out = tmp
                 else:
-                    logging.critical('The provided path is not a valid linux gams folder')
+                    logging.critical("The provided path is not a valid linux gams folder")
                     sys.exit(1)
             else:
                 if os.path.isdir(tmp):

@@ -14,7 +14,7 @@ def shrink_to_64(x, N=64):
 
     def shrink_singlestring(key, N):
         if len(key) >= N:
-            return key[:20] + ' ... ' + key[-20:]
+            return key[:20] + " ... " + key[-20:]
         else:
             return key
 
@@ -23,7 +23,7 @@ def shrink_to_64(x, N=64):
     elif type(x) == list:
         return [shrink_singlestring(xx, N) for xx in x]
     else:
-        logging.critical('Argument type not supported')
+        logging.critical("Argument type not supported")
         sys.exit(1)
 
 
@@ -39,18 +39,19 @@ def clean_strings(x, exclude_digits=False, exclude_punctuation=False):
         df['DisplayName'].apply(clean_strings)
 
     """
-    if sys.version_info >= (3,0): # Skip this funcion if python version is >3. Have to test better TODO
+    if sys.version_info >= (3, 0):  # Skip this funcion if python version is >3. Have to test better TODO
         return x
     import unicodedata
     import string
+
     def clean_singlestring(x):
         if exclude_digits:  # modify the following depending on what you need to exclude
             exclude1 = set(string.punctuation)
             # exception to the exclusion:
-            exclude1.remove('_')
-            exclude1.remove('-')
-            exclude1.remove('[')
-            exclude1.remove(']')
+            exclude1.remove("_")
+            exclude1.remove("-")
+            exclude1.remove("[")
+            exclude1.remove("]")
         else:
             exclude1 = set([])
         if exclude_punctuation:
@@ -60,19 +61,21 @@ def clean_strings(x, exclude_digits=False, exclude_punctuation=False):
         exclude = exclude1 | exclude2
 
         # http://stackoverflow.com/questions/2365411/python-convert-unicode-to-ascii-without-errors
-        x = str(x).decode('utf-8')  # to string byte and then unicode
-        x = unicodedata.normalize('NFKD', x).encode('ascii', 'ignore')  # convert utf characters and to ascii
+        x = str(x).decode("utf-8")  # to string byte and then unicode
+        x = unicodedata.normalize("NFKD", x).encode("ascii", "ignore")  # convert utf characters and to ascii
 
         # x = x.upper() #to UPPERCASE
-        x = ''.join(ch for ch in x if ch not in exclude)  # remove numbers and punctuation
+        x = "".join(ch for ch in x if ch not in exclude)  # remove numbers and punctuation
         return x
+
     if type(x) == str:
         return clean_singlestring(x)
     elif type(x) == list:
         return [clean_singlestring(xx) for xx in x]
     else:
-        logging.error('Argument type not supported')
+        logging.error("Argument type not supported")
         sys.exit(1)
+
 
 def force_str(x):
     """ Used to get a str object both in python 2 and 3 although they represent different objects (byte vs unicode)

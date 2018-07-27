@@ -1,0 +1,526 @@
+===============================================================================
+EXTENSION NAME : linecount
+EXTENSION VERSION : 0.1.7
+-------------------------------------------------------------------------------
+count time : 2018-06-09 10:37:20
+count workspace : c:\Users\PC-HP\Dispa-SET
+total files : 514
+total code lines : 216
+total comment lines : 13
+total blank lines : 145
+
+.gitattributes, code is 0, comment is 0, blank is 0.
+.gitattributes, code is 0, comment is 0, blank is 0.
+.gitignore, code is 11, comment is 7, blank is 0.
+.gitignore, code is 11, comment is 7, blank is 0.
+.pickle\Database-AvailabilityFactors-AT-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-AvailabilityFactors-BE-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-AvailabilityFactors-CH-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-AvailabilityFactors-DE-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-AvailabilityFactors-FR-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-AvailabilityFactors-NL-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-CrossBorderFlows-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-DayAheadNTC-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-DummyData-AvailabilityFactors-Z1-2015.csv-.p, it is a binary file.
+.pickle\Database-DummyData-AvailabilityFactors-Z2-2015.csv-.p, it is a binary file.
+.pickle\Database-DummyData-CrossBorderFlows.csv-.p, it is a binary file.
+.pickle\Database-DummyData-HeatDemand.csv-.p, it is a binary file.
+.pickle\Database-DummyData-Load_RealTime-Z1-2015.csv-.p, it is a binary file.
+.pickle\Database-DummyData-Load_RealTime-Z2-2015.csv-.p, it is a binary file.
+.pickle\Database-DummyData-NTCs.csv-.p, it is a binary file.
+.pickle\Database-DummyData-Outages.csv-.p, it is a binary file.
+.pickle\Database-DummyData-ReservoirLevels.csv-.p, it is a binary file.
+.pickle\Database-DummyData-ScaledInflows.csv-.p, it is a binary file.
+.pickle\Database-DummyData-Units_testcase.csv-.p, it is a binary file.
+.pickle\Database-FuelPrices-Biomass-2015.csv-.p, it is a binary file.
+.pickle\Database-FuelPrices-CO2-2015.csv-.p, it is a binary file.
+.pickle\Database-FuelPrices-Coal-2015.csv-.p, it is a binary file.
+.pickle\Database-FuelPrices-Gas-2015.csv-.p, it is a binary file.
+.pickle\Database-FuelPrices-Lignite-2015.csv-.p, it is a binary file.
+.pickle\Database-FuelPrices-Oil-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ReservoirLevel-AT-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ReservoirLevel-BE-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ReservoirLevel-CH-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ReservoirLevel-DE-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ReservoirLevel-FR-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ReservoirLevel-NL-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ScaledInflows-AT-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ScaledInflows-BE-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ScaledInflows-CH-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ScaledInflows-DE-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ScaledInflows-FR-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-HydroData-ScaledInflows-NL-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-Load_RealTime-AT-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-Load_RealTime-BE-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-Load_RealTime-CH-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-Load_RealTime-DE-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-Load_RealTime-FR-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-Load_RealTime-NL-1h-2015.csv-.p, it is a binary file.
+.pickle\Database-PowerPlants-AT-2015.csv-.p, it is a binary file.
+.pickle\Database-PowerPlants-BE-2015.csv-.p, it is a binary file.
+.pickle\Database-PowerPlants-CH-2015.csv-.p, it is a binary file.
+.pickle\Database-PowerPlants-DE-2015.csv-.p, it is a binary file.
+.pickle\Database-PowerPlants-FR-2015.csv-.p, it is a binary file.
+.pickle\Database-PowerPlants-NL-2015.csv-.p, it is a binary file.
+225a\gamscntr.dat, code is 303, comment is 0, blank is 3.
+225a\gamsdict.dat, it is a binary file.
+225a\gamsmatr.dat, it is a binary file.
+225a\gamsnext.cmd, code is 2, comment is 0, blank is 0.
+225a\gamssolu.dat, it is a binary file.
+225a\gamsstat.dat, code is 3, comment is 0, blank is 2.
+225a\gamswrk0.dat, it is a binary file.
+225a\gmsprmNT.dat, code is 16, comment is 0, blank is 0.
+225b\gamscntr.dat, code is 303, comment is 0, blank is 3.
+225b\gamsdict.dat, it is a binary file.
+225b\gamsmatr.dat, code is 0, comment is 0, blank is 0.
+225b\gamsnext.cmd, code is 2, comment is 0, blank is 0.
+225b\gamssolu.dat, it is a binary file.
+225b\gamsstat.dat, code is 425, comment is 0, blank is 13.
+225b\gmsprmNT.dat, code is 16, comment is 0, blank is 0.
+Changes.xlsx, it is a binary file.
+Changes.xlsx, it is a binary file.
+clustered.xlsx, it is a binary file.
+clustered.xlsx, it is a binary file.
+command.txt, code is 2, comment is 0, blank is 0.
+command.txt, code is 2, comment is 0, blank is 0.
+ConfigFiles\Config.xlsx, it is a binary file.
+ConfigFiles\config_EL.yml, code is 73, comment is 0, blank is 0.
+ConfigFiles\Config_integer.xlsx, it is a binary file.
+ConfigFiles\Config_noclustering (version 1).xlsb.xlsx, it is a binary file.
+ConfigFiles\Config_noclustering.xlsx, it is a binary file.
+ConfigFiles\Config_noclusteringMZ.xlsx, it is a binary file.
+ConfigFiles\ConfigBE.xlsx, it is a binary file.
+ConfigFiles\ConfigCY.xlsx, it is a binary file.
+ConfigFiles\ConfigEL.xlsx, it is a binary file.
+ConfigFiles\ConfigIE.xlsx, it is a binary file.
+ConfigFiles\ConfigNL.xlsx, it is a binary file.
+ConfigFiles\ConfigTest.xlsx, it is a binary file.
+ConfigFiles\~$Config_noclustering.xlsx, it is a binary file.
+ConfigFiles\~$Config_noclusteringMZ.xlsx, it is a binary file.
+Database\AvailabilityFactors\AT\15min\2015.csv, code is 35041, comment is 0, blank is 0.
+Database\AvailabilityFactors\AT\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\BE\15min\2015.csv, code is 35041, comment is 0, blank is 0.
+Database\AvailabilityFactors\BE\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\CH\15min\2015.csv, code is 35041, comment is 0, blank is 0.
+Database\AvailabilityFactors\CH\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\CY\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\DE\15min\2015.csv, code is 35041, comment is 0, blank is 0.
+Database\AvailabilityFactors\DE\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\DE\1h\2015_.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\EL\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\FR\15min\2015.csv, code is 35041, comment is 0, blank is 0.
+Database\AvailabilityFactors\FR\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\IE\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\NL\15min\2015.csv, code is 35041, comment is 0, blank is 0.
+Database\AvailabilityFactors\NL\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\AvailabilityFactors\NL\1h\2015_withBEVS.csv, code is 8761, comment is 0, blank is 0.
+Database\CrossBorderFlows\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\DayAheadNTC\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\00 - These data files are used for testing purposes only.txt, code is 1, comment is 0, blank is 0.
+Database\DummyData\AvailabilityFactors\Z1\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\AvailabilityFactors\Z2\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\CrossBorderFlows.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\HeatDemand.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\load.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\Load_RealTime\Z1\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\DummyData\Load_RealTime\Z2\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\DummyData\NTCs.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\Outages.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\ReservoirLevels.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\ScaledInflows.csv, code is 8761, comment is 0, blank is 0.
+Database\DummyData\Units_testcase.csv, code is 17, comment is 0, blank is 0.
+Database\FuelPrices\Biomass\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\FuelPrices\CO2\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\FuelPrices\Coal\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\FuelPrices\Gas\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\FuelPrices\Gas\2015_.csv, code is 8760, comment is 0, blank is 0.
+Database\FuelPrices\Gas\EL\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\FuelPrices\Lignite\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\FuelPrices\Oil\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Heat_demand\CY\Vassilikos_CCP2.csv, code is 8761, comment is 0, blank is 0.
+Database\Heat_demand\CY\Vassilikos_CCP2_80.csv, code is 8761, comment is 0, blank is 0.
+Database\Heat_demand\CY\vassilikos_chp_p2h.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\Inflows\EL\average.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\Inflows\EL\dry.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\Inflows\EL\wet.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ReservoirLevel\AT\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ReservoirLevel\BE\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ReservoirLevel\CH\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ReservoirLevel\DE\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ReservoirLevel\EL\1h\average.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ReservoirLevel\EL\1h\dry.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ReservoirLevel\FR\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ReservoirLevel\NL\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ScaledInflows\AT\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ScaledInflows\CH\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ScaledInflows\FR\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\HydroData\ScaledInflows\NL\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\Load_DayAhead\AT\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_DayAhead\AT\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_DayAhead\BE\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_DayAhead\BE\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_DayAhead\CH\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_DayAhead\CH\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_DayAhead\DE\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_DayAhead\DE\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_DayAhead\FR\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_DayAhead\FR\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_DayAhead\NL\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_DayAhead\NL\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_RealTime\AT\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_RealTime\AT\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_RealTime\BE\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_RealTime\BE\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_RealTime\CH\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_RealTime\CH\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_RealTime\CY\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_RealTime\DE\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_RealTime\DE\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_RealTime\EL\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\Load_RealTime\FR\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_RealTime\FR\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_RealTime\IE\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\Load_RealTime\NL\15min\2015.csv, code is 35040, comment is 0, blank is 0.
+Database\Load_RealTime\NL\1h\2015.csv, code is 8760, comment is 0, blank is 0.
+Database\OutageFactors\EL\outages_EL_final.csv, code is 8762, comment is 0, blank is 0.
+Database\OutageFactors\IE\1h\2015.csv, code is 8761, comment is 0, blank is 0.
+Database\PowerPlants\AT\2015.csv, code is 47, comment is 0, blank is 0.
+Database\PowerPlants\BE\2015.csv, code is 37, comment is 0, blank is 0.
+Database\PowerPlants\BE\simplified.csv, code is 29, comment is 0, blank is 0.
+Database\PowerPlants\CH\2015.csv, code is 28, comment is 0, blank is 0.
+Database\PowerPlants\CY\2015.csv, code is 25, comment is 0, blank is 0.
+Database\PowerPlants\CY\2015_heat.csv, code is 25, comment is 0, blank is 0.
+Database\PowerPlants\CY\2015_heatpump.csv, code is 25, comment is 0, blank is 0.
+Database\PowerPlants\DE\2015.csv, code is 295, comment is 40, blank is 0.
+Database\PowerPlants\DE\2015_.csv, code is 888, comment is 0, blank is 0.
+Database\PowerPlants\DE\2015_2105.csv, code is 669, comment is 116, blank is 0.
+Database\PowerPlants\DE\2015__.csv, code is 141, comment is 0, blank is 0.
+Database\PowerPlants\DE\2015____.csv, code is 888, comment is 0, blank is 0.
+Database\PowerPlants\DE\2015_____.csv, code is 859, comment is 0, blank is 11.
+Database\PowerPlants\DE\2015_excel.xlsx, it is a binary file.
+Database\PowerPlants\DE\2015_old.xlsx, it is a binary file.
+Database\PowerPlants\DE\conventional_power_plants_DE (version 1).xlsb.xlsx, it is a binary file.
+Database\PowerPlants\DE\conventional_power_plants_DE.xlsx, it is a binary file.
+Database\PowerPlants\DE\~$2015_excel.xlsx, it is a binary file.
+Database\PowerPlants\EL\2015.csv, code is 54, comment is 0, blank is 0.
+Database\PowerPlants\FR\2015.csv, code is 143, comment is 0, blank is 0.
+Database\PowerPlants\IE\2015_Lucy.csv, code is 77, comment is 0, blank is 0.
+Database\PowerPlants\NL\2015.csv, code is 47, comment is 0, blank is 0.
+Database\PowerPlants\NL\2015_BEVS.csv, code is 58, comment is 0, blank is 0.
+Dispa_Result.xlsx, it is a binary file.
+Dispa_Result.xlsx, it is a binary file.
+dispaset.egg-info\dependency_links.txt, code is 0, comment is 0, blank is 1.
+dispaset.egg-info\entry_points.txt, code is 2, comment is 0, blank is 1.
+dispaset.egg-info\PKG-INFO, code is 60, comment is 6, blank is 18.
+dispaset.egg-info\requires.txt, code is 11, comment is 0, blank is 1.
+dispaset.egg-info\SOURCES.txt, code is 35, comment is 0, blank is 0.
+dispaset.egg-info\top_level.txt, code is 1, comment is 0, blank is 0.
+DispaSET\__init__.py, code is 64, comment is 9, blank is 10.
+DispaSET\__init__.pyc, it is a binary file.
+DispaSET\__pycache__\__init__.cpython-36.pyc, it is a binary file.
+DispaSET\__pycache__\_version.cpython-36.pyc, it is a binary file.
+DispaSET\__pycache__\cli.cpython-36.pyc, it is a binary file.
+DispaSET\__pycache__\common.cpython-36.pyc, it is a binary file.
+DispaSET\__pycache__\solve.cpython-36.pyc, it is a binary file.
+DispaSET\_version.py, code is 1, comment is 0, blank is 0.
+DispaSET\_version.pyc, it is a binary file.
+DispaSET\cli.py, code is 43, comment is 3, blank is 13.
+DispaSET\cli.pyc, it is a binary file.
+DispaSET\common.py, code is 19, comment is 14, blank is 4.
+DispaSET\common.pyc, it is a binary file.
+DispaSET\GAMS\cplex.opt, code is 4, comment is 0, blank is 0.
+DispaSET\GAMS\gams_path.txt, code is 1, comment is 0, blank is 0.
+DispaSET\GAMS\makeGDX.bat, code is 37, comment is 0, blank is 5.
+DispaSET\GAMS\UCM_GUSS.gms, code is 925, comment is 8, blank is 134.
+DispaSET\GAMS\UCM_h.gms, code is 912, comment is 8, blank is 125.
+DispaSET\GAMS\UCM_MZ.gms, code is 910, comment is 8, blank is 121.
+DispaSET\GAMS\UCM_v22.gms, code is 1005, comment is 8, blank is 139.
+DispaSET\GAMS\writeresults.gms, code is 48, comment is 0, blank is 7.
+DispaSET\misc\__init__.py, code is 0, comment is 0, blank is 0.
+DispaSET\misc\__init__.pyc, it is a binary file.
+DispaSET\misc\__pycache__\__init__.cpython-36.pyc, it is a binary file.
+DispaSET\misc\__pycache__\colorstreamhandler.cpython-36.pyc, it is a binary file.
+DispaSET\misc\__pycache__\gdx_handler.cpython-36.pyc, it is a binary file.
+DispaSET\misc\__pycache__\gms_handler.cpython-36.pyc, it is a binary file.
+DispaSET\misc\__pycache__\str_handler.cpython-36.pyc, it is a binary file.
+DispaSET\misc\checks.py, code is 240, comment is 13, blank is 58.
+DispaSET\misc\colorstreamhandler.py, code is 93, comment is 55, blank is 20.
+DispaSET\misc\colorstreamhandler.pyc, it is a binary file.
+DispaSET\misc\gdx_handler.py, code is 293, comment is 23, blank is 57.
+DispaSET\misc\gdx_handler.pyc, it is a binary file.
+DispaSET\misc\gms_handler.py, code is 70, comment is 3, blank is 13.
+DispaSET\misc\gms_handler.pyc, it is a binary file.
+DispaSET\misc\str_handler.py, code is 50, comment is 8, blank is 12.
+DispaSET\misc\str_handler.pyc, it is a binary file.
+DispaSET\postprocessing\__init__.py, code is 0, comment is 0, blank is 0.
+DispaSET\postprocessing\__init__.pyc, it is a binary file.
+DispaSET\postprocessing\__pycache__\__init__.cpython-36.pyc, it is a binary file.
+DispaSET\postprocessing\__pycache__\postprocessing.cpython-36.pyc, it is a binary file.
+DispaSET\postprocessing\postprocessing.py, code is 724, comment is 100, blank is 166.
+DispaSET\postprocessing\postprocessing.pyc, it is a binary file.
+DispaSET\postprocessing\warn.log, code is 0, comment is 0, blank is 0.
+DispaSET\preprocessing\__init__.py, code is 0, comment is 0, blank is 0.
+DispaSET\preprocessing\__init__.pyc, it is a binary file.
+DispaSET\preprocessing\__pycache__\__init__.cpython-36.pyc, it is a binary file.
+DispaSET\preprocessing\__pycache__\data_check.cpython-36.pyc, it is a binary file.
+DispaSET\preprocessing\__pycache__\data_handler.cpython-36.pyc, it is a binary file.
+DispaSET\preprocessing\__pycache__\preprocessing.cpython-36.pyc, it is a binary file.
+DispaSET\preprocessing\__pycache__\utils.cpython-36.pyc, it is a binary file.
+DispaSET\preprocessing\data_check.py, code is 412, comment is 43, blank is 66.
+DispaSET\preprocessing\data_check.pyc, it is a binary file.
+DispaSET\preprocessing\data_handler.py, code is 393, comment is 66, blank is 85.
+DispaSET\preprocessing\data_handler.pyc, it is a binary file.
+DispaSET\preprocessing\preprocessing.py, code is 614, comment is 153, blank is 135.
+DispaSET\preprocessing\preprocessing.pyc, it is a binary file.
+DispaSET\preprocessing\utils.py, code is 273, comment is 46, blank is 84.
+DispaSET\preprocessing\utils.pyc, it is a binary file.
+DispaSET\pyomo\__init__.py, code is 0, comment is 0, blank is 0.
+DispaSET\pyomo\model.py, code is 545, comment is 253, blank is 190.
+DispaSET\pyomo\utils.py, code is 76, comment is 2, blank is 15.
+DispaSET\solve.py, code is 72, comment is 25, blank is 17.
+DispaSET\solve.pyc, it is a binary file.
+DispaSET\test\preprocessing_test.py, code is 21, comment is 1, blank is 11.
+DispaSET\test\preprocessing_test.pyc, it is a binary file.
+DispaSET\warn.log, code is 0, comment is 0, blank is 0.
+Docs\conf.py, code is 45, comment is 162, blank is 73.
+Docs\data.rst, code is 241, comment is 0, blank is 89.
+Docs\developers.rst, code is 2, comment is 0, blank is 1.
+Docs\DispaSET.misc.rst, code is 28, comment is 0, blank is 10.
+Docs\DispaSET.postprocessing.rst, code is 16, comment is 0, blank is 6.
+Docs\DispaSET.preprocessing.rst, code is 34, comment is 0, blank is 12.
+Docs\DispaSET.pyomo.rst, code is 22, comment is 0, blank is 8.
+Docs\DispaSET.rst, code is 23, comment is 0, blank is 9.
+Docs\figures\backpressure.png, it is a binary file.
+Docs\figures\CHP_flows.png, it is a binary file.
+Docs\figures\cli.png, it is a binary file.
+Docs\figures\clustering.png, it is a binary file.
+Docs\figures\config.gif, it is a binary file.
+Docs\figures\database.png, it is a binary file.
+Docs\figures\extraction.png, it is a binary file.
+Docs\figures\Flow-chart.png, it is a binary file.
+Docs\figures\logo.png, it is a binary file.
+Docs\figures\p2h.png, it is a binary file.
+Docs\figures\report2.jpg, it is a binary file.
+Docs\figures\resolution_flow.png, it is a binary file.
+Docs\figures\result_analysis.png, it is a binary file.
+Docs\figures\results_aggreg.png, it is a binary file.
+Docs\figures\results_balance.png, it is a binary file.
+Docs\figures\results_congestion.png, it is a binary file.
+Docs\figures\results_dispatch.png, it is a binary file.
+Docs\figures\results_rug.png, it is a binary file.
+Docs\figures\results_zones.png, it is a binary file.
+Docs\figures\rolling_horizon.png, it is a binary file.
+Docs\figures\spyder_config.png, it is a binary file.
+Docs\implementation.rst, code is 155, comment is 0, blank is 71.
+Docs\index.rst, code is 51, comment is 4, blank is 23.
+Docs\make.bat, code is 51, comment is 0, blank is 7.
+Docs\Makefile, code is 10, comment is 0, blank is 2.
+Docs\model.rst, code is 499, comment is 0, blank is 329.
+Docs\overview.rst, code is 55, comment is 0, blank is 21.
+Docs\releases.rst, code is 25, comment is 3, blank is 23.
+Docs\workflow.rst, code is 91, comment is 1, blank is 74.
+environment.yml, code is 15, comment is 0, blank is 1.
+environment.yml, code is 15, comment is 0, blank is 1.
+Externals\gams_api\win32\GAMS-1.0-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win32\gams\__init__.py, code is 8, comment is 1, blank is 2.
+Externals\gams_api\win32\gams\database.pyd, it is a binary file.
+Externals\gams_api\win32\gams\execution.pyd, it is a binary file.
+Externals\gams_api\win32\gams\options.pyd, it is a binary file.
+Externals\gams_api\win32\gams\workspace.pyd, it is a binary file.
+Externals\gams_api\win32\gamsxcc-1-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win32\gamsxcc.py, code is 337, comment is 7, blank is 142.
+Externals\gams_api\win32\gdxcc-7-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win32\gdxcc.py, code is 470, comment is 7, blank is 265.
+Externals\gams_api\win32\gevmcc-6-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win32\gmdcc-2-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win32\gmomcc-14-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win32\optcc-2-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\__pycache__\gdxcc.cpython-36.pyc, it is a binary file.
+Externals\gams_api\win64\_cfgmcc.pyd, it is a binary file.
+Externals\gams_api\win64\_dctmcc.pyd, it is a binary file.
+Externals\gams_api\win64\_gamsxcc.pyd, it is a binary file.
+Externals\gams_api\win64\_gdxcc.pyd, it is a binary file.
+Externals\gams_api\win64\_gevmcc.pyd, it is a binary file.
+Externals\gams_api\win64\_gmdcc.pyd, it is a binary file.
+Externals\gams_api\win64\_gmomcc.pyd, it is a binary file.
+Externals\gams_api\win64\_idxcc.pyd, it is a binary file.
+Externals\gams_api\win64\_optcc.pyd, it is a binary file.
+Externals\gams_api\win64\cfgmcc-1-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\cfgmcc.py, code is 300, comment is 7, blank is 108.
+Externals\gams_api\win64\dctmcc-1-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\dctmcc.py, code is 323, comment is 7, blank is 140.
+Externals\gams_api\win64\GAMS-1.0-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\gams\__init__.py, code is 8, comment is 1, blank is 2.
+Externals\gams_api\win64\gams\database.pyd, it is a binary file.
+Externals\gams_api\win64\gams\execution.pyd, it is a binary file.
+Externals\gams_api\win64\gams\options.pyd, it is a binary file.
+Externals\gams_api\win64\gams\workspace.pyd, it is a binary file.
+Externals\gams_api\win64\gamsxcc-1-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\gamsxcc.py, code is 337, comment is 7, blank is 142.
+Externals\gams_api\win64\gdxcc-7-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\gdxcc.py, code is 470, comment is 7, blank is 265.
+Externals\gams_api\win64\gevmcc-6-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\gevmcc.py, code is 497, comment is 7, blank is 245.
+Externals\gams_api\win64\gmdcc-2-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\gmdcc.py, code is 408, comment is 7, blank is 216.
+Externals\gams_api\win64\gmomcc-14-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\gmomcc.py, code is 1000, comment is 7, blank is 722.
+Externals\gams_api\win64\idxcc.py, code is 295, comment is 7, blank is 120.
+Externals\gams_api\win64\optcc-2-py2.7.egg-info, code is 10, comment is 0, blank is 0.
+Externals\gams_api\win64\optcc.py, code is 458, comment is 7, blank is 252.
+LICENSE, code is 83, comment is 0, blank is 118.
+LICENSE, code is 83, comment is 0, blank is 118.
+MANIFEST.in, code is 3, comment is 0, blank is 0.
+MANIFEST.in, code is 3, comment is 0, blank is 0.
+README.md, code is 51, comment is 4, blank is 18.
+README.md, code is 51, comment is 4, blank is 18.
+requirements.txt, code is 9, comment is 0, blank is 0.
+requirements.txt, code is 9, comment is 0, blank is 0.
+reservoirlevels.xlsx, it is a binary file.
+scripts\.gitignore, code is 1, comment is 0, blank is 0.
+scripts\.ipynb_checkpoints\check heating-checkpoint.ipynb, code is 592, comment is 0, blank is 34.
+scripts\.ipynb_checkpoints\Read_results_notebook-checkpoint.ipynb, code is 5186, comment is 0, blank is 130.
+scripts\.ipynb_checkpoints\Untitled-checkpoint.ipynb, code is 6, comment is 0, blank is 0.
+scripts\.pickle\04a1d3624b72022b3117f20ccb997f47.p, it is a binary file.
+scripts\.pickle\08f8a94f4b49c554651e1cfc18ae935d.p, it is a binary file.
+scripts\.pickle\12199521dcea900037347118cea5ba73.p, it is a binary file.
+scripts\.pickle\33fb640e7e2fb926db432308b4659c51.p, it is a binary file.
+scripts\.pickle\820b2e7d5e8781bccece4d3d8b5d176a.p, it is a binary file.
+scripts\.pickle\96bf137bd3bd54b928a61f2472fe5e9b.p, it is a binary file.
+scripts\.pickle\9f9c4b6a595ff0fb06de09c25db6f582.p, it is a binary file.
+scripts\.pickle\d4e05180920d7bca0c643fc66a4ae5ba.p, it is a binary file.
+scripts\build_and_run.py, code is 6, comment is 7, blank is 6.
+scripts\build_and_run_batch.py, code is 32, comment is 11, blank is 15.
+scripts\build_and_run_hypercube.py, code is 79, comment is 36, blank is 23.
+scripts\check heating.ipynb, code is 583, comment is 0, blank is 33.
+scripts\day_ahead_opsd.csv, code is 105194, comment is 0, blank is 0.
+scripts\read_results.py, code is 8, comment is 11, blank is 10.
+scripts\Read_results_notebook.ipynb, code is 5186, comment is 0, blank is 130.
+scripts\test.xlsx, it is a binary file.
+scripts\test2.xlsx, it is a binary file.
+scripts\Untitled.ipynb, code is 1148, comment is 0, blank is 21.
+scripts\warn.log, code is 4, comment is 0, blank is 0.
+setup.py, code is 42, comment is 2, blank is 8.
+setup.py, code is 42, comment is 2, blank is 8.
+Simulations\simulation_Noclustering\Inputs.gdx, it is a binary file.
+Simulations\simulation_Noclustering\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_Noclustering\Results.gdx, it is a binary file.
+Simulations\simulation_Noclustering\UCM.gpr, code is 11, comment is 0, blank is 1.
+Simulations\simulation_Noclustering\UCM_h.gms, code is 912, comment is 8, blank is 125.
+Simulations\simulation_Noclustering\UCM_h.lst, code is 1198, comment is 2, blank is 612.
+Simulations\simulation_Noclustering\warn_preprocessing.log, code is 695, comment is 0, blank is 0.
+Simulations\simulation_Noclustering\warn_solve.log, code is 695, comment is 0, blank is 0.
+Simulations\simulation_Noclustering\writeresults.gms, code is 48, comment is 0, blank is 7.
+Simulations\simulation_Noclustering_MIP1105\Inputs.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP1105\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_Noclustering_MIP1105\Results.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP1105\UCM.gpr, code is 11, comment is 0, blank is 1.
+Simulations\simulation_Noclustering_MIP1105\UCM_h.gms, code is 912, comment is 8, blank is 125.
+Simulations\simulation_Noclustering_MIP1105\UCM_h.lst, code is 1195, comment is 2, blank is 612.
+Simulations\simulation_Noclustering_MIP1105\warn_preprocessing.log, code is 695, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP1105\warn_solve.log, code is 695, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP1105\writeresults.gms, code is 48, comment is 0, blank is 7.
+Simulations\simulation_Noclustering_MIP43234\Inputs.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43234\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_Noclustering_MIP43234\Results.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43234\UCM.gpr, code is 11, comment is 0, blank is 1.
+Simulations\simulation_Noclustering_MIP43234\UCM_h.gms, code is 912, comment is 8, blank is 125.
+Simulations\simulation_Noclustering_MIP43234\UCM_h.lst, code is 1195, comment is 2, blank is 612.
+Simulations\simulation_Noclustering_MIP43234\warn_preprocessing.log, code is 694, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43234\warn_solve.log, code is 694, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43234\writeresults.gms, code is 48, comment is 0, blank is 7.
+Simulations\simulation_Noclustering_MIP43237\Inputs.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43237\Inputs.p, it is a binary file.
+Simulations\simulation_Noclustering_MIP43237\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_Noclustering_MIP43237\Results.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43237\UCM.gpr, code is 11, comment is 0, blank is 1.
+Simulations\simulation_Noclustering_MIP43237\UCM_h.gms, code is 912, comment is 8, blank is 125.
+Simulations\simulation_Noclustering_MIP43237\UCM_h.lst, code is 1204, comment is 2, blank is 612.
+Simulations\simulation_Noclustering_MIP43237\warn_preprocessing.log, code is 613, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43237\warn_solve.log, code is 613, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43237\writeresults.gms, code is 48, comment is 0, blank is 7.
+Simulations\simulation_Noclustering_MIP43240_LP\Inputs.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43240_LP\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_Noclustering_MIP43240_LP\Results.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43240_LP\UCM.gpr, code is 11, comment is 0, blank is 1.
+Simulations\simulation_Noclustering_MIP43240_LP\UCM_h.gms, code is 912, comment is 8, blank is 125.
+Simulations\simulation_Noclustering_MIP43240_LP\UCM_h.lst, code is 1201, comment is 2, blank is 612.
+Simulations\simulation_Noclustering_MIP43240_LP\warn_preprocessing.log, code is 694, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43240_LP\warn_solve.log, code is 694, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43240_LP\writeresults.gms, code is 48, comment is 0, blank is 7.
+Simulations\simulation_Noclustering_MIP43243_\debug.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43243_\Inputs.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43243_\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_Noclustering_MIP43243_\Results.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43243_\UCM.gpr, code is 11, comment is 0, blank is 1.
+Simulations\simulation_Noclustering_MIP43243_\UCM_h.gms, code is 912, comment is 8, blank is 125.
+Simulations\simulation_Noclustering_MIP43243_\UCM_h.lst, code is 1201, comment is 2, blank is 612.
+Simulations\simulation_Noclustering_MIP43243_\warn_preprocessing.log, code is 695, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43243_\warn_solve.log, code is 695, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43243_\writeresults.gms, code is 48, comment is 0, blank is 7.
+Simulations\simulation_Noclustering_MIP43245\Inputs.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43245\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_Noclustering_MIP43245\Results.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP43245\UCM.gpr, code is 11, comment is 0, blank is 1.
+Simulations\simulation_Noclustering_MIP43245\UCM_h.gms, code is 912, comment is 8, blank is 125.
+Simulations\simulation_Noclustering_MIP43245\UCM_h.lst, code is 1201, comment is 2, blank is 612.
+Simulations\simulation_Noclustering_MIP43245\warn_preprocessing.log, code is 695, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43245\warn_solve.log, code is 695, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP43245\writeresults.gms, code is 48, comment is 0, blank is 7.
+Simulations\simulation_Noclustering_MIP\Inputs.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP\Inputs.p, it is a binary file.
+Simulations\simulation_Noclustering_MIP\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_Noclustering_MIP\Results.gdx, it is a binary file.
+Simulations\simulation_Noclustering_MIP\UCM.gpr, code is 11, comment is 0, blank is 1.
+Simulations\simulation_Noclustering_MIP\UCM_h.gms, code is 890, comment is 8, blank is 118.
+Simulations\simulation_Noclustering_MIP\UCM_h.log, code is 32, comment is 0, blank is 3.
+Simulations\simulation_Noclustering_MIP\UCM_h.lst, code is 1386, comment is 2, blank is 662.
+Simulations\simulation_Noclustering_MIP\UCM_h.lxi, code is 192, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP\UCM_h.~gm, code is 890, comment is 8, blank is 118.
+Simulations\simulation_Noclustering_MIP\warn_preprocessing.log, code is 335, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP\warn_solve.log, code is 335, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_MIP\writeresults.gms, code is 48, comment is 0, blank is 7.
+Simulations\simulation_Noclustering_wip\225a\gamscntr.dat, code is 303, comment is 0, blank is 3.
+Simulations\simulation_Noclustering_wip\225a\gamsdict.dat, it is a binary file.
+Simulations\simulation_Noclustering_wip\225a\gamsmatr.dat, it is a binary file.
+Simulations\simulation_Noclustering_wip\225a\gamsnext.cmd, code is 2, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_wip\225a\gamssolu.dat, it is a binary file.
+Simulations\simulation_Noclustering_wip\225a\gamsstat.dat, code is 297, comment is 0, blank is 9.
+Simulations\simulation_Noclustering_wip\225a\gamswrk0.dat, it is a binary file.
+Simulations\simulation_Noclustering_wip\225a\gmsprmNT.dat, code is 25, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_wip\225b\gamscntr.dat, code is 303, comment is 0, blank is 3.
+Simulations\simulation_Noclustering_wip\225b\gamsdict.dat, it is a binary file.
+Simulations\simulation_Noclustering_wip\225b\gamsmatr.dat, it is a binary file.
+Simulations\simulation_Noclustering_wip\225b\gamsnext.cmd, code is 2, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_wip\225b\gamssolu.dat, it is a binary file.
+Simulations\simulation_Noclustering_wip\225b\gamsstat.dat, code is 297, comment is 0, blank is 9.
+Simulations\simulation_Noclustering_wip\225b\gamswrk0.dat, it is a binary file.
+Simulations\simulation_Noclustering_wip\225b\gmsprmNT.dat, code is 25, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_wip\Inputs.gdx, it is a binary file.
+Simulations\simulation_Noclustering_wip\Inputs.p, it is a binary file.
+Simulations\simulation_Noclustering_wip\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_Noclustering_wip\Results.gdx, it is a binary file.
+Simulations\simulation_Noclustering_wip\UCM.gpr, code is 13, comment is 0, blank is 1.
+Simulations\simulation_Noclustering_wip\UCM_h.gms, code is 907, comment is 8, blank is 123.
+Simulations\simulation_Noclustering_wip\UCM_h.log, code is 20, comment is 0, blank is 1.
+Simulations\simulation_Noclustering_wip\UCM_h.lst, code is 49, comment is 2, blank is 16.
+Simulations\simulation_Noclustering_wip\UCM_h.lxi, code is 3, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_wip\UCM_h.~gm, code is 907, comment is 8, blank is 122.
+Simulations\simulation_Noclustering_wip\warn_preprocessing.log, code is 335, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_wip\warn_solve.log, code is 335, comment is 0, blank is 0.
+Simulations\simulation_Noclustering_wip\writeresults.gms, code is 48, comment is 0, blank is 7.
+Simulations\simulation_test\Inputs.gdx, it is a binary file.
+Simulations\simulation_test\Inputs.p, it is a binary file.
+Simulations\simulation_test\makeGDX.bat, code is 37, comment is 0, blank is 5.
+Simulations\simulation_test\Results.gdx, it is a binary file.
+Simulations\simulation_test\UCM.gpr, code is 11, comment is 0, blank is 1.
+Simulations\simulation_test\UCM_h.gms, code is 912, comment is 8, blank is 125.
+Simulations\simulation_test\UCM_h.lst, code is 130, comment is 2, blank is 62.
+Simulations\simulation_test\UCM_h.~gm, code is 890, comment is 8, blank is 118.
+Simulations\simulation_test\warn_preprocessing.log, code is 34, comment is 0, blank is 0.
+Simulations\simulation_test\warn_solve.log, code is 34, comment is 0, blank is 0.
+Simulations\simulation_test\writeresults.gms, code is 48, comment is 0, blank is 7.
+test.xlsx, it is a binary file.
+warn.log, code is 335, comment is 0, blank is 0.
+~$test.xlsx, it is a binary file.
+===============================================================================
