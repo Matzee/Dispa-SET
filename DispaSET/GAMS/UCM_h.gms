@@ -1,7 +1,7 @@
 $Title UCM model
 
 $eolcom //
-Option threads=2;
+Option threads=8;
 Option IterLim=1000000000;
 Option ResLim = 10000000000;
 *Option optca=0.0;
@@ -105,7 +105,6 @@ EmissionMaximum(n,p)             [tP]     Emission limit
 EmissionRate(u,p)                [tP\MWh] P emission rate
 FlowMaximum(l,h)                 [MW]     Line limits
 FlowMinimum(l,h)                 [MW]     Minimum flow
-FuelPrice(n,f,h)                 [EUR\F]  Fuel price
 Fuel(u,f)                        [n.a.]   Fuel type {1 0}
 HeatDemand(chp,h)                [MWh\u]  Heat demand profile for chp units
 LineNode(l,n)                    [n.a.]   Incidence matrix {-1 +1}
@@ -140,7 +139,7 @@ TimeDownMinimum(u)               [h]      Minimum down time
 TimeUpMinimum(u)                 [h]      Minimum up time
 $If %RetrieveStatus% == 1 CommittedCalc(u,z)               [n.a.]   Committment status as for the MILP
 Nunits(u)                        [n.a.]   Number of units inside the cluster (upper bound value for integer variables)
-K_QuickStart(n)                      [n.a.]   Percentage of reserve provided by nonsynchronised offline resources (e.g. quick start units or demand response
+K_QuickStart(n)                      [n.a.]   Part of the reserve that can be provided by offline quickstart units
 QuickStartPower(u,h)            [MW\h\u]   Available max capacity in tertiary regulation up from fast-starting power plants - TC formulation
 ;
 
@@ -194,7 +193,6 @@ $LOAD EmissionMaximum
 $LOAD EmissionRate
 $LOAD FlowMaximum
 $LOAD FlowMinimum
-$LOAD FuelPrice
 $LOAD Fuel
 $LOAD HeatDemand
 $LOAD LineNode
@@ -262,7 +260,6 @@ EmissionMaximum,
 EmissionRate,
 FlowMaximum,
 FlowMinimum,
-FuelPrice,
 Fuel,
 HeatDemand,
 LineNode,
@@ -429,6 +426,24 @@ EQ_CommittedCalc(u,z)..
 $label skipequation
 
 *Objective function
+
+$ifthen [%LPFormulation% == 1]
+EQ_SystemCost(i)..
+         SystemCost(i)
+         =E=
+         sum(u,CostFixed(u)*Committed(u,i))
+         +sum(u,CostRampUpH(u,i) + CostRampDownH(u,i))
+         +sum(u,CostVariable(u,i) * Power(u,i))
+         +sum(l,PriceTransmission(l,i)*Flow(l,i))
+         +sum(n,CostLoadShedding(n,i)*ShedLoad(n,i))
+         +sum(chp, CostHeatSlack(chp,i) * HeatSlack(chp,i))
+         +sum(chp, CostVariable(chp,i) * CHPPowerLossFactor(chp) * Heat(chp,i))
+         +100E3*(sum(n,LL_MaxPower(n,i)+LL_MinPower(n,i)))
+         +80E3*(sum(n,LL_2U(n,i)+LL_2D(n,i)+LL_3U(n,i)))
+         +70E3*sum(u,LL_RampUp(u,i)+LL_RampDown(u,i))
+         +1*sum(s,spillage(s,i));
+$else
+
 EQ_SystemCost(i)..
          SystemCost(i)
          =E=
@@ -443,8 +458,12 @@ EQ_SystemCost(i)..
          +100E3*(sum(n,LL_MaxPower(n,i)+LL_MinPower(n,i)))
          +80E3*(sum(n,LL_2U(n,i)+LL_2D(n,i)+LL_3U(n,i)))
          +70E3*sum(u,LL_RampUp(u,i)+LL_RampDown(u,i))
-         +1*sum(s,spillage(s,i))
+         +1*sum(s,spillage(s,i));
+
+$endIf
 ;
+
+
 
 EQ_Objective_function..
          SystemCostD
@@ -762,8 +781,8 @@ $If not %LPFormulation% == 1 EQ_CostShutDown,
 $If %LPFormulation% == 1 EQ_CostRampUp,
 $If %LPFormulation% == 1 EQ_CostRampDown,
 EQ_Commitment,
-EQ_MinUpTime,
-EQ_MinDownTime,
+$If not %LPFormulation% == 1 EQ_MinUpTime,
+$If not %LPFormulation% == 1 EQ_MinDownTime,
 EQ_RampUp_TC,
 EQ_RampDown_TC,
 EQ_Demand_balance_DA,
@@ -796,9 +815,7 @@ $If %RetrieveStatus% == 1 EQ_CommittedCalc
 /
 ;
 UCM_SIMPLE.optcr = 0.01;
-*UCM_SIMPLE.epgap = 0.005
-*UCM_SIMPLE.probe = 3
-*UCM_SIMPLE.optfile=1;
+UCM_SIMPLE.optfile=1;
 
 *===============================================================================
 *Solving loop
@@ -820,6 +837,13 @@ set  tmp   "tpm"  / "model", "solver" /  ;
 parameter status(tmp,h);
 
 $if %Debug% == 1 $goto DebugSection
+
+display "OK";
+
+scalar starttime;
+set days /1,'ndays'/; 
+display days;
+PARAMETER elapsed(days);
 
 FOR(day = 1 TO ndays-Config("RollingHorizon LookAhead","day") by Config("RollingHorizon Length","day"),
          FirstHour = (day-1)*24+1;
