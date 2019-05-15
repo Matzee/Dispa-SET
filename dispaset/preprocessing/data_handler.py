@@ -487,6 +487,11 @@ def load_config_excel(ConfigFile,AbsPath=True):
     config['WritePickle'] = sheet.cell_value(20, 2)
     config['GAMS_folder'] = sheet.cell_value(21, 2)
     config['cplex_path'] = sheet.cell_value(22, 2)
+    
+    try: 
+        config["CEP"] = sheet.cell_value(151, 2)
+    except: # config sheet without CEP cell leads to out of bounds error
+        config["CEP"] = None
 
     config['StartDate'] = xlrd.xldate_as_tuple(sheet.cell_value(30, 2), wb.datemode)
     config['StopDate'] = xlrd.xldate_as_tuple(sheet.cell_value(31, 2), wb.datemode)
