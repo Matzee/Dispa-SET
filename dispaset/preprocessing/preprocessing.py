@@ -443,24 +443,23 @@ def build_simulation(config):
         logging.info("Capacity Expansion used!")
         expandable_units = ['HRD-STUR', 'LIG-STUR', 'NUC-STUR','OIL-STUR', 'GAS-GTUR'] #TODO rather in config?
 
-        Plants_merged = Plants_merged.query('Technology != "COMC" and Fuel != "GAS"')
-        Plants_merged = Plants_merged.query('Technology != "STUR" and Fuel != "GAS"') 
+        #Plants_merged = Plants_merged.query('Technology != "COMC" and Fuel != "GAS"')
+        #Plants_merged = Plants_merged.query('Technology != "STUR" and Fuel != "GAS"') 
 
         plant_new = load_csv('Database/CapacityExpansion/techs_cap.csv') # technical information
         plant_new = plant_new[plant_new.Unit.isin(expandable_units)]
-        plant_rows = plant_new.shape[0]
 
         # create variables (cartesian product of tech x country)
         n_countries = len(config['countries'])
         plant_new = pd.concat([plant_new] * n_countries) # for each node/country
-        plant_new['Zone'] = np.repeat(config['countries'], plant_rows) # country code
+        plant_new['Zone'] = np.repeat(config['countries'], plant_new.shape[0]) # country code
         plant_new['Unit'] = plant_new.apply(lambda x:  x['Zone'] + "-" + x['Unit'], axis=1)
         plant_new = plant_new.set_index('Unit', drop=False)
         
         ## Cost of new technologies
         index = plant_new[['Fuel', 'Technology']].reset_index().set_index('Unit', drop=False)
         
-        Plants_merged = Plants_merged.merge(index[['Fuel', 'Technology']],  how='outer', on = ['Fuel', 'Technology'], \
+        Plants_merged = Plants_merged.merge(index[['Fuel', 'Technology']],  how='outer', on = ['Fuel', 'Technology'], 
             indicator=True).query('_merge == "left_only"')
 
         del Plants_merged['_merge']
@@ -476,11 +475,11 @@ def build_simulation(config):
             sets_param[var] = ['uc']
         
         plant_new_cost = all_cost[all_cost.Unit.isin(expandable_units)]
-        df = pd.merge(index, plant_new_cost, on=['Fuel', 'Technology'], how='left')
+        df_expanded = pd.merge(index, plant_new_cost, on=['Fuel', 'Technology'], how='left')
 
         for var in ["Investment", "EconomicLifetime"]:
             parameters[var] = define_parameter(sets_param[var], sets, value=0)
-            parameters[var]["val"] =  df[var].values
+            parameters[var]["val"] =  df_expanded[var].values
 
 
     Plants_merged['FixedCost'] = pd.merge(Plants_merged, all_cost, how='left', on=['Fuel', 'Technology'])['FixedCost'].values
