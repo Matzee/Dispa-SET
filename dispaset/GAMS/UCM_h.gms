@@ -49,6 +49,11 @@ $setglobal LPFormulation 0
 * (1 to retrieve 0 to not)
 $setglobal RetrieveStatus 0
 
+* Definition of the capacity expansion decision
+* (1 for yes 0 for no)
+$setglobal CEPFormulation 0
+
+
 *===============================================================================
 *Definition of   sets and parameters
 *===============================================================================
@@ -57,6 +62,8 @@ mk               Markets
 n                Nodes
 l                Lines
 u                Units
+uc(u)            Units expanded by CEP
+ue(u)            Existing units
 t                Generation technologies
 tr(t)            Renewable generation technologies
 f                Fuel types
@@ -141,6 +148,10 @@ $If %RetrieveStatus% == 1 CommittedCalc(u,z)               [n.a.]   Committment 
 Nunits(u)                        [n.a.]   Number of units inside the cluster (upper bound value for integer variables)
 K_QuickStart(n)                      [n.a.]   Part of the reserve that can be provided by offline quickstart units
 QuickStartPower(u,h)            [MW\h\u]   Available max capacity in tertiary regulation up from fast-starting power plants - TC formulation
+Investment(uc)                   [EUR]?Investment cost
+EconomicLifetime(uc)             Economic Lifetime of the power plants
+C_inv(uc)                        Investment cost
+
 ;
 
 *Parameters as used within the loop
@@ -153,6 +164,7 @@ StorageFinalMin(s)               [MWh]   Minimum storage level at the end of the
 
 * Scalar variables necessary to the loop:
 scalar FirstHour,LastHour,LastKeptHour,day,ndays,failed;
+scalar intrate_investment       interest rate for investments [%] /0.09/;
 FirstHour = 1;
 
 *===============================================================================
@@ -165,6 +177,8 @@ $LOAD mk
 $LOAD n
 $LOAD l
 $LOAD u
+$LOAD uc
+$LOAD ue
 $LOAD t
 $LOAD tr
 $LOAD f
@@ -225,6 +239,8 @@ $LOAD TimeUpMinimum
 $LOAD CostRampUp
 $LOAD CostRampDown
 $If %RetrieveStatus% == 1 $LOAD CommittedCalc
+$LOAD Investment
+$LOAD EconomicLifetime
 ;
 
 
@@ -235,6 +251,8 @@ mk,
 n,
 l,
 u,
+uc,
+ue,
 t,
 tr,
 f,
@@ -333,9 +351,10 @@ Reserve_3U(u,h)            [MW]    Non spinning quick start reserve up
 Heat(chp,h)                [MW]    Heat output by chp plant
 HeatSlack(chp,h)           [MW]    Heat satisfied by other sources
 WaterSlack(s)              [MWh]   Unsatisfied water level constraint
+Expanded(uc)               []      Additional capacity to install (Generation Expansion)
 ;
 
-free variable
+FREE variable
 SystemCostD                ![EUR]   Total system cost for one optimization period
 ;
 
@@ -363,6 +382,13 @@ PowerMustRun(u,h)$(sum(tr,Technology(u,tr))>=1 and smin(n,Location(u,n)*(1-Curta
 
 * Part of the reserve that can be provided by offline quickstart units:
 K_QuickStart(n) = Config("QuickStartShare","val");
+
+
+Expanded.up(uc) = 1;
+
+* Investment unit: EUR/kW, model unit MW -> 1/1/1000=01
+C_inv(uc) = ((intrate_investment*(1+intrate_investment)**EconomicLifetime(uc))
+                /((1+intrate_investment)**EconomicLifetime(uc)-1))*Investment(uc);
 
 $If %Verbose% == 1 Display RampStartUpMaximum, RampShutDownMaximum, CommittedInitial;
 
@@ -414,6 +440,9 @@ EQ_Force_Commitment
 EQ_Force_DeCommitment
 EQ_LoadShedding
 $If %RetrieveStatus% == 1 EQ_CommittedCalc
+EQ_Committed_Cap
+EQ_Startup_Cap
+EQ_Shutdown_Cap
 ;
 
 $If %RetrieveStatus% == 0 $goto skipequation
@@ -442,7 +471,9 @@ EQ_SystemCost(i)..
          +Config("ValueOfLostLoad","val")*(sum(n,LL_MaxPower(n,i)+LL_MinPower(n,i)))
          +0.8*Config("ValueOfLostLoad","val")*(sum(n,LL_2U(n,i)+LL_2D(n,i)+LL_3U(n,i)))
          +0.7*Config("ValueOfLostLoad","val")*sum(u,LL_RampUp(u,i)+LL_RampDown(u,i))
-         +Config("CostOfSpillage","val")*sum(s,spillage(s,i));
+         +Config("CostOfSpillage","val")*sum(s,spillage(s,i))
+         +sum(uc, Expanded(uc) * C_inv(uc)*PowerCapacity(uc)* 1/card(h))
+         ;
 $else
 
 EQ_SystemCost(i)..
@@ -459,7 +490,9 @@ EQ_SystemCost(i)..
          +Config("ValueOfLostLoad","val")*(sum(n,LL_MaxPower(n,i)+LL_MinPower(n,i)))
          +0.8*Config("ValueOfLostLoad","val")*(sum(n,LL_2U(n,i)+LL_2D(n,i)+LL_3U(n,i)))
          +0.7*Config("ValueOfLostLoad","val")*sum(u,LL_RampUp(u,i)+LL_RampDown(u,i))
-         +Config("CostOfSpillage","val")*sum(s,spillage(s,i));
+         +Config("CostOfSpillage","val")*sum(s,spillage(s,i))
+         +sum(uc, Expanded(uc) * C_inv(uc)*PowerCapacity(uc)* 1/card(h))
+         ;
 
 $endIf
 ;
@@ -768,6 +801,32 @@ EQ_Heat_Storage_level(chp,i)..
 *         =L=
 *         StorageLevel(chp,i)
 *;
+
+
+**** CAPACITY EXPANSION
+EQ_Startup_Cap(uc,i)..
+    StartUp(uc,i)
+        =L=
+    Committed(uc,i);
+
+**** CAPACITY EXPANSION
+EQ_Shutdown_Cap(uc,i)..
+    ShutDown(uc,i)
+        =L=
+    Committed(uc, i);
+
+*EQ_Power_available_Cap(uc,i)..
+*    Power(uc,i)
+*        =L=
+*    Expanded(uc)*PowerCapacity(uc)*LoadMaximum(uc,i);
+
+EQ_Committed_Cap(uc,i)..
+    Committed(uc,i)
+        =L=
+    Expanded(uc) ;
+
+
+
 *===============================================================================
 *Definition of models
 *===============================================================================
@@ -813,7 +872,10 @@ EQ_Flow_limits_upper,
 EQ_Force_Commitment,
 EQ_Force_DeCommitment,
 EQ_LoadShedding,
-$If %RetrieveStatus% == 1 EQ_CommittedCalc
+$If %RetrieveStatus% == 1 EQ_CommittedCalc,
+$If %CEPFormulation% == 1 EQ_Committed_Cap,
+$If %CEPFormulation% == 1 EQ_Startup_Cap,
+$If %CEPFormulation% == 1 EQ_Shutdown_Cap
 /
 ;
 UCM_SIMPLE.optcr = 0.01;
@@ -840,12 +902,16 @@ parameter status(tmp,h);
 
 $if %Debug% == 1 $goto DebugSection
 
+
 display "OK";
 
 scalar starttime;
 set days /1,'ndays'/;
 display days;
 PARAMETER elapsed(days);
+
+* Capacity expansion for a rolling horizon does not make sense without further methods
+$If %CEPFormulation% == 1 Config("RollingHorizon Length","day") = ndays;
 
 FOR(day = 1 TO ndays-Config("RollingHorizon LookAhead","day") by Config("RollingHorizon Length","day"),
          FirstHour = (day-1)*24+1;

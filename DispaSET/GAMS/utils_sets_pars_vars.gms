@@ -329,3 +329,16 @@ CURT_STOR(s,h)
 free variable
 SystemCostD                ![EUR]   Total system cost for one optimization period
 ;
+
+
+SETS
+    hdam(s)
+    psp(s)
+;
+
+parameter CapacityFactorHDAM_(subiter);
+* Define storage technologies
+hdam(s) = NO;
+psp(s) = NO;
+hdam(s)$(Technology(s, 'HDAM')) = YES;
+psp(s)$(Technology(s, 'HPHS')) = YES;

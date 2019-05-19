@@ -53,7 +53,7 @@ def build_simulation(config):
 
     # Boolean variable to check wether it is milp or lp:
     LP = config['SimulationType'] == 'LP' or config['SimulationType'] == 'LP clustered'
-
+    CEP = config['CEP'] == 1
     # Day/hour corresponding to the first and last days of the simulation:
     # Note that the first available data corresponds to 2015.01.31 (23.00) and the
     # last day with data is 2015.12.31 (22.00)
@@ -451,8 +451,9 @@ def build_simulation(config):
 
         # create variables (cartesian product of tech x country)
         n_countries = len(config['countries'])
+        n_technologies = plant_new.shape[0]
         plant_new = pd.concat([plant_new] * n_countries) # for each node/country
-        plant_new['Zone'] = np.repeat(config['countries'], plant_new.shape[0]) # country code
+        plant_new['Zone'] = np.repeat(config['countries'], n_technologies) # country code
         plant_new['Unit'] = plant_new.apply(lambda x:  x['Zone'] + "-" + x['Unit'], axis=1)
         plant_new = plant_new.set_index('Unit', drop=False)
         
@@ -725,16 +726,26 @@ def build_simulation(config):
 
     if not os.path.exists(sim):
         os.makedirs(sim)
-    if LP:
+
+    print(config["CEP"])
+    print(config["CEP"])
+    gams_file_changes = {'LP':LP, 'CEP':CEP}
+    changes_infile_string = {'LP': ['$setglobal LPFormulation 0', '$setglobal LPFormulation 1'], 'CEP': ['$setglobal CEPFormulation 0', '$setglobal CEPFormulation 1']}
+    gams_file_changes_list = [k for k,v in gams_file_changes.items() if v == True]
+
+    if len(gams_file_changes_list)>0:
         fin = open(os.path.join(GMS_FOLDER, 'UCM_h.gms'))
         fout = open(os.path.join(sim,'UCM_h.gms'), "wt")
         for line in fin:
-            fout.write(line.replace('$setglobal LPFormulation 0', '$setglobal LPFormulation 1'))
+            for k in gams_file_changes_list:
+                fout.write(line.replace(changes_infile_string[k][0], changes_infile_string[k][1]))
         fin.close()
         fout.close()
     else:
         shutil.copyfile(os.path.join(GMS_FOLDER, 'UCM_h.gms'),
                         os.path.join(sim, 'UCM_h.gms'))
+
+
     gmsfile = open(os.path.join(sim, 'UCM.gpr'), 'w')
     gmsfile.write(
         '[PROJECT] \n \n[RP:UCM_H] \n1= \n[OPENWINDOW_1] \nFILE0=UCM_h.gms \nFILE1=UCM_h.gms \nMAXIM=1 \nTOP=50 \nLEFT=50 \nHEIGHT=400 \nWIDTH=400')
