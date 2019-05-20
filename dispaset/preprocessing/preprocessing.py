@@ -93,7 +93,6 @@ def build_simulation(config):
     Load = NodeBasedTable(config['Demand'],idx_utc_noloc,config['countries'],tablename='Demand')
     # For the peak load, the whole year is considered:
     PeakLoad = NodeBasedTable(config['Demand'],idx_utc_year_noloc,config['countries'],tablename='PeakLoad').max()
-
     if config['modifiers']['Demand'] != 1:
         logging.info('Scaling load curve by a factor ' + str(config['modifiers']['Demand']))
         Load = Load * config['modifiers']['Demand']
@@ -435,7 +434,7 @@ def build_simulation(config):
 
     all_cost = load_csv('Database/CapacityExpansion/techs_cost.csv') # cost information # NOTE: Fixed Cost are added to initial model formulation
 
-    if config["CEP"]:
+    if CEP:
         # split set u -> uc ⋃ ue
         # load technical parameters (averaged by existing data) and cost (DIW)
         ## TODO: Determine parameters in dependency of country 
@@ -452,9 +451,9 @@ def build_simulation(config):
         # create variables (cartesian product of tech x country)
         n_countries = len(config['countries'])
         n_technologies = plant_new.shape[0]
-        plant_new = pd.concat([plant_new] * n_countries) # for each node/country
-        plant_new['Zone'] = np.repeat(config['countries'], n_technologies) # country code
-        plant_new['Unit'] = plant_new.apply(lambda x:  x['Zone'] + "-" + x['Unit'], axis=1)
+        plant_new = pd.concat([plant_new] * n_countries) # for each zone
+        plant_new['Zone'] = np.repeat(config['countries'], n_technologies) # create zone column
+        plant_new['Unit'] = plant_new.apply(lambda x:  x['Zone'] + "-" + x['Unit'], axis=1) # naming
         plant_new = plant_new.set_index('Unit', drop=False)
         
         ## Cost of new technologies
@@ -478,26 +477,25 @@ def build_simulation(config):
         plant_new_cost = all_cost[all_cost.Unit.isin(expandable_units)]
         df_expanded = pd.merge(index, plant_new_cost, on=['Fuel', 'Technology'], how='left')
 
+
+    # Define all the parameters and set a default value of zero:
+    for var in sets_param:
+        parameters[var] = define_parameter(sets_param[var], sets, value=0)
+
+    if CEP:
         for var in ["Investment", "EconomicLifetime"]:
             parameters[var] = define_parameter(sets_param[var], sets, value=0)
             parameters[var]["val"] =  df_expanded[var].values
 
 
     Plants_merged['FixedCost'] = pd.merge(Plants_merged, all_cost, how='left', on=['Fuel', 'Technology'])['FixedCost'].values
-
     Nunits = len(Plants_merged)
-    # Define all the parameters and set a default value of zero:
-    for var in sets_param:
-        parameters[var] = define_parameter(sets_param[var], sets, value=0)
 
     for var in ["CostFixed"]:
         sets_param[var] = ['u']
         parameters[var] = define_parameter(sets_param[var], sets, value=0)
         parameters[var]["val"] =  Plants_merged['FixedCost'].values
 
-    # Define all the parameters and set a default value of zero:
-    for var in sets_param:
-        parameters[var] = define_parameter(sets_param[var], sets, value=0)
 
     # List of parameters whose default value is 1
     for var in ['AvailabilityFactor', 'Efficiency', 'Curtailment', 'StorageChargingEfficiency',
@@ -591,8 +589,10 @@ def build_simulation(config):
         values[0, i, :] = Load[sets['n'][i]]
         values[1, i, :] = reserve_2U_tot[sets['n'][i]]
         values[2, i, :] = reserve_2D_tot[sets['n'][i]]
+    
     parameters['Demand'] = {'sets': sets_param['Demand'], 'val': values}
-
+    print(parameters['Demand'])
+    print(Load)
     # Emission Rate:
     parameters['EmissionRate']['val'][:, 0] = Plants_merged['EmissionRate'].values
 
@@ -727,18 +727,19 @@ def build_simulation(config):
     if not os.path.exists(sim):
         os.makedirs(sim)
 
-    print(config["CEP"])
-    print(config["CEP"])
+    def replace_all(text, dic):
+        for i, j in dic.items():
+            text = text.replace(i, j)
+        return text
+    
     gams_file_changes = {'LP':LP, 'CEP':CEP}
-    changes_infile_string = {'LP': ['$setglobal LPFormulation 0', '$setglobal LPFormulation 1'], 'CEP': ['$setglobal CEPFormulation 0', '$setglobal CEPFormulation 1']}
-    gams_file_changes_list = [k for k,v in gams_file_changes.items() if v == True]
-
+    changes_infile_string = {'LP': ('$setglobal LPFormulation 0','$setglobal LPFormulation 1'), 'CEP': ('$setglobal CEPFormulation 0', '$setglobal CEPFormulation 1')}
+    gams_file_changes_list = {changes_infile_string[k][0]: changes_infile_string[k][1] for k,v in gams_file_changes.items() if v == True}  #filter based on selection
     if len(gams_file_changes_list)>0:
         fin = open(os.path.join(GMS_FOLDER, 'UCM_h.gms'))
         fout = open(os.path.join(sim,'UCM_h.gms'), "wt")
         for line in fin:
-            for k in gams_file_changes_list:
-                fout.write(line.replace(changes_infile_string[k][0], changes_infile_string[k][1]))
+            fout.write(replace_all(line, gams_file_changes_list))
         fin.close()
         fout.close()
     else:

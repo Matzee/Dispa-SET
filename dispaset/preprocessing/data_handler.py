@@ -80,7 +80,8 @@ def NodeBasedTable(path,idx,countries,tablename='',default=None):
                 logging.error('The index of data file ' + paths['all'] + ' is not unique. Please check the data')
                 sys.exit(1)
             data[c] = tmp.iloc[:,0]
-     
+            #print(idx)
+            print(data)
     return data
 
 

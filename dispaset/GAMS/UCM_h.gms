@@ -1,7 +1,7 @@
 $Title UCM model
 
 $eolcom //
-Option threads=8;
+Option threads=4;
 Option IterLim=1000000000;
 Option ResLim = 10000000000;
 *Option optca=0.0;
@@ -830,6 +830,9 @@ EQ_Committed_Cap(uc,i)..
 *===============================================================================
 *Definition of models
 *===============================================================================
+
+
+
 MODEL UCM_SIMPLE /
 EQ_Objective_function,
 EQ_CHP_extraction_Pmax,
@@ -1009,29 +1012,7 @@ LostLoad_RampUp(n,z)    = sum(u,LL_RampUp.L(u,z)*Location(u,n));
 LostLoad_RampDown(n,z)  = sum(u,LL_RampDown.L(u,z)*Location(u,n));
 ShadowPrice(n,z) = EQ_Demand_balance_DA.m(n,z);
 
-EXECUTE_UNLOAD "Results.gdx"
-OutputCommitted,
-OutputFlow,
-OutputPower,
-OutputHeat,
-OutputHeatSlack,
-OutputStorageInput,
-OutputStorageLevel,
-OutputSystemCost,
-OutputSpillage,
-OutputShedLoad,
-OutputCurtailedPower,
-OutputGenMargin,
-LostLoad_MaxPower,
-LostLoad_MinPower,
-LostLoad_2D,
-LostLoad_2U,
-LostLoad_3U,
-LostLoad_RampUp,
-LostLoad_RampDown,
-ShadowPrice,
-status
-;
+EXECUTE_UNLOAD "Results.gdx";
 
 $onorder
 * Exit here if the PrintResult option is set to 0:
