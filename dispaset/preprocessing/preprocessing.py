@@ -68,7 +68,7 @@ def build_simulation(config):
                                )
     idx_utc_noloc = idx_std - dt.timedelta(hours=1)
     idx_utc = idx_utc_noloc.tz_localize('UTC')
-
+    idx_utc_noloc = idx_utc
     # Indexes for the whole year considered in StartDate
     idx_utc_year_noloc = pd.DatetimeIndex(pd.date_range(start=pd.datetime(*(config['StartDate'][0],1,1,0,0)),
                                                         end=pd.datetime(*(config['StartDate'][0],12,31,23,59,59)),
@@ -470,21 +470,22 @@ def build_simulation(config):
         sets['u'] = sets['ue'] + sets['uc'] # Union
 
         Plants_merged = Plants_merged.append(plant_new)
-
-        for var in ["Investment",  "EconomicLifetime"]:
-            sets_param[var] = ['uc']
-        
         plant_new_cost = all_cost[all_cost.Unit.isin(expandable_units)]
         df_expanded = pd.merge(index, plant_new_cost, on=['Fuel', 'Technology'], how='left')
 
-
+    else:
+        sets['uc'] = list()
+    
+    for var in ["Investment",  "EconomicLifetime"]:
+        sets_param[var] = ['uc']
+        
     # Define all the parameters and set a default value of zero:
     for var in sets_param:
         parameters[var] = define_parameter(sets_param[var], sets, value=0)
-
-    if CEP:
-        for var in ["Investment", "EconomicLifetime"]:
-            parameters[var] = define_parameter(sets_param[var], sets, value=0)
+    
+    for var in ["Investment", "EconomicLifetime"]:
+        parameters[var] = define_parameter(sets_param[var], sets, value=0)
+        if CEP:
             parameters[var]["val"] =  df_expanded[var].values
 
 
@@ -745,6 +746,10 @@ def build_simulation(config):
     else:
         shutil.copyfile(os.path.join(GMS_FOLDER, 'UCM_h.gms'),
                         os.path.join(sim, 'UCM_h.gms'))
+
+    if CEP:
+        shutil.copyfile(os.path.join(GMS_FOLDER, 'UCM_CAP.gms'),
+                        os.path.join(sim, 'UCM_CAP.gms'))
 
 
     gmsfile = open(os.path.join(sim, 'UCM.gpr'), 'w')
