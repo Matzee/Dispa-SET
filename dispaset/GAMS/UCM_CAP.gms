@@ -917,11 +917,11 @@ LastHour = min(card(h),FirstHour + (Config("RollingHorizon Length","day")+Config
 LastKeptHour = LastHour - Config("RollingHorizon LookAhead","day") * 24;
 i(h) = no;
 i(h)$(ord(h)>=firsthour and ord(h)<=lasthour)=yes;
-         display day,FirstHour,LastHour,LastKeptHour;
+display day,FirstHour,LastHour,LastKeptHour;
 
-*        Defining the minimum level at the end of the horizon, ensuring that it is feasible with the provided inflows:
+* Defining the minimum level at the end of the horizon, ensuring that it is feasible with the provided inflows:
 StorageFinalMin(s) =  min(StorageInitial(s) + (sum(i,StorageInflow(s,i)) - sum(i,StorageOutflow(s,i)))*Nunits(s), sum(i$(ord(i)=card(i)),StorageProfile(s,i)*Nunits(s)*StorageCapacity(s)*AvailabilityFactor(s,i)));
-*        Correcting the minimum level to avoid the infeasibility in case it is too close to the StorageCapacity:
+* Correcting the minimum level to avoid the infeasibility in case it is too close to the StorageCapacity:
 StorageFinalMin(s) = min(StorageFinalMin(s),Nunits(s)*StorageCapacity(s) - Nunits(s)*smax(i,StorageInflow(s,i)));
 
 $If %Verbose% == 1   Display PowerInitial,CommittedInitial,StorageFinalMin;
