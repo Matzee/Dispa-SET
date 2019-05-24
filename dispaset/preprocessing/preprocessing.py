@@ -487,7 +487,6 @@ def build_simulation(config):
         if CEP:
             parameters[var]["val"] =  df_expanded[var].values
 
-
     Plants_merged['FixedCost'] = pd.merge(Plants_merged, all_cost, how='left', on=['Fuel', 'Technology'])['FixedCost'].values
     Nunits = len(Plants_merged)
 
