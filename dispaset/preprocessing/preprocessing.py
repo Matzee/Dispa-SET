@@ -68,7 +68,6 @@ def build_simulation(config):
                                )
     idx_utc_noloc = idx_std - dt.timedelta(hours=1)
     idx_utc = idx_utc_noloc.tz_localize('UTC')
-    idx_utc_noloc = idx_utc
     # Indexes for the whole year considered in StartDate
     idx_utc_year_noloc = pd.DatetimeIndex(pd.date_range(start=pd.datetime(*(config['StartDate'][0],1,1,0,0)),
                                                         end=pd.datetime(*(config['StartDate'][0],12,31,23,59,59)),
