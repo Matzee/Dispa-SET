@@ -726,7 +726,10 @@ def build_simulation(config):
     if not os.path.exists(sim):
         os.makedirs(sim)
 
-    def replace_all(text, dic):
+    def replace_text_by_dict(text, dic):
+        """Replace dictionary items in text
+        """
+
         for i, j in dic.items():
             text = text.replace(i, j)
         return text
@@ -738,7 +741,7 @@ def build_simulation(config):
         fin = open(os.path.join(GMS_FOLDER, 'UCM_h.gms'))
         fout = open(os.path.join(sim,'UCM_h.gms'), "wt")
         for line in fin:
-            fout.write(replace_all(line, gams_file_changes_list))
+            fout.write(replace_text_by_dict(line, gams_file_changes_list))
         fin.close()
         fout.close()
     else:
