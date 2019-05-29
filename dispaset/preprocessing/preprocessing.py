@@ -727,9 +727,7 @@ def build_simulation(config):
         os.makedirs(sim)
 
     def replace_text_by_dict(text, dic):
-        """Replace dictionary items in text
-        """
-
+        """Replace dictionary items in text"""
         for i, j in dic.items():
             text = text.replace(i, j)
         return text
@@ -747,11 +745,6 @@ def build_simulation(config):
     else:
         shutil.copyfile(os.path.join(GMS_FOLDER, 'UCM_h.gms'),
                         os.path.join(sim, 'UCM_h.gms'))
-
-    if CEP:
-        shutil.copyfile(os.path.join(GMS_FOLDER, 'UCM_CAP.gms'),
-                        os.path.join(sim, 'UCM_CAP.gms'))
-
 
     gmsfile = open(os.path.join(sim, 'UCM.gpr'), 'w')
     gmsfile.write(
