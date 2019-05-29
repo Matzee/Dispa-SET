@@ -590,8 +590,6 @@ def build_simulation(config):
         values[2, i, :] = reserve_2D_tot[sets['n'][i]]
     
     parameters['Demand'] = {'sets': sets_param['Demand'], 'val': values}
-    print(parameters['Demand'])
-    print(Load)
     # Emission Rate:
     parameters['EmissionRate']['val'][:, 0] = Plants_merged['EmissionRate'].values
 
@@ -788,7 +786,6 @@ def build_simulation(config):
     
     if os.path.isfile(commons['logfile']):
         shutil.copy(commons['logfile'], os.path.join(sim, 'warn_preprocessing.log'))
-
 
     return SimData
 
