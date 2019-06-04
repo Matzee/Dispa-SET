@@ -2,14 +2,35 @@
 def build_simulation():
     dm = DispaModel(...)
 
-class DispaModel():
+
+# TODO Move to utils
+def get_git_revision_tag():
+    """Get version of DispaSET used for this run. tag + commit hash"""
+    from subprocess import check_output
+    try:
+        return check_output(["git", "describe", "--tags", "--always"]).strip()
+    except:
+        return 'NA'
+
+
+class DispaModel(object):
 
     def __init__(self, config): # TODO constructor
         self.config = config
         self.time_range = None # TODO
-        self.model = DispaModelFormulation()
         self.version = str(get_git_revision_tag())
         self.data = None
+        self.model.sets = load_sets()
+        self.model.params = load_params() 
+
+        self._dag = {} # reevaluate based on dag
+
+
+    def __str__(self):
+        """Return a descriptive string for this instance, invoked by print() and str()"""
+
+        return ('A Dispa-SET model with ...') #TODO
+
 
     def edit_configuration(self, key, new_value):
         """Edit the config file (practical for simulating multiple variations)
@@ -22,6 +43,11 @@ class DispaModel():
             self.config[key] = new_value
         except KeyError as e: 
             print("Key not found")
+
+
+    def _update_config(self, config):
+        print("reevaluating ...")
+        
 
     def build_model(self, target_dir=""):
         if self.config["SimulationDirectory"]:
@@ -145,12 +171,3 @@ def load_params():
     sets_param['TimeDownMinimum'] = ['u']
     return sets_param
 
-
-# TODO Move to utils
-def get_git_revision_tag():
-    """Get version of DispaSET used for this run. tag + commit hash"""
-    from subprocess import check_output
-    try:
-        return check_output(["git", "describe", "--tags", "--always"]).strip()
-    except:
-        return 'NA'
