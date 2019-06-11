@@ -281,7 +281,6 @@ def build_simulation(config):
             logging.warning('No heat cost profile found for CHP plant "' + str(oldname) + '". Assuming zero')
             CostHeatSlack[oldname] = 0
  
-
     # merge the outages:
     for i in plants.index:  # for all the old plant indexes
         # get the old plant name corresponding to s:
@@ -688,7 +687,7 @@ def build_simulation(config):
     dd_begin = idx_long[4]
     dd_end = idx_long[-2]
 
-#TODO: integrated the parameters (VOLL, Water value, etc) from the excel config file
+    #TODO: integrated the parameters (VOLL, Water value, etc) from the excel config file
     values = np.array([
         [dd_begin.year, dd_begin.month, dd_begin.day, 0],
         [dd_end.year, dd_end.month, dd_end.day, 0],
