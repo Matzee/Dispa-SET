@@ -464,6 +464,10 @@ def load_csv(filename, TempPath='.pickle', header=0, skiprows=None, skipfooter=0
         data.to_pickle(filepath_pandas)
     else:
         data = pd.read_pickle(filepath_pandas)
+
+    if parse_dates:
+        data.index = data.index.tz_localize(None)
+
     return data
 
 

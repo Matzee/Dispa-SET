@@ -2,7 +2,7 @@
 """
 This is the main file of the DispaSET pre-processing tool. It comprises a single function that generated the DispaSET simulation environment.
 
-@author: S. Quoilin
+@author: S. Quoilin, edited by M. Zech
 """
 
 import datetime as dt
@@ -21,7 +21,8 @@ except ImportError:
 
 from .data_check import check_units, check_chp, check_sto, check_heat_demand, check_df, isStorage, check_MinMaxFlows,check_AvailabilityFactors, check_clustering
 from .utils import clustering, interconnections, incidence_matrix
-from .data_handler import UnitBasedTable,NodeBasedTable,merge_series, define_parameter, write_to_excel, load_csv
+from .data_handler import UnitBasedTable,NodeBasedTable,merge_series, \
+        define_parameter, write_to_excel, load_csv, load_config_excel, load_config_yaml
 
 from ..misc.gdx_handler import write_variables
 from ..common import commons  # Load fuel types, technologies, timestep, etc:
@@ -40,6 +41,20 @@ def get_git_revision_tag():
     except:
         return 'NA'
 
+def get_indices(config):
+    # Indexes of the simulation:
+    idx_std = pd.DatetimeIndex(pd.date_range(start=pd.datetime(*config['StartDate']),
+                                            end=pd.datetime(*config['StopDate']),
+                                            freq=commons['TimeStep'])
+                            )
+    idx_utc_noloc = idx_std - dt.timedelta(hours=1)
+    idx_utc = idx_utc_noloc.tz_localize('UTC')
+    # Indexes for the whole year considered in StartDate
+    idx_utc_year_noloc = pd.DatetimeIndex(pd.date_range(start=pd.datetime(*(config['StartDate'][0],1,1,0,0)),
+                                                        end=pd.datetime(*(config['StartDate'][0],12,31,23,59,59)),
+                                                        freq=commons['TimeStep'])
+                                        )
+    return idx_utc, idx_utc_noloc, idx_utc_year_noloc
 
 class Property(object):
     def __init__(self, name):
@@ -66,22 +81,53 @@ class DispaModel(object):
     # 1) data 
     # 2) model
 
-    def __init__(self, config): # TODO constructor
-        self.config = config
-        self.time_range = None # TODO
+
+    def __init__(self, excel_path=None, yaml_path=None): # TODO constructor
+        
+        if excel_path:
+            self.config = load_config_excel(excel_path)
+        elif yaml_path:
+            self.config = load_config_yaml(yaml_path)
+        else:
+            logging.error("Only yaml and excel files are supported")
+            sys.exit(1)
+
+        
         self.version = str(get_git_revision_tag())
+<<<<<<< HEAD
         self.data = DataLoader(config)
         self.model = DispaModelFormulation()
         self.properties = {}
         #self.model.sets = load_sets()
+=======
+        #self.CEP = config['CEP'] == 1
+        #self.LP = config['SimulationType'] == 'LP' or config['SimulationType'] == 'LP clustered'
+        self.idx_utc, self.idx_utc_noloc, idx_utc_year_noloc = get_indices(self.config)
+        self.time_range = (self.idx_utc[-1] - self.idx_utc[0]).days 
+        if not isinstance(self.config['default']['CostLoadShedding'],(float,int)):
+            self.config['default']['CostLoadShedding'] = 1000
+        if not isinstance(self.config['default']['CostHeatSlack'],(float,int)):
+            self.config['default']['CostHeatSlack'] = 50
+
+        # self.__dag = {'clustering': [self.build_model, None], #TODO
+        #             'CEP': ['C', 'D'],
+        #             'C': ['D'],
+        #             'D': ['C'],
+        #             'E': ['F'],
+        #             'F': ['C']
+        #             }
+       #self.model.sets = load_sets()
+>>>>>>> d7a99526503cb3ac85b7f32693d58fa603047ff5
         #self.model.params = load_params()
 
 
     def __str__(self):
         """Return a descriptive string for this instance, invoked by print() and str()"""
 
-        return ('Dispa-SET model with ...') #TODO
+        return ('Dispa-SET model: \n -> %s to %s \n -> %i days' % \
+             (str(self.idx_utc[0]), str(self.idx_utc[-1]), self.time_range)) #TODO
 
+<<<<<<< HEAD
     foo = Property('foo')
 
     @foo.on_set
@@ -89,6 +135,11 @@ class DispaModel(object):
         pass
 
     def edit_config(self, key, new_value): #TODO trigger events
+=======
+    __repr__ = __str__ # usage in jupyter notebooks
+
+    def edit_config(self, key, new_value): #TODO
+>>>>>>> d7a99526503cb3ac85b7f32693d58fa603047ff5
         """Edit the config file (practical for simulating multiple variations)
         
         Args:
@@ -97,19 +148,13 @@ class DispaModel(object):
         """
         try:
             self.config[key] = new_value
-            # update_DAG(key) TODO 
+            #update_DAG(key) 
         except KeyError as e: 
             print("Key not found")
 
-    def _update_config(self, config):
+    def _update_config(self, config): #TODO
         print("reevaluating ...")
         
-
-    def build_model(self, target_dir=""):
-        if self.config["SimulationDirectory"]:
-            pass
-        else:
-            pass
 
     def solve_model(self, language="GAMS"):
         pass
@@ -124,7 +169,16 @@ class DispaModel(object):
         :param config: Dictionary with all the configuration fields loaded from the excel file. Output of the 'LoadConfig' function.
         :param plot_load: Boolean used to display a plot of the demand curves in the different zones
         """
-        pass
+        if self.config["SimulationDirectory"]:
+            self.data = DataLoader(self.config)
+            self.model = DispaModelFormulation(self.config)
+
+        else:
+            pass
+
+    # def update_DAG(self):
+    #     pass
+
 # graph = {'clustering': ['B', 'C'],
 #             'CEP': ['C', 'D'],
 #             'C': ['D'],
@@ -142,26 +196,28 @@ class DispaModel(object):
 #     parameters[var] = define_parameter(sets_param[var], sets, value=default_value)
 #     parameters[var]["val"] =  values
 
-def define_parameters(DataLoader): pass
+def define_parameters(DataLoader): 
+    pass
 
 
-class DataLoader():
+class DataLoader(object):
     def __init__(self, config):
         self.config = config
-        self.clustering = clustering #bool
-        self.CEP = False
-        self.idx = ???
-
+        self.idx_utc, self.idx_utc_noloc, self.idx_utc_year_noloc = get_indices(self.config)
+        self.load_loads()
+        self.load_interconnections()
+        self.load_load_shedding()
+        
 
     def load_loads(self):
         config = self.config 
-        self.Load = NodeBasedTable(config['Demand'],idx_utc_noloc,config['countries'],tablename='Demand')
+        self.Load = NodeBasedTable(self.config['Demand'], self.idx_utc_noloc, self.config['countries'], tablename='Demand')
         # For the peak load, the whole year is considered:
-        self.PeakLoad = NodeBasedTable(config['Demand'],idx_utc_year_noloc,config['countries'],tablename='PeakLoad').max()
-        if config['modifiers']['Demand'] != 1:
-            logging.info('Scaling load curve by a factor ' + str(config['modifiers']['Demand']))
-            self.Load = self.Load * config['modifiers']['Demand']
-            self.PeakLoad = self.PeakLoad * config['modifiers']['Demand']
+        self.PeakLoad = NodeBasedTable(self.config['Demand'], self.idx_utc_year_noloc, self.config['countries'], tablename='PeakLoad').max()
+        if self.config['modifiers']['Demand'] != 1:
+            logging.info('Scaling load curve by a factor ' + str(self.config['modifiers']['Demand']))
+            self.Load = self.Load * self.config['modifiers']['Demand']
+            self.PeakLoad = self.PeakLoad * self.config['modifiers']['Demand']
 
     def load_interconnections(self):
         # Interconnections:
@@ -170,29 +226,29 @@ class DataLoader():
             self.flows = load_csv(config['Interconnections'], index_col=0, parse_dates=True).fillna(0)
         else:
             logging.warning('No historical flows will be considered (no valid file provided)')
-            self.flows = pd.DataFrame(index=idx_utc_noloc)
-        if os.path.isfile(config['NTC']):
-            self.NTC = load_csv(config['NTC'], index_col=0, parse_dates=True).fillna(0)
+            self.flows = pd.DataFrame(index=self.idx_utc_noloc)
+        if os.path.isfile(self.config['NTC']):
+            self.NTC = load_csv(self.config['NTC'], index_col=0, parse_dates=True).fillna(0)
         else:
             logging.warning('No NTC values will be considered (no valid file provided)')
-            self.NTC = pd.DataFrame(index=idx_utc_noloc)
+            self.NTC = pd.DataFrame(index=self.idx_utc_noloc)
         
         # Interconnections:
-        [Interconnections_sim, Interconnections_RoW, Interconnections] = interconnections(config['countries'], NTC, flows)
+        [Interconnections_sim, Interconnections_RoW, Interconnections] = interconnections(config['countries'], self.NTC, self.flows)
 
         if len(Interconnections_sim.columns) > 0:
-            self.NTCs = Interconnections_sim.reindex(idx_utc_noloc)
+            self.NTCs = Interconnections_sim.reindex(self.idx_utc_noloc)
         else:
-            self.NTCs = pd.DataFrame(index=idx_utc_noloc)
-        self.Inter_RoW = Interconnections_RoW.reindex(idx_utc_noloc)
+            self.NTCs = pd.DataFrame(index=self.idx_utc_noloc)
+        self.Inter_RoW = Interconnections_RoW.reindex(self.idx_utc_noloc)
 
-    def load_shedding(self):
+    def load_load_shedding(self):
         config = self.config
         # Load Shedding:
-        self.LoadShedding = NodeBasedTable(config['LoadShedding'],idx_utc_noloc,config['countries'],tablename='LoadShedding',default=config['default']['LoadShedding'])
-        self.CostLoadShedding = NodeBasedTable(config['CostLoadShedding'],idx_utc_noloc,config['countries'],tablename='CostLoadShedding',default=config['default']['CostLoadShedding'])
+        self.LoadShedding = NodeBasedTable(config['LoadShedding'],self.idx_utc_noloc,config['countries'],tablename='LoadShedding',default=config['default']['LoadShedding'])
+        self.CostLoadShedding = NodeBasedTable(config['CostLoadShedding'],self.idx_utc_noloc,config['countries'],tablename='CostLoadShedding',default=config['default']['CostLoadShedding'])
 
-    def load_plants(self): 
+    def load_plants(self):
         config = self.config
         # Power plants:
         plants = pd.DataFrame()
@@ -221,15 +277,10 @@ class DataLoader():
             if key not in plants.columns:
                 plants[key] = np.nan
         self.plants = plants
-
-
-    def load_storages(self):
-        plants_sto = plants[[u in commons['tech_storage'] for u in plants['Technology']]]
-        check_sto(config, plants_sto)
+        self.plants_chp = plants[[str(x).lower() in commons['types_CHP'] for x in plants['CHPType']]] # Defining the CHPs
+        plants_sto = self.plants[[u in self.commons['tech_storage'] for u in self.plants['Technology']]]
+        check_sto(self.config, plants_sto)
         self.plants_sto = plants_sto
-
-    def load_heat(self): pass
-
 
 
     def load_fuel_prices(self):
@@ -238,14 +289,14 @@ class DataLoader():
         'PriceOfFuelOil', 'PriceOfBiomass', 'PriceOfCO2', 'PriceOfLignite', 
         'PriceOfPeat']
 
-        FuelPrices = pd.DataFrame(columns=fuels, index=idx_utc_noloc)
+        FuelPrices = pd.DataFrame(columns=fuels, index=self.idx_utc_noloc)
         for fuel in fuels:
             if os.path.isfile(config[fuel]):
                 tmp = load_csv(config[fuel], header=None, index_col=0, parse_dates=True)
-                self.FuelPrices[fuel] = tmp[1][idx_utc_noloc].values
+                self.FuelPrices[fuel] = tmp[1][self.idx_utc_noloc].values
             elif isinstance(config['default'][fuel], (int, float, complex)):
-                logging.warning('No data file found for "' + fuel + '. Using default value ' + str(config['default'][fuel]) + ' EUR')
-                self.FuelPrices[fuel] = pd.Series(config['default'][fuel], index=idx_utc_noloc)
+                logging.warning('No data file found for "' + fuel + '. Using default value ' + str(self.config['default'][fuel]) + ' EUR')
+                self.FuelPrices[fuel] = pd.Series(config['default'][fuel], index=self.idx_utc_noloc)
             # Special case for lignite and peat, for backward compatibility
             elif fuel == 'PriceOfLignite':
                 logging.warning('No price data found for "' + fuel + '. Using the same value as for Black Coal')
@@ -255,7 +306,7 @@ class DataLoader():
                 self.FuelPrices[fuel] = FuelPrices['PriceOfBiomass']
             else:
                 logging.warning('No data file or default value found for "' + fuel + '. Assuming zero marginal price!')
-                self.FuelPrices[fuel] = pd.Series(0, index=idx_utc_noloc)
+                self.FuelPrices[fuel] = pd.Series(0, index=self.idx_utc_noloc)
 
 
     def load_cep_parameters(self):
@@ -282,12 +333,16 @@ class DataLoader():
         df_expanded = pd.merge(index, plant_new_cost, on=['Fuel', 'Technology'], how='left')
 
 
-    def cluster_plants(self): 
+    def cluster_plants(self):
+    
         # Clustering of the plants:
-        self.Plants_merged, self.mapping = clustering(self.plants, method=config['SimulationType'])
+        Plants_merged, mapping = clustering(self.plants, method=config['SimulationType'])
         # Check clustering:
-        check_clustering(self.plants, self.Plants_merged)
+        check_clustering(plants, Plants_merged)
+        self.plants = plants
+        self.Plants_merged = Plants_merged
 
+        
     def get_unit_based_tables(self):
         
         self.Outages = UnitBasedTable(plants,config['Outages'],idx_utc_noloc,config['countries'],fallbacks=['Unit','Technology'],tablename='Outages')
@@ -296,6 +351,9 @@ class DataLoader():
         self.ReservoirScaledInflows = UnitBasedTable(plants_sto,config['ReservoirScaledInflows'],idx_utc_noloc,config['countries'],fallbacks=['Unit','Technology','Zone'],tablename='ReservoirScaledInflows',default=0)
         self.HeatDemand = UnitBasedTable(plants_chp,config['HeatDemand'],idx_utc_noloc,config['countries'],fallbacks=['Unit'],tablename='HeatDemand',default=0)
         self.CostHeatSlack = UnitBasedTable(plants_chp,config['CostHeatSlack'],idx_utc_noloc,config['countries'],fallbacks=['Unit','Zone'],tablename='CostHeatSlack',default=config['default']['CostHeatSlack'])
+        check_AvailabilityFactors(self.plants, self.AF)
+        check_heat_demand(self.plants, self.HeatDemand)
+
 
 
     def merge_time_series(self, mapping): 
@@ -309,8 +367,8 @@ class DataLoader():
 
 
     def check_dfs(self): 
-        first_hour_no_loc = idx_utc_noloc[0]
-        last_hour_no_loc = idx_utc_noloc[-1],
+        first_hour_no_loc = self.idx_utc_noloc[0]
+        last_hour_no_loc = self.idx_utc_noloc[-1],
         check_df(self.Load, StartDate=first_hour_no_loc, StopDate=last_hour_no_loc, name='Load')
         check_df(self.AF_merged, StartDate=first_hour_no_loc, StopDate=last_hour_no_loc,
                 name='AF_merged')
@@ -354,7 +412,7 @@ class DataLoader():
         map(attributes2extend, lambda x: setattr(self, x, getattr(x).reindex(idx_long, method='nearest').fillna(method='bfill')))
         
 
-    def extend_data_lookahead(self):
+    def extend_data_with_lookahead(self):
         # Extending the data to include the look-ahead period (with constant values assumed)
         #TODO
         enddate_long = idx_utc_noloc[-1] + dt.timedelta(days=config['LookAhead'])
@@ -378,9 +436,93 @@ class DataLoader():
         #        Renewables[tr] = Renewables[tr].reindex(idx_long, method='nearest').fillna(method='bfill')
 
 
-    def data_to_pickle(self): pass
+    def finish_preprocessing(self):
 
-    def data_from_pickle(self, path): pass
+        Plants_merged = self.Plants_merged
+        for key in ['TimeUpMinimum','TimeDownMinimum']:
+            if any([not x.is_integer() for x in Plants_merged[key].fillna(0).values.astype('float')]):
+                logging.warning(key + ' in the power plant data has been rounded to the nearest integer value')
+                Plants_merged.loc[:,key] = Plants_merged[key].fillna(0).values.astype('int32')
+
+            if not len(Plants_merged.index.unique()) == len(Plants_merged):
+                # Very unlikely case:
+                logging.error('plant indexes not unique!')
+                sys.exit(1)
+
+            # Apply scaling factors:
+            if config['modifiers']['Solar'] != 1:
+                logging.info('Scaling Solar Capacity by a factor ' + str(config['modifiers']['Solar']))
+                for u in Plants_merged.index:
+                    if Plants_merged.Technology[u] == 'PHOT':
+                        Plants_merged.loc[u, 'PowerCapacity'] = Plants_merged.loc[u, 'PowerCapacity'] * config['modifiers']['Solar']
+            if config['modifiers']['Wind'] != 1:
+                logging.info('Scaling Wind Capacity by a factor ' + str(config['modifiers']['Wind']))
+                for u in Plants_merged.index:
+                    if Plants_merged.Technology[u] == 'WTON' or Plants_merged.Technology[u] == 'WTOF':
+                        Plants_merged.loc[u, 'PowerCapacity'] = Plants_merged.loc[u, 'PowerCapacity'] * config['modifiers']['Wind']
+            if config['modifiers']['Storage'] != 1:
+                logging.info('Scaling Storage Power and Capacity by a factor ' + str(config['modifiers']['Storage']))
+                for u in Plants_merged.index:
+                    if isStorage(Plants_merged.Technology[u]):
+                        Plants_merged.loc[u, 'PowerCapacity'] = Plants_merged.loc[u, 'PowerCapacity'] * config['modifiers']['Storage']
+                        Plants_merged.loc[u, 'StorageCapacity'] = Plants_merged.loc[u, 'StorageCapacity'] * config['modifiers']['Storage']
+                        Plants_merged.loc[u, 'StorageChargingCapacity'] = Plants_merged.loc[u, 'StorageChargingCapacity'] * config['modifiers']['Storage']
+
+            # Defining the hydro storages:
+            Plants_sto = Plants_merged[[u in commons['tech_storage'] for u in Plants_merged['Technology']]]
+            # check storage plants:
+            check_sto(config, Plants_sto,raw_data=False)
+            # Defining the CHPs:
+            Plants_chp = Plants_merged[[x.lower() in commons['types_CHP'] for x in Plants_merged['CHPType']]].copy()
+            # check chp plants:
+            check_chp(config, Plants_chp)
+            # For all the chp plants correct the PowerCapacity, which is defined in cogeneration mode in the inputs and in power generation model in the optimization model
+            for u in Plants_chp.index:
+                PowerCapacity = Plants_chp.loc[u, 'PowerCapacity']
+
+                if Plants_chp.loc[u,'CHPType'].lower() == 'p2h':
+                    PurePowerCapacity = PowerCapacity
+                else:
+                    if pd.isnull(Plants_chp.loc[u,'CHPMaxHeat']):  # If maximum heat is not defined, then it is defined as the intersection between two lines
+                        MaxHeat = PowerCapacity / Plants_chp.loc[u,'CHPPowerToHeat']
+                        Plants_chp.loc[u, 'CHPMaxHeat'] = 'inf'
+                    else:
+                        MaxHeat = Plants_chp.loc[u, 'CHPMaxHeat']
+                    PurePowerCapacity = PowerCapacity + Plants_chp.loc[u,'CHPPowerLossFactor'] * MaxHeat
+                Plants_merged.loc[u,'PartLoadMin'] = Plants_merged.loc[u,'PartLoadMin'] * PowerCapacity / PurePowerCapacity  # FIXME: Is this correct?
+                Plants_merged.loc[u,'PowerCapacity'] = PurePowerCapacity
+                
+            # Get the hydro time series corresponding to the original plant list: #FIXME Unused variable ?
+            #StorageFormerIndexes = [s for s in plants.index if
+            #                        plants['Technology'][s] in commons['tech_storage']]
+
+            # Same with the CHPs:
+            # Get the heat demand time series corresponding to the original plant list:
+            CHPFormerIndexes = [s for s in plants.index if
+                                    plants['CHPType'][s] in commons['types_CHP']]
+            for s in CHPFormerIndexes:  # for all the old plant indexes
+                # get the old plant name corresponding to s:
+                oldname = plants['Unit'][s]
+                # newname = mapping['NewIndex'][s] #FIXME Unused variable ?
+                if oldname not in HeatDemand:
+                    logging.warning('No heat demand profile found for CHP plant "' + str(oldname) + '". Assuming zero')
+                    HeatDemand[oldname] = 0
+                if oldname not in CostHeatSlack:
+                    logging.warning('No heat cost profile found for CHP plant "' + str(oldname) + '". Assuming zero')
+                    CostHeatSlack[oldname] = 0
+        
+            # merge the outages:
+            for i in plants.index:  # for all the old plant indexes
+                # get the old plant name corresponding to s:
+                oldname = plants['Unit'][i]
+                newname = mapping['NewIndex'][i]
+
+
+    def data_to_pickle(self): 
+        pass
+        
+    def data_from_pickle(self, path): 
+        pass
 
     
 def get_model_horizon(): pass
@@ -403,15 +545,16 @@ def write_gdx(): pass
 
 
 
-class DispaModelFormulation():
+class DispaModelFormulation(object):
 
     def __init__(self, config):
-        self.sets = load_sets()
-        self.parameters = load_params()
+
         self.LP = config['SimulationType'] == 'LP' or config['SimulationType'] == 'LP clustered'
         self.CEP = config['CEP'] == 1
+        self.load_sets()
+        self.parameters = load_params()
 
-    def load_sets():
+    def load_sets(self):
         sets = {}
         sets['h'] = [str(x + 1) for x in range(Nhours_long)]
         sets['z'] = [str(x + 1) for x in range(Nhours_long - config['LookAhead'] * 24)]
@@ -425,7 +568,7 @@ class DispaModelFormulation():
         sets['chp'] = Plants_chp.index.tolist()
         sets['t'] = commons['Technologies']
         sets['tr'] = commons['tech_renewables']
-        return sets
+        self.sets = sets 
 
     def load_params(): 
         sets_param = {}
@@ -480,7 +623,7 @@ class DispaModelFormulation():
         sets_param['TimeDowninimum'] = ['u']
         return sets_param
 
-    def fill_parameters(self):
+    def __build_parameters(self):
         parameters=dict()
 
         sets_param = self.sets_param
