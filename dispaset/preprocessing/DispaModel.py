@@ -41,6 +41,25 @@ def get_git_revision_tag():
         return 'NA'
 
 
+class Property(object):
+    def __init__(self, name):
+        self.name = name
+        self.dirty = False
+        self.on_set_callbacks = []
+
+    def __get__(self, obj, obj_type=None):
+        if self.dirty:
+            self.dirt
+        return obj.properties[name]
+
+    def __set__(self, obj, obj_type, value):
+        for callback in self.on_set_callbacks:
+            callback(obj, value)
+        obj.properties[name] = value
+
+    def on_set(self, func):
+        self.on_set_callbacks.append(func)
+
 class DispaModel(object):
 
     # consists of 
@@ -53,6 +72,7 @@ class DispaModel(object):
         self.version = str(get_git_revision_tag())
         self.data = DataLoader(config)
         self.model = DispaModelFormulation()
+        self.properties = {}
         #self.model.sets = load_sets()
         #self.model.params = load_params()
 
@@ -62,8 +82,13 @@ class DispaModel(object):
 
         return ('Dispa-SET model with ...') #TODO
 
+    foo = Property('foo')
 
-    def edit_config(self, key, new_value):
+    @foo.on_set
+    def spam(self, value):
+        pass
+
+    def edit_config(self, key, new_value): #TODO trigger events
         """Edit the config file (practical for simulating multiple variations)
         
         Args:
