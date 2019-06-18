@@ -75,12 +75,13 @@ class Property(object):
     def on_set(self, func):
         self.on_set_callbacks.append(func)
 
+
+
 class DispaModel(object):
 
     # consists of 
     # 1) data 
     # 2) model
-
 
     def __init__(self, excel_path=None, yaml_path=None): # TODO constructor
         
@@ -89,25 +90,20 @@ class DispaModel(object):
         elif yaml_path:
             self.config = load_config_yaml(yaml_path)
         else:
-            logging.error("Only yaml and excel files are supported")
+            logging.error("Please select file location of your config file")
             sys.exit(1)
 
         
         self.version = str(get_git_revision_tag())
-<<<<<<< HEAD
-        self.data = DataLoader(config)
-        self.model = DispaModelFormulation()
+        self.data = DataLoader(self.config)
+        self.model = DispaModelFormulation(self.config)
         self.properties = {}
         #self.model.sets = load_sets()
-=======
         #self.CEP = config['CEP'] == 1
         #self.LP = config['SimulationType'] == 'LP' or config['SimulationType'] == 'LP clustered'
-        self.idx_utc, self.idx_utc_noloc, idx_utc_year_noloc = get_indices(self.config)
+        self.idx_utc, self.idx_utc_noloc, self.idx_utc_year_noloc = get_indices(self.config)
         self.time_range = (self.idx_utc[-1] - self.idx_utc[0]).days 
-        if not isinstance(self.config['default']['CostLoadShedding'],(float,int)):
-            self.config['default']['CostLoadShedding'] = 1000
-        if not isinstance(self.config['default']['CostHeatSlack'],(float,int)):
-            self.config['default']['CostHeatSlack'] = 50
+        _define_default_values()
 
         # self.__dag = {'clustering': [self.build_model, None], #TODO
         #             'CEP': ['C', 'D'],
@@ -117,9 +113,14 @@ class DispaModel(object):
         #             'F': ['C']
         #             }
        #self.model.sets = load_sets()
->>>>>>> d7a99526503cb3ac85b7f32693d58fa603047ff5
         #self.model.params = load_params()
 
+
+    def _define_default_values(self):
+        if not isinstance(self.config['default']['CostLoadShedding'],(float,int)):
+            self.config['default']['CostLoadShedding'] = 1000
+        if not isinstance(self.config['default']['CostHeatSlack'],(float,int)):
+            self.config['default']['CostHeatSlack'] = 50
 
     def __str__(self):
         """Return a descriptive string for this instance, invoked by print() and str()"""
@@ -127,19 +128,11 @@ class DispaModel(object):
         return ('Dispa-SET model: \n -> %s to %s \n -> %i days' % \
              (str(self.idx_utc[0]), str(self.idx_utc[-1]), self.time_range)) #TODO
 
-<<<<<<< HEAD
-    foo = Property('foo')
-
-    @foo.on_set
-    def spam(self, value):
-        pass
-
-    def edit_config(self, key, new_value): #TODO trigger events
-=======
     __repr__ = __str__ # usage in jupyter notebooks
 
+
+
     def edit_config(self, key, new_value): #TODO
->>>>>>> d7a99526503cb3ac85b7f32693d58fa603047ff5
         """Edit the config file (practical for simulating multiple variations)
         
         Args:
@@ -206,7 +199,7 @@ class DataLoader(object):
         self.idx_utc, self.idx_utc_noloc, self.idx_utc_year_noloc = get_indices(self.config)
         self.load_loads()
         self.load_interconnections()
-        self.load_load_shedding()
+        #self.load_load_shedding()
         
 
     def load_loads(self):
@@ -355,7 +348,6 @@ class DataLoader(object):
         check_heat_demand(self.plants, self.HeatDemand)
 
 
-
     def merge_time_series(self, mapping): 
         # Merging the time series relative to the clustered power plants:
         self.ReservoirScaledInflows_merged = merge_series(self.plants, self.ReservoirScaledInflows, mapping, method='WeightedAverage', tablename='ScaledInflows')
@@ -428,8 +420,7 @@ class DataLoader(object):
         self.Load = self.Load.reindex(idx_long, method='nearest').fillna(method='bfill')
         self.Outages_merged = self.Outages_merged.reindex(idx_long, method='nearest').fillna(method='bfill')
         self.ReservoirLevels_merged = self.ReservoirLevels_merged.reindex(idx_long, method='nearest').fillna(method='bfill')
-        self.ReservoirScaledInflows_merged = self.ReservoirScaledInflows_merged.reindex(idx_long, method='nearest').fillna(
-            method='bfill')
+        self.ReservoirScaledInflows_merged = self.ReservoirScaledInflows_merged.reindex(idx_long, method='nearest').fillna(method='bfill')
         self.LoadShedding = self.LoadShedding.reindex(idx_long, method='nearest').fillna(method='bfill')
         self.CostLoadShedding = self.CostLoadShedding.reindex(idx_long, method='nearest').fillna(method='bfill')
         #    for tr in Renewables:
@@ -517,115 +508,12 @@ class DataLoader(object):
                 oldname = plants['Unit'][i]
                 newname = mapping['NewIndex'][i]
 
-
-    def data_to_pickle(self): 
-        pass
-        
-    def data_from_pickle(self, path): 
-        pass
-
-    
-def get_model_horizon(): pass
-
-def load_model_data(): pass
-
-def add_capacity_expansion(): pass
-
-def prepare_model_formulation(): pass
-
-def build_model(): pass
-
-def write_to_dest_folder(): pass
-
-def cluster_power_plants(): pass
-
-def write_pickle(): pass
-
-def write_gdx(): pass
-
-
-
-class DispaModelFormulation(object):
-
-    def __init__(self, config):
-
-        self.LP = config['SimulationType'] == 'LP' or config['SimulationType'] == 'LP clustered'
-        self.CEP = config['CEP'] == 1
-        self.load_sets()
+    def build_model_formulation(self):
+        _model_load_sets()
         self.parameters = load_params()
 
-    def load_sets(self):
-        sets = {}
-        sets['h'] = [str(x + 1) for x in range(Nhours_long)]
-        sets['z'] = [str(x + 1) for x in range(Nhours_long - config['LookAhead'] * 24)]
-        sets['mk'] = ['DA', '2U', '2D']
-        sets['n'] = config['countries']
-        sets['u'] = Plants_merged.index.tolist()
-        sets['l'] = Interconnections
-        sets['f'] = commons['Fuels']
-        sets['p'] = ['CO2']
-        sets['s'] = Plants_sto.index.tolist()
-        sets['chp'] = Plants_chp.index.tolist()
-        sets['t'] = commons['Technologies']
-        sets['tr'] = commons['tech_renewables']
-        self.sets = sets 
-
-    def load_params(): 
-        sets_param = {}
-        sets_param['AvailabilityFactor'] = ['u', 'h']
-        sets_param['CHPPowerToHeat'] = ['chp']
-        sets_param['CHPPowerLossFactor'] = ['chp']
-        sets_param['CHPMaxHeat'] = ['chp']
-        sets_param['CostFixed'] = ['u']
-        sets_param['CostHeatSlack'] = ['chp','h']
-        sets_param['CostLoadShedding'] = ['n','h']
-        sets_param['CostRampUp'] = ['u']
-        sets_param['CostRampDown'] = ['u']
-        sets_param['CostShutDown'] = ['u']
-        sets_param['CostStartUp'] = ['u']
-        sets_param['CostVariable'] = ['u', 'h']
-        sets_param['Curtailment'] = ['n']
-        sets_param['Demand'] = ['mk', 'n', 'h']
-        sets_param['Efficiency'] = ['u']
-        sets_param['EmissionMaximum'] = ['n', 'p']
-        sets_param['EmissionRate'] = ['u', 'p']
-        sets_param['FlowMaximum'] = ['l', 'h']
-        sets_param['FlowMinimum'] = ['l', 'h']
-        sets_param['Fuel'] = ['u', 'f']
-        sets_param['HeatDemand'] = ['chp','h']
-        sets_param['LineNode'] = ['l', 'n']
-        sets_param['LoadShedding'] = ['n','h']
-        sets_param['Location'] = ['u', 'n']
-        sets_param['Markup'] = ['u', 'h']
-        sets_param['Nunits'] = ['u']
-        sets_param['OutageFactor'] = ['u', 'h']
-        sets_param['PartLoadMin'] = ['u']
-        sets_param['PowerCapacity'] = ['u']
-        sets_param['PowerInitial'] = ['u']
-        sets_param['PriceTransmission'] = ['l', 'h']
-        sets_param['RampUpMaximum'] = ['u']
-        sets_param['RampDownMaximum'] = ['u']
-        sets_param['RampStartUpMaximum'] = ['u']
-        sets_param['RampShutDownMaximum'] = ['u']
-        sets_param['Reserve'] = ['t']
-        sets_param['StorageCapacity'] = ['u']
-        sets_param['StorageChargingCapacity'] = ['s']
-        sets_param['StorageChargingEfficiency'] = ['s']
-        sets_param['StorageDischargeEfficiency'] = ['s']
-        sets_param['StorageSelfDischarge'] = ['u']
-        sets_param['StorageInflow'] = ['s', 'h']
-        sets_param['StorageInitial'] = ['s']
-        sets_param['StorageMinimum'] = ['s']
-        sets_param['StorageOutflow'] = ['s', 'h']
-        sets_param['StorageProfile'] = ['s', 'h']
-        sets_param['Technology'] = ['u', 't']
-        sets_param['TimeUpMinimum'] = ['u']
-        sets_param['TimeDowninimum'] = ['u']
-        return sets_param
-
-    def __build_parameters(self):
+    def build_model_parameters(self):
         parameters=dict()
-
         sets_param = self.sets_param
         Plants_merged = self.Plants_merged
         Plants_sto = self.Plants_sto
@@ -638,7 +526,7 @@ class DispaModelFormulation(object):
         
         for var in ["Investment", "EconomicLifetime"]:
             parameters[var] = define_parameter(sets_param[var], sets, value=0)
-            if CEP:
+            if self.CEP:
                 parameters[var]["val"] =  df_expanded[var].values
 
         Plants_merged['FixedCost'] = pd.merge(Plants_merged, all_cost, how='left', on=['Fuel', 'Technology'])['FixedCost'].values
@@ -854,3 +742,347 @@ class DispaModelFormulation(object):
             [0, 0, 0, 100],       # Value of water (for unsatisfied water reservoir levels, EUR/MWh)
         ])
         parameters['Config'] = {'sets': ['x_config', 'y_config'], 'val': values}
+
+    def data_to_pickle(self): 
+        pass
+        
+    def data_from_pickle(self, path): 
+        pass
+
+    
+def get_model_horizon(): pass
+
+def load_model_data(): pass
+
+def add_capacity_expansion(): pass
+
+def prepare_model_formulation(): pass
+
+def build_model(): pass
+
+def write_to_dest_folder(): pass
+
+def cluster_power_plants(): pass
+
+def write_pickle(): pass
+
+def write_gdx(): pass
+
+
+
+class DispaModelFormulation():
+
+    def __init__(self, config, Nhours_long, Plants, Interconnections, Plants_sto, Plants_chp):
+
+        self.LP = config['SimulationType'] == 'LP' or config['SimulationType'] == 'LP clustered'
+        self.CEP = config['CEP'] == 1
+        self.load_sets()
+        self.parameters = load_params()
+
+        self.data = DataLoader
+        # self.model_horizon = Nhours_long
+        # self.Plants = Plants
+        # self.Interconnections = Interconnections
+        # self.Plants_sto = Plants_sto
+        # self.Plants_chp = Plants_chp
+
+    def load_sets(self):
+        sets = {}
+        sets['h'] = [str(x + 1) for x in range(self.model_horizon)]
+        sets['z'] = [str(x + 1) for x in range(self.model_horizon - self.config['LookAhead'] * 24)]
+        sets['mk'] = ['DA', '2U', '2D']
+        sets['n'] = self.config['countries']
+        sets['u'] = self.Plants.index.tolist()
+        sets['l'] = self.Interconnections
+        sets['f'] = self.commons['Fuels']
+        sets['p'] = ['CO2']
+        sets['s'] = self.Plants_sto.index.tolist()
+        sets['chp'] = self.Plants_chp.index.tolist()
+        sets['t'] = self.commons['Technologies']
+        sets['tr'] = self.commons['tech_renewables']
+        self.sets = sets 
+
+    def load_params(self): 
+        sets_param = {}
+        sets_param['AvailabilityFactor'] = ['u', 'h']
+        sets_param['CHPPowerToHeat'] = ['chp']
+        sets_param['CHPPowerLossFactor'] = ['chp']
+        sets_param['CHPMaxHeat'] = ['chp']
+        sets_param['CostFixed'] = ['u']
+        sets_param['CostHeatSlack'] = ['chp','h']
+        sets_param['CostLoadShedding'] = ['n','h']
+        sets_param['CostRampUp'] = ['u']
+        sets_param['CostRampDown'] = ['u']
+        sets_param['CostShutDown'] = ['u']
+        sets_param['CostStartUp'] = ['u']
+        sets_param['CostVariable'] = ['u', 'h']
+        sets_param['Curtailment'] = ['n']
+        sets_param['Demand'] = ['mk', 'n', 'h']
+        sets_param['Efficiency'] = ['u']
+        sets_param['EmissionMaximum'] = ['n', 'p']
+        sets_param['EmissionRate'] = ['u', 'p']
+        sets_param['FlowMaximum'] = ['l', 'h']
+        sets_param['FlowMinimum'] = ['l', 'h']
+        sets_param['Fuel'] = ['u', 'f']
+        sets_param['HeatDemand'] = ['chp','h']
+        sets_param['LineNode'] = ['l', 'n']
+        sets_param['LoadShedding'] = ['n','h']
+        sets_param['Location'] = ['u', 'n']
+        sets_param['Markup'] = ['u', 'h']
+        sets_param['Nunits'] = ['u']
+        sets_param['OutageFactor'] = ['u', 'h']
+        sets_param['PartLoadMin'] = ['u']
+        sets_param['PowerCapacity'] = ['u']
+        sets_param['PowerInitial'] = ['u']
+        sets_param['PriceTransmission'] = ['l', 'h']
+        sets_param['RampUpMaximum'] = ['u']
+        sets_param['RampDownMaximum'] = ['u']
+        sets_param['RampStartUpMaximum'] = ['u']
+        sets_param['RampShutDownMaximum'] = ['u']
+        sets_param['Reserve'] = ['t']
+        sets_param['StorageCapacity'] = ['u']
+        sets_param['StorageChargingCapacity'] = ['s']
+        sets_param['StorageChargingEfficiency'] = ['s']
+        sets_param['StorageDischargeEfficiency'] = ['s']
+        sets_param['StorageSelfDischarge'] = ['u']
+        sets_param['StorageInflow'] = ['s', 'h']
+        sets_param['StorageInitial'] = ['s']
+        sets_param['StorageMinimum'] = ['s']
+        sets_param['StorageOutflow'] = ['s', 'h']
+        sets_param['StorageProfile'] = ['s', 'h']
+        sets_param['Technology'] = ['u', 't']
+        sets_param['TimeUpMinimum'] = ['u']
+        sets_param['TimeDowninimum'] = ['u']
+        self.sets_param = sets_param
+
+    # def __build_parameters(self):
+    #     parameters=dict()
+
+    #     sets_param = self.sets_param
+    #     Plants_merged = self.Plants_merged
+    #     Plants_sto = self.Plants_sto
+    #     Plants_chp = self.Plants_chp
+
+        
+    #     # Define all the parameters and set a default value of zero:
+    #     for var in sets_param:
+    #         parameters[var] = define_parameter(sets_param[var], sets, value=0)
+        
+    #     for var in ["Investment", "EconomicLifetime"]:
+    #         parameters[var] = define_parameter(sets_param[var], sets, value=0)
+    #         if CEP:
+    #             parameters[var]["val"] =  df_expanded[var].values
+
+    #     Plants_merged['FixedCost'] = pd.merge(Plants_merged, all_cost, how='left', on=['Fuel', 'Technology'])['FixedCost'].values
+    #     Nunits = len(Plants_merged)
+
+    #     for var in ["CostFixed"]:
+    #         sets_param[var] = ['u']
+    #         parameters[var] = define_parameter(sets_param[var], sets, value=0)
+    #         parameters[var]["val"] =  Plants_merged['FixedCost'].values
+
+
+    #     # List of parameters whose default value is 1
+    #     for var in ['AvailabilityFactor', 'Efficiency', 'Curtailment', 'StorageChargingEfficiency',
+    #                 'StorageDischargeEfficiency', 'Nunits']:
+    #         parameters[var] = define_parameter(sets_param[var], sets, value=1)
+
+    #     # List of parameters whose default value is very high
+    #     for var in ['RampUpMaximum', 'RampDownMaximum', 'RampStartUpMaximum', 'RampShutDownMaximum',
+    #                 'EmissionMaximum']:
+    #         parameters[var] = define_parameter(sets_param[var], sets, value=1e7)
+
+    #     # Boolean parameters:
+    #     for var in ['Technology', 'Fuel', 'Reserve', 'Location']:
+    #         parameters[var] = define_parameter(sets_param[var], sets, value='bool')
+
+    #     # %%
+    #     # List of parameters whose value is known, and provided in the dataframe Plants_merged.
+    #     for var in ['Efficiency', 'PowerCapacity', 'PartLoadMin', 'TimeUpMinimum', 'TimeDownMinimum', 'CostStartUp',
+    #                 'CostRampUp','StorageCapacity', 'StorageSelfDischarge']:
+    #         parameters[var]['val'] = Plants_merged[var].values
+
+    #     # List of parameters whose value is not necessarily specified in the dataframe Plants_merged
+    #     for var in ['Nunits']:
+    #         if var in Plants_merged:
+    #             parameters[var]['val'] = Plants_merged[var].values
+
+
+    #     # List of parameters whose value is known, and provided in the dataframe Plants_sto.
+    #     for var in ['StorageChargingCapacity', 'StorageChargingEfficiency']:
+    #         parameters[var]['val'] = Plants_sto[var].values
+
+    #     # The storage discharge efficiency is actually given by the unit efficiency:
+    #     parameters['StorageDischargeEfficiency']['val'] = Plants_sto['Efficiency'].values
+        
+    #     # List of parameters whose value is known, and provided in the dataframe Plants_chp
+    #     for var in ['CHPPowerToHeat','CHPPowerLossFactor', 'CHPMaxHeat']:
+    #         parameters[var]['val'] = Plants_chp[var].values
+
+    #     # Storage profile and initial state:
+    #     for i, s in enumerate(sets['s']):
+    #         if s in ReservoirLevels_merged:
+    #             # get the time
+    #             parameters['StorageInitial']['val'][i] = ReservoirLevels_merged[s][idx_long[0]] * \
+    #                                                     Plants_sto['StorageCapacity'][s] * Plants_sto['Nunits'][s]
+    #             parameters['StorageProfile']['val'][i, :] = ReservoirLevels_merged[s][idx_long].values
+    #             if any(ReservoirLevels_merged[s] > 1):
+    #                 logging.warning(s + ': The reservoir level is sometimes higher than its capacity!')
+    #         else:
+    #             logging.warning( 'Could not find reservoir level data for storage plant ' + s + '. Assuming 50% of capacity')
+    #             parameters['StorageInitial']['val'][i] = 0.5 * Plants_sto['StorageCapacity'][s]
+    #             parameters['StorageProfile']['val'][i, :] = 0.5
+
+    #     # Storage Inflows:
+    #     for i, s in enumerate(sets['s']):
+    #         if s in ReservoirScaledInflows_merged:
+    #             parameters['StorageInflow']['val'][i, :] = ReservoirScaledInflows_merged[s][idx_long].values * \
+    #                                                     Plants_sto['PowerCapacity'][s]
+    #     # CHP time series:
+    #     for i, u in enumerate(sets['chp']):
+    #         if u in HeatDemand_merged:
+    #             parameters['HeatDemand']['val'][i, :] = HeatDemand_merged[u][idx_long].values
+    #             parameters['CostHeatSlack']['val'][i, :] = CostHeatSlack_merged[u][idx_long].values
+
+    #     # Ramping rates are reconstructed for the non dimensional value provided (start-up and normal ramping are not differentiated)
+    #     parameters['RampUpMaximum']['val'] = Plants_merged['RampUpRate'].values * Plants_merged['PowerCapacity'].values * 60
+    #     parameters['RampDownMaximum']['val'] = Plants_merged['RampDownRate'].values * Plants_merged[
+    #         'PowerCapacity'].values * 60
+    #     parameters['RampStartUpMaximum']['val'] = Plants_merged['RampUpRate'].values * Plants_merged[
+    #         'PowerCapacity'].values * 60
+    #     parameters['RampShutDownMaximum']['val'] = Plants_merged['RampDownRate'].values * Plants_merged[
+    #         'PowerCapacity'].values * 60
+
+    #     # If Curtailment is not allowed, set to 0:
+    #     if config['AllowCurtailment'] == 0:
+    #         parameters['Curtailment'] = define_parameter(sets_param['Curtailment'], sets, value=0)
+
+    #     # Availability Factors
+    #     if len(AF_merged.columns) != 0:
+    #         for i, u in enumerate(sets['u']):
+    #             if u in AF_merged.columns:
+    #                 parameters['AvailabilityFactor']['val'][i, :] = AF_merged[u].values
+
+
+    #     # Demand
+    #     # Dayahead['NL'][1800:1896] = Dayahead['NL'][1632:1728]
+    #     reserve_2U_tot = {i: (np.sqrt(10 * PeakLoad[i] + 150 ** 2) - 150) for i in Load.columns}
+    #     reserve_2D_tot = {i: (0.5 * reserve_2U_tot[i]) for i in Load.columns}
+
+    #     values = np.ndarray([len(sets['mk']), len(sets['n']), len(sets['h'])])
+    #     for i in range(len(sets['n'])):
+    #         values[0, i, :] = Load[sets['n'][i]]
+    #         values[1, i, :] = reserve_2U_tot[sets['n'][i]]
+    #         values[2, i, :] = reserve_2D_tot[sets['n'][i]]
+        
+    #     parameters['Demand'] = {'sets': sets_param['Demand'], 'val': values}
+    #     # Emission Rate:
+    #     parameters['EmissionRate']['val'][:, 0] = Plants_merged['EmissionRate'].values
+
+    #     # Load Shedding:
+    #     for i, c in enumerate(sets['n']):
+    #         parameters['LoadShedding']['val'][i] = LoadShedding[c] * PeakLoad[c]
+    #         parameters['CostLoadShedding']['val'][i] = CostLoadShedding[c]
+
+    #     # %%#################################################################################################################################################################################################
+    #     # Variable Cost
+    #     # Equivalence dictionary between fuel types and price entries in the config sheet:
+    #     FuelEntries = {'BIO':'PriceOfBiomass', 'GAS':'PriceOfGas', 'HRD':'PriceOfBlackCoal', 'LIG':'PriceOfLignite', 'NUC':'PriceOfNuclear', 'OIL':'PriceOfFuelOil', 'PEA':'PriceOfPeat'}
+    #     for unit in range(Nunits):
+    #         found = False
+    #         for FuelEntry in FuelEntries:
+    #             if Plants_merged['Fuel'][unit] == FuelEntry:
+    #                 parameters['CostVariable']['val'][unit, :] = FuelPrices[FuelEntries[FuelEntry]] / Plants_merged['Efficiency'][unit] + \
+    #                                                             Plants_merged['EmissionRate'][unit] * FuelPrices['PriceOfCO2']
+    #                 found = True
+    #         # Special case for biomass plants, which are not included in EU ETS:
+    #         if Plants_merged['Fuel'][unit] == 'BIO':
+    #             parameters['CostVariable']['val'][unit, :] = FuelPrices['PriceOfBiomass'] / Plants_merged['Efficiency'][
+    #                 unit]
+    #             found = True
+    #         if not found:
+    #             logging.warning('No fuel price value has been found for fuel ' + Plants_merged['Fuel'][unit] + ' in unit ' + \
+    #                 Plants_merged['Unit'][unit] + '. A null variable cost has been assigned')
+
+    #     # %%#################################################################################################################################################################################################
+
+    #     # Maximum Line Capacity
+    #     for i, l in enumerate(sets['l']):
+    #         if l in NTCs.columns:
+    #             parameters['FlowMaximum']['val'][i, :] = NTCs[l]
+    #         if l in Inter_RoW.columns:
+    #             parameters['FlowMaximum']['val'][i, :] = Inter_RoW[l]
+    #             parameters['FlowMinimum']['val'][i, :] = Inter_RoW[l]
+    #     # Check values:
+    #     check_MinMaxFlows(parameters['FlowMinimum']['val'],parameters['FlowMaximum']['val'])
+        
+    #     parameters['LineNode'] = incidence_matrix(sets, 'l', parameters, 'LineNode')
+
+    #     # Outage Factors
+    #     if len(Outages_merged.columns) != 0:
+    #         for i, u in enumerate(sets['u']):
+    #             if u in Outages_merged.columns:
+    #                 parameters['OutageFactor']['val'][i, :] = Outages_merged[u].values
+    #             else:
+    #                 logging.warning('Outages factors not found for unit ' + u + '. Assuming no outages')
+
+    #     # Participation to the reserve market
+    #     values = np.array([s in config['ReserveParticipation'] for s in sets['t']], dtype='bool')
+    #     parameters['Reserve'] = {'sets': sets_param['Reserve'], 'val': values}
+
+    #     # Technologies
+    #     for unit in range(Nunits):
+    #         idx = sets['t'].index(Plants_merged['Technology'][unit])
+    #         parameters['Technology']['val'][unit, idx] = True
+
+    #     # Fuels
+    #     for unit in range(Nunits):
+    #         idx = sets['f'].index(Plants_merged['Fuel'][unit])
+    #         parameters['Fuel']['val'][unit, idx] = True
+
+    #     # Location
+    #     for i in range(len(sets['n'])):
+    #         parameters['Location']['val'][:, i] = (Plants_merged['Zone'] == config['countries'][i]).values
+
+    #     # CHPType parameter:
+    #     sets['chp_type'] = ['Extraction','Back-Pressure', 'P2H']
+    #     parameters['CHPType'] = define_parameter(['chp','chp_type'],sets,value=0)
+    #     for i,u in enumerate(sets['chp']):
+    #         if u in Plants_chp.index:
+    #             if Plants_chp.loc[u,'CHPType'].lower() == 'extraction':
+    #                 parameters['CHPType']['val'][i,0] = 1
+    #             elif Plants_chp.loc[u,'CHPType'].lower() == 'back-pressure':
+    #                 parameters['CHPType']['val'][i,1] = 1
+    #             elif Plants_chp.loc[u,'CHPType'].lower() == 'p2h':
+    #                 parameters['CHPType']['val'][i,2] = 1
+    #             else:
+    #                 logging.error('CHPType not valid for plant ' + u)
+    #                 sys.exit(1)
+
+    #     # Initial Power
+    #     if 'InitialPower' in Plants_merged:
+    #         parameters['PowerInitial']['val'] = Plants_merged['InitialPower'].values
+    #     else:
+    #         for i in range(Nunits):
+    #             # Nuclear and Fossil Gas greater than 350 MW are up (assumption):
+    #             if Plants_merged['Fuel'][i] in ['GAS', 'NUC'] and Plants_merged['PowerCapacity'][i] > 350:
+    #                 parameters['PowerInitial']['val'][i] = (Plants_merged['PartLoadMin'][i] + 1) / 2 * \
+    #                                                     Plants_merged['PowerCapacity'][i]
+    #             # Config variables:
+    #     sets['x_config'] = ['FirstDay', 'LastDay', 'RollingHorizon Length', 'RollingHorizon LookAhead','ValueOfLostLoad','QuickStartShare','CostOfSpillage','WaterValue']
+    #     sets['y_config'] = ['year', 'month', 'day', 'val']
+    #     dd_begin = idx_long[4]
+    #     dd_end = idx_long[-2]
+
+    # #TODO: integrated the parameters (VOLL, Water value, etc) from the excel config file
+    #     values = np.array([
+    #         [dd_begin.year, dd_begin.month, dd_begin.day, 0],
+    #         [dd_end.year, dd_end.month, dd_end.day, 0],
+    #         [0, 0, config['HorizonLength'], 0],
+    #         [0, 0, config['LookAhead'], 0],
+    #         [0, 0, 0, 1e5],     # Value of lost load
+    #         [0, 0, 0, 0.5],       # allowed Share of quick start units in reserve
+    #         [0, 0, 0, 1],       # Cost of spillage (EUR/MWh)
+    #         [0, 0, 0, 100],       # Value of water (for unsatisfied water reservoir levels, EUR/MWh)
+    #     ])
+    #     parameters['Config'] = {'sets': ['x_config', 'y_config'], 'val': values}
