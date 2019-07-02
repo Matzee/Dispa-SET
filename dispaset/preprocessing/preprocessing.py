@@ -194,6 +194,8 @@ def build_simulation(config):
     # Clustering of the plants:
     Plants_merged, mapping = clustering(plants, method=config['SimulationType'])
     # Check clustering:
+    print("old")
+    print(plants)
     check_clustering(plants,Plants_merged)
 
     # Renaming the columns to ease the production of parameters:
@@ -280,7 +282,6 @@ def build_simulation(config):
         if oldname not in CostHeatSlack:
             logging.warning('No heat cost profile found for CHP plant "' + str(oldname) + '". Assuming zero')
             CostHeatSlack[oldname] = 0
- 
     # merge the outages:
     for i in plants.index:  # for all the old plant indexes
         # get the old plant name corresponding to s:
@@ -435,8 +436,7 @@ def build_simulation(config):
     if CEP:
         # split set u -> uc ⋃ ue
         # load technical parameters (averaged by existing data) and cost (DIW)
-        ## TODO: Determine parameters in dependency of country 
-
+        
         logging.info("Capacity Expansion used!")
         expandable_units = ['HRD-STUR', 'LIG-STUR', 'NUC-STUR','OIL-STUR', 'GAS-GTUR'] #TODO rather in config?
 
@@ -446,7 +446,7 @@ def build_simulation(config):
         plant_new = load_csv('Database/CapacityExpansion/techs_cap.csv') # technical information
         plant_new = plant_new[plant_new.Unit.isin(expandable_units)]
 
-        # create variables (cartesian product of tech x country)
+        # create variables (cartesian product of technology & country)
         n_countries = len(config['countries'])
         n_technologies = plant_new.shape[0]
         plant_new = pd.concat([plant_new] * n_countries) # for each zone
@@ -498,7 +498,7 @@ def build_simulation(config):
     # List of parameters whose default value is 1
     for var in ['AvailabilityFactor', 'Efficiency', 'Curtailment', 'StorageChargingEfficiency',
                 'StorageDischargeEfficiency', 'Nunits']:
-        parameters[var] = define_parameter(sets_param[var], sets, value=1)
+        parameters[var] = define_parameter([var], sets, value=1)
 
     # List of parameters whose default value is very high
     for var in ['RampUpMaximum', 'RampDownMaximum', 'RampStartUpMaximum', 'RampShutDownMaximum',

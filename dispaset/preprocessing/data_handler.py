@@ -491,10 +491,12 @@ def load_config_excel(ConfigFile,AbsPath=True):
     config['GAMS_folder'] = sheet.cell_value(21, 2)
     config['cplex_path'] = sheet.cell_value(22, 2)
     
-    try: 
-        config["CEP"] = sheet.cell_value(151, 2)
-    except: # config sheet without CEP cell leads to out of bounds error
-        config["CEP"] = None
+    try:   
+        config['CEP'] = sheet.cell_value(151, 2)
+        config["CapCosts"] = sheet.cell_value(168, 2)
+    except: # config sheet without CEP cell leads to out of bounds error -> backwards compatibility
+        config['CEP'] = None
+        config["CapCosts"] = None
 
     config['StartDate'] = xlrd.xldate_as_tuple(sheet.cell_value(30, 2), wb.datemode)
     config['StopDate'] = xlrd.xldate_as_tuple(sheet.cell_value(31, 2), wb.datemode)
@@ -509,7 +511,7 @@ def load_config_excel(ConfigFile,AbsPath=True):
     params = ['Demand', 'Outages', 'PowerPlantData', 'RenewablesAF', 'LoadShedding', 'NTC', 'Interconnections',
               'ReservoirScaledInflows', 'PriceOfNuclear', 'PriceOfBlackCoal', 'PriceOfGas', 'PriceOfFuelOil',
               'PriceOfBiomass', 'PriceOfCO2', 'ReservoirLevels', 'PriceOfLignite', 'PriceOfPeat','HeatDemand',
-              'CostHeatSlack','CostLoadShedding']
+              'CostHeatSlack','CostLoadShedding', 'CapCosts']
     for i, param in enumerate(params):
         config[param] = sheet.cell_value(61 + i, 2)
 
@@ -581,7 +583,7 @@ def load_config_yaml(filename,AbsPath=True):
     params = ['Demand', 'Outages', 'PowerPlantData', 'RenewablesAF', 'LoadShedding', 'NTC', 'Interconnections',
               'ReservoirScaledInflows', 'PriceOfNuclear', 'PriceOfBlackCoal', 'PriceOfGas', 'PriceOfFuelOil',
               'PriceOfBiomass', 'PriceOfCO2', 'ReservoirLevels', 'PriceOfLignite', 'PriceOfPeat','HeatDemand',
-              'CostHeatSlack','CostLoadShedding']
+              'CostHeatSlack','CostLoadShedding', 'CapCosts']
 
     if AbsPath:
     # Changing all relative paths to absolute paths. Relative paths must be defined 

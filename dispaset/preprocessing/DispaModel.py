@@ -199,6 +199,10 @@ class DataLoader(object):
         self.idx_utc, self.idx_utc_noloc, self.idx_utc_year_noloc = get_indices(self.config)
         self.load_loads()
         self.load_interconnections()
+        self.plants = None
+        self.plants_merged = None
+        self.flows = None
+        self.NTC = None
         #self.load_load_shedding()
         
 

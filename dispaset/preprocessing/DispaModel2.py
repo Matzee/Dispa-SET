@@ -114,7 +114,7 @@ class DispaModel(object):
         #             'E': ['F'],
         #             'F': ['C']
         #             }
-       #self.model.sets = load_sets()
+        #self.model.sets = load_sets()
         #self.model.params = load_params()
 
 
@@ -126,7 +126,7 @@ class DispaModel(object):
         return ('Dispa-SET model: \n -> %s to %s \n -> %i days  \n no_plants -> %i' % \
              (str(self.idx_utc[0]), str(self.idx_utc[-1]), no_days, no_plants)) #TODO
 
-    __repr__ = __str__ # usage in jupyter notebooks
+    __repr__ = __str__ # pretty printing for usage in jupyter notebooks
 
 
 
@@ -200,7 +200,7 @@ def define_parameters(DataLoader):
 class DataLoader(object):
     def __init__(self, config):
 
-        # loading/assigning basic data
+        # loading/assigning basic data (do not have any side effects)
         self.config = config
         self.idx_utc, self.idx_utc_noloc, self.idx_utc_year_noloc = get_indices(self.config)
         self.Load, self.PeakLoad = load_loads(self.config, self.idx_utc_noloc, self.idx_utc_year_noloc)
@@ -243,7 +243,6 @@ class DataLoader(object):
     def load_interconnections(config, idx_utc_noloc):
         # Interconnections:
 
-        # Interconnections:
         if os.path.isfile(config['Interconnections']):
             flows = load_csv(config['Interconnections'], index_col=0, parse_dates=True).fillna(0)
         else:
@@ -347,7 +346,7 @@ class DataLoader(object):
         # create variables (cartesian product of tech x country)
         n_countries = len(config['countries'])
         n_technologies = plant_new.shape[0]
-        plant_new = pd.concat([plant_new] * n_countries) # for each zone
+        plant_new = pd.concat([plant_new] * n_countries) # for each zone create new uc
         plant_new['Zone'] = np.repeat(config['countries'], n_technologies) # create zone column
         plant_new['Unit'] = plant_new.apply(lambda x:  x['Zone'] + "-" + x['Unit'], axis=1) # naming
         plant_new = plant_new.set_index('Unit', drop=False)
@@ -364,9 +363,13 @@ class DataLoader(object):
         return df_expanded
 
     def cluster_plants(config, plants):
-    
+        
+        print("lolo")
+        print(plants)
         # Clustering of the plants:
         Plants_merged, mapping = clustering(plants, method=config['SimulationType'])
+        
+        print(plants)
         # Check clustering:
         check_clustering(plants, Plants_merged)
         return Plants_merged, mapping
@@ -390,13 +393,13 @@ class DataLoader(object):
         plants = self.plants
         mapping = self.mapping
         # Merging the time series relative to the clustered power plants:
-        ReservoirScaledInflows_merged = merge_series(plants, self.ReservoirScaledInflows, mapping, method='WeightedAverage', tablename='ScaledInflows')
-        ReservoirLevels_merged = merge_series(plants, self.ReservoirLevels, mapping, tablename='ReservoirLevels')
-        Outages_merged = merge_series(plants, self.Outages, mapping, tablename='Outages')
-        HeatDemand_merged = merge_series(plants, self.HeatDemand, mapping, tablename='HeatDemand',method='Sum')
-        AF_merged = merge_series(plants, self.AF, mapping, tablename='AvailabilityFactors')
-        CostHeatSlack_merged = merge_series(plants, self.CostHeatSlack, mapping, tablename='CostHeatSlack')
-        return ReservoirScaledInflows_merged, self.ReservoirLevels_merged, Outages_merged, HeatDemand_merged, AF_merged, CostHeatSlack_merged
+        self.ReservoirScaledInflows = merge_series(plants, self.ReservoirScaledInflows, mapping, method='WeightedAverage', tablename='ScaledInflows')
+        self.ReservoirLevels = merge_series(plants, self.ReservoirLevels, mapping, tablename='ReservoirLevels')
+        self.Outages = merge_series(plants, self.Outages, mapping, tablename='Outages')
+        self.HeatDemand = merge_series(plants, self.HeatDemand, mapping, tablename='HeatDemand',method='Sum')
+        self.AF = merge_series(plants, self.AF, mapping, tablename='AvailabilityFactors')
+        self.CostHeatSlack = merge_series(plants, self.CostHeatSlack, mapping, tablename='CostHeatSlack')
+        #return ReservoirScaledInflows_merged, self.ReservoirLevels_merged, Outages_merged, HeatDemand_merged, AF_merged, CostHeatSlack_merged
 
 
     def __check_dfs(self): 
@@ -404,24 +407,17 @@ class DataLoader(object):
         idx_utc_noloc = self.idx_utc_noloc
 
         check_df(self.Load, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='Load')
-        check_df(self.AF_merged, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1],
-                name='AF_merged')
-        check_df(self.Outages_merged, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='Outages_merged')
+        check_df(self.AF, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='AF_merged')
+        check_df(self.Outages, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='Outages_merged')
         check_df(self.Inter_RoW, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='Inter_RoW')
         check_df(self.FuelPrices, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='FuelPrices')
         check_df(self.NTCs, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='NTCs')
-        check_df(self.ReservoirLevels_merged, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1],
-                name='ReservoirLevels_merged')
-        check_df(self.ReservoirScaledInflows_merged, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1],
-                name='ReservoirScaledInflows_merged')
-        check_df(self.HeatDemand_merged, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1],
-                name='HeatDemand_merged')
-        check_df(self.CostHeatSlack_merged, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1],
-                name='CostHeatSlack_merged')
-        check_df(self.LoadShedding, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1],
-                name='LoadShedding')
-        check_df(self.CostLoadShedding, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1],
-                name='CostLoadShedding')
+        check_df(self.ReservoirLevels, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='ReservoirLevels_merged')
+        check_df(self.ReservoirScaledInflow, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='ReservoirScaledInflows_merged')
+        check_df(self.HeatDemand, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='HeatDemand_merged')
+        check_df(self.CostHeatSlack, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='CostHeatSlack_merged')
+        check_df(self.LoadShedding, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='LoadShedding')
+        check_df(self.CostLoadShedding, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='CostLoadShedding')
 
 
 

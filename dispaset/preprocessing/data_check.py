@@ -351,9 +351,10 @@ def check_heat_demand(plants,data):
 
     :param     plants:  List of CHP plants
     '''
-    plants.index = plants['Unit']
+    
+    plants_index = plants['Unit']
     for u in data:
-        if u in plants.index:
+        if u in plants_index:
             if 'Nunits' in plants:
                 Nunits = plants.loc[u,'Nunits']
             else:

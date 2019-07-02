@@ -494,7 +494,41 @@ def load_load_shedding(config, idx_utc_noloc):
     CostLoadShedding = NodeBasedTable(config['CostLoadShedding'],idx_utc_noloc,config['countries'],tablename='CostLoadShedding',default=config['default']['CostLoadShedding'])
     return LoadShedding, CostLoadShedding
 
+def load_plants(config):
+    # Power plants:
+    plants = pd.DataFrame()
+    if os.path.isfile(config['PowerPlantData']):
+        plants = load_csv(config['PowerPlantData'])
+    elif '##' in config['PowerPlantData']:
+        for c in config['countries']:
+            path = config['PowerPlantData'].replace('##', str(c))
+            tmp = load_csv(path)
+            plants = plants.append(tmp, ignore_index=True)
+    plants = plants[plants['Technology'] != 'Other']
+    plants = plants[pd.notnull(plants['PowerCapacity'])]
+    plants.index = range(len(plants))
 
+    # Some columns can be in two format (absolute or per unit). If not specified, they are set to zero:
+    for key in ['StartUpCost','NoLoadCost']:
+        if key in plants:
+            pass
+        elif key+'_pu' in plants:
+            plants[key] = plants[key+'_pu'] * plants['PowerCapacity']
+        else:
+            plants[key] = 0
+    # check plant list:
+    check_units(config, plants)
+    # If not present, add the non-compulsory fields to the units table:
+    for key in ['CHPPowerLossFactor','CHPPowerToHeat','CHPType','STOCapacity','STOSelfDischarge','STOMaxChargingPower','STOChargingEfficiency', 'CHPMaxHeat']:
+        if key not in plants.columns:
+            plants[key] = np.nan
+
+    # Defining the hydro storages:
+    plants_sto = plants[[u in commons['tech_storage'] for u in plants['Technology']]]
+    # check storage plants:
+    check_sto(config, plants_sto)
+    plants_chp = plants[[str(x).lower() in commons['types_CHP'] for x in plants['CHPType']]]
+    return plants, plants_sto, plants_chp
 
 def load_fuel_prices(config, idx_utc_noloc):
 
@@ -581,76 +615,8 @@ def get_unit_based_tables(idx_utc_noloc, config, plants, plants_sto, plants_chp)
     check_heat_demand(plants,HeatDemand)
     return Outages, AF, ReservoirLevels, ReservoirScaledInflows, HeatDemand, CostHeatSlack
 
-def rename_plant_columns(plants):
-        # Renaming the columns to ease the production of parameters:
-    plants.rename(columns={'StartUpCost': 'CostStartUp',
-                                'RampUpMax': 'RampUpMaximum',
-                                'RampDownMax': 'RampDownMaximum',
-                                'MinUpTime': 'TimeUpMinimum',
-                                'MinDownTime': 'TimeDownMinimum',
-                                'RampingCost': 'CostRampUp',
-                                'STOCapacity': 'StorageCapacity',
-                                'STOMaxChargingPower': 'StorageChargingCapacity',
-                                'STOChargingEfficiency': 'StorageChargingEfficiency',
-                                'STOSelfDischarge': 'StorageSelfDischarge',
-                                'CO2Intensity': 'EmissionRate'}, inplace=True)
-
 
 class DataLoader(object):
-
-    def _load_plants(self):
-        # Power plants:
-        config = self.config
-        plants = pd.DataFrame()
-        if os.path.isfile(config['PowerPlantData']):
-            plants = load_csv(config['PowerPlantData'])
-        elif '##' in config['PowerPlantData']:
-            for c in config['countries']:
-                path = config['PowerPlantData'].replace('##', str(c))
-                tmp = load_csv(path)
-                plants = plants.append(tmp, ignore_index=True)
-        plants = plants[plants['Technology'] != 'Other']
-        plants = plants[pd.notnull(plants['PowerCapacity'])]
-        plants.index = range(len(plants))
-
-        # Some columns can be in two format (absolute or per unit). If not specified, they are set to zero:
-        for key in ['StartUpCost','NoLoadCost']:
-            if key in plants:
-                pass
-            elif key+'_pu' in plants:
-                plants[key] = plants[key+'_pu'] * plants['PowerCapacity']
-            else:
-                plants[key] = 0
-        # check plant list:
-        check_units(config, plants)
-        # If not present, add the non-compulsory fields to the units table:
-        for key in ['CHPPowerLossFactor','CHPPowerToHeat','CHPType','STOCapacity','STOSelfDischarge','STOMaxChargingPower','STOChargingEfficiency', 'CHPMaxHeat']:
-            if key not in plants.columns:
-                plants[key] = np.nan
-
-
-        
-
-
-
-        # Defining the hydro storages:
-        plants_sto = plants[[u in commons['tech_storage'] for u in plants['Technology']]]
-        # check storage plants:
-        check_sto(config, plants_sto)
-        plants_chp = plants[[str(x).lower() in commons['types_CHP'] for x in plants['CHPType']]]
-
-        Plants_merged, mapping = cluster_plants(config, plants)
-        rename_plant_columns(plants)
-        self.plants = plants
-
-        # self.plants = plants
-        # self.Plants_merged = Plants_merged
-        # self.plants_sto = plants_sto
-        # self.plants_chp = plants_chp
-        
-        return plants, Plants_merged, plants_sto, plants_chp, mapping
-
-
     def __init__(self, config):
 
         # loading/assigning basic data 
@@ -660,14 +626,14 @@ class DataLoader(object):
         self.Load, self.PeakLoad = load_loads(self.config, self.idx_utc_noloc, self.idx_utc_year_noloc)
         self.flows, self.NTC = load_interconnections(config, self.idx_utc_noloc)
         self.LoadShedding, self.CostLoadShedding = load_load_shedding(self.config, self.idx_utc_noloc)
-        self.plants, self.Plants_merged, self.plants_sto, self.plants_chp, self.mapping = self._load_plants()
+        self.plants, self.plants_sto, self.plants_chp = load_plants(self.config)
         self.Interconnections, self.NTCs, self.Inter_RoW = load_interconnections2(config, self.NTC, self.flows, self.idx_utc_noloc)
         self.FuelPrices = load_fuel_prices(self.config, self.idx_utc_noloc)
-        #self.Plants_merged, self.mapping = cluster_plants(self.config, self.plants)
+        self.Plants_merged, self.mapping = cluster_plants(self.config, self.plants)
         self.Outages, self.AF, self.ReservoirLevels, self.ReservoirScaledInflows, self.HeatDemand, self.CostHeatSlack = get_unit_based_tables(self.idx_utc_noloc, self.config, self.plants, self.plants_sto, self.plants_chp)
         
         # preprocess data
-        
+        self.__rename_plant_columns()
         self.__merge_time_series()
         self.__check_plants()
 
@@ -677,7 +643,6 @@ class DataLoader(object):
 
         # adding cep
         self.plants_expanded, self.techs_cost = load_cep_parameters(config, self.Plants_merged)
-
 
     def __check_plants(self):
         # data checks:
@@ -716,6 +681,19 @@ class DataLoader(object):
         check_df(self.CostLoadShedding, StartDate=idx_utc_noloc[0], StopDate=idx_utc_noloc[-1], name='CostLoadShedding')
 
 
+    def __rename_plant_columns(self):
+            # Renaming the columns to ease the production of parameters:
+        self.Plants_merged.rename(columns={'StartUpCost': 'CostStartUp',
+                                    'RampUpMax': 'RampUpMaximum',
+                                    'RampDownMax': 'RampDownMaximum',
+                                    'MinUpTime': 'TimeUpMinimum',
+                                    'MinDownTime': 'TimeDownMinimum',
+                                    'RampingCost': 'CostRampUp',
+                                    'STOCapacity': 'StorageCapacity',
+                                    'STOMaxChargingPower': 'StorageChargingCapacity',
+                                    'STOChargingEfficiency': 'StorageChargingEfficiency',
+                                    'STOSelfDischarge': 'StorageSelfDischarge',
+                                    'CO2Intensity': 'EmissionRate'}, inplace=True)
 
 
     def __map_extend_data_with_lookahead(self):

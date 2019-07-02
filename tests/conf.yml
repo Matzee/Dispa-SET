@@ -17,13 +17,14 @@ Clustering: 1.0
 SimulationType:  'MILP'  #LP, LP clustered
 ReserveCalculation:  'Generic'
 AllowCurtailment: 1.0
-
+CEP: 1
 #-------------------
 CostHeatSlack:  ''
 CostLoadShedding:  ''
 Demand:  'tests/dummy_data/Load_RealTime/##/2015.csv'
 HeatDemand:  'tests/dummy_data/HeatDemand.csv'
 Interconnections:  'tests/dummy_data/CrossBorderFlows.csv'
+CapCosts: 'tests/dummy_data/TechsCost.csv'
 LoadShedding:  ''
 NTC:  'tests/dummy_data/NTCs.csv'
 Outages:  ''
