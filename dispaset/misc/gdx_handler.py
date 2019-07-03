@@ -134,8 +134,11 @@ def _insert_symbols(gdxHandle, sets, parameters):
             sys.exit(1)
         for i in range(dims):
             if shape[i] != len(sets[variable['sets'][i]]):
+                print(sets[variable['sets'][i]])
+                print(i)
+                print(shape[i])
                 logging.error(
-                    'Variable ' + p + ': The \'val\' data matrix has ' + str(shape[i]) + ' elements for dimention ' +
+                    'Variable ' + p + ': The \'val\' data matrix has ' + str(shape[i]) + ' elements for dimension ' +
                     str(variable['sets'][i]) + ' while there are ' + str(
                         len(variable['sets'])) + ' set values')
                 sys.exit(1)

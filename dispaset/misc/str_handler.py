@@ -11,7 +11,7 @@ def shrink_to_64(x, N=64):
 
     :returns:   Shrinked string or list of strings
     """
-
+    
     def shrink_singlestring(key, N):
         if len(key) >= N:
             return key[:20] + ' ... ' + key[-20:]

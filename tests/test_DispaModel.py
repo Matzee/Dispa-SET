@@ -25,12 +25,12 @@ config = ds.load_config_yaml(conf_file)
 # declaration & class are used to get all permutations shared between the tests
 @pytest.mark.parametrize('sim_type', SIMULATION_TYPES)
 @pytest.mark.parametrize('cep', CEP)
-class TestParametrized:
+class TestDataModel:
 
     def test_DispaModel_all(self, sim_type, cep):
         config['SimulationType'] = sim_type
         config['CEP'] = cep
-        dl = DispaModel(config)
+        dm = DispaModel(config)
 
     # def test_(self, sim_type, cep):
     #     config['SimulationType'] = sim_type
