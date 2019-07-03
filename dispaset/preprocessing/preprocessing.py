@@ -87,7 +87,7 @@ def build_simulation(config):
         config['default']['CostLoadShedding'] = 1000
     if not isinstance(config['default']['CostHeatSlack'],(float,int)):
         config['default']['CostHeatSlack'] = 50
-    
+
     # Load :
     Load = NodeBasedTable(config['Demand'],idx_utc_noloc,config['countries'],tablename='Demand')
     # For the peak load, the whole year is considered:
@@ -146,7 +146,7 @@ def build_simulation(config):
     plants_sto = plants[[u in commons['tech_storage'] for u in plants['Technology']]]
     # check storage plants:
     check_sto(config, plants_sto)
-    
+
     # Defining the CHPs:
     plants_chp = plants[[str(x).lower() in commons['types_CHP'] for x in plants['CHPType']]]
 
@@ -194,8 +194,6 @@ def build_simulation(config):
     # Clustering of the plants:
     Plants_merged, mapping = clustering(plants, method=config['SimulationType'])
     # Check clustering:
-    print("old")
-    print(plants)
     check_clustering(plants,Plants_merged)
 
     # Renaming the columns to ease the production of parameters:
@@ -210,7 +208,7 @@ def build_simulation(config):
                                   'STOChargingEfficiency': 'StorageChargingEfficiency',
                                   'STOSelfDischarge': 'StorageSelfDischarge',
                                   'CO2Intensity': 'EmissionRate'}, inplace=True)
-    
+
     for key in ['TimeUpMinimum','TimeDownMinimum']:
         if any([not x.is_integer() for x in Plants_merged[key].fillna(0).values.astype('float')]):
             logging.warning(key + ' in the power plant data has been rounded to the nearest integer value')
@@ -263,7 +261,7 @@ def build_simulation(config):
             PurePowerCapacity = PowerCapacity + Plants_chp.loc[u,'CHPPowerLossFactor'] * MaxHeat
         Plants_merged.loc[u,'PartLoadMin'] = Plants_merged.loc[u,'PartLoadMin'] * PowerCapacity / PurePowerCapacity  # FIXME: Is this correct?
         Plants_merged.loc[u,'PowerCapacity'] = PurePowerCapacity
-        
+
     # Get the hydro time series corresponding to the original plant list: #FIXME Unused variable ?
     #StorageFormerIndexes = [s for s in plants.index if
     #                        plants['Technology'][s] in commons['tech_storage']]
@@ -295,7 +293,7 @@ def build_simulation(config):
     HeatDemand_merged = merge_series(plants, HeatDemand, mapping, tablename='HeatDemand',method='Sum')
     AF_merged = merge_series(plants, AF, mapping, tablename='AvailabilityFactors')
     CostHeatSlack_merged = merge_series(plants, CostHeatSlack, mapping, tablename='CostHeatSlack')
-    
+
 
     # %%
     # checking data
@@ -436,12 +434,12 @@ def build_simulation(config):
     if CEP:
         # split set u -> uc ⋃ ue
         # load technical parameters (averaged by existing data) and cost (DIW)
-        
+
         logging.info("Capacity Expansion used!")
         expandable_units = ['HRD-STUR', 'LIG-STUR', 'NUC-STUR','OIL-STUR', 'GAS-GTUR'] #TODO rather in config?
 
         #Plants_merged = Plants_merged.query('Technology != "COMC" and Fuel != "GAS"')
-        #Plants_merged = Plants_merged.query('Technology != "STUR" and Fuel != "GAS"') 
+        #Plants_merged = Plants_merged.query('Technology != "STUR" and Fuel != "GAS"')
 
         plant_new = load_csv('Database/CapacityExpansion/techs_cap.csv') # technical information
         plant_new = plant_new[plant_new.Unit.isin(expandable_units)]
@@ -453,11 +451,11 @@ def build_simulation(config):
         plant_new['Zone'] = np.repeat(config['countries'], n_technologies) # create zone column
         plant_new['Unit'] = plant_new.apply(lambda x:  x['Zone'] + "-" + x['Unit'], axis=1) # naming
         plant_new = plant_new.set_index('Unit', drop=False)
-        
+
         ## Cost of new technologies
         index = plant_new[['Fuel', 'Technology']].reset_index().set_index('Unit', drop=False)
-        
-        Plants_merged = Plants_merged.merge(index[['Fuel', 'Technology']],  how='outer', on = ['Fuel', 'Technology'], 
+
+        Plants_merged = Plants_merged.merge(index[['Fuel', 'Technology']],  how='outer', on = ['Fuel', 'Technology'],
             indicator=True).query('_merge == "left_only"')
 
         del Plants_merged['_merge']
@@ -473,14 +471,14 @@ def build_simulation(config):
 
     else:
         sets['uc'] = list()
-    
+
     for var in ["Investment",  "EconomicLifetime"]:
         sets_param[var] = ['uc']
-        
+
     # Define all the parameters and set a default value of zero:
     for var in sets_param:
         parameters[var] = define_parameter(sets_param[var], sets, value=0)
-    
+
     for var in ["Investment", "EconomicLifetime"]:
         parameters[var] = define_parameter(sets_param[var], sets, value=0)
         if CEP:
@@ -527,7 +525,7 @@ def build_simulation(config):
 
     # The storage discharge efficiency is actually given by the unit efficiency:
     parameters['StorageDischargeEfficiency']['val'] = Plants_sto['Efficiency'].values
-    
+
     # List of parameters whose value is known, and provided in the dataframe Plants_chp
     for var in ['CHPPowerToHeat','CHPPowerLossFactor', 'CHPMaxHeat']:
         parameters[var]['val'] = Plants_chp[var].values
@@ -587,7 +585,7 @@ def build_simulation(config):
         values[0, i, :] = Load[sets['n'][i]]
         values[1, i, :] = reserve_2U_tot[sets['n'][i]]
         values[2, i, :] = reserve_2D_tot[sets['n'][i]]
-    
+
     parameters['Demand'] = {'sets': sets_param['Demand'], 'val': values}
     # Emission Rate:
     parameters['EmissionRate']['val'][:, 0] = Plants_merged['EmissionRate'].values
@@ -628,7 +626,7 @@ def build_simulation(config):
             parameters['FlowMinimum']['val'][i, :] = Inter_RoW[l]
     # Check values:
     check_MinMaxFlows(parameters['FlowMinimum']['val'],parameters['FlowMaximum']['val'])
-    
+
     parameters['LineNode'] = incidence_matrix(sets, 'l', parameters, 'LineNode')
 
     # Outage Factors
@@ -728,7 +726,7 @@ def build_simulation(config):
         for i, j in dic.items():
             text = text.replace(i, j)
         return text
-    
+
     gams_file_changes = {'LP':LP, 'CEP':CEP}
     changes_infile_string = {'LP': ('$setglobal LPFormulation 0','$setglobal LPFormulation 1'), 'CEP': ('$setglobal CEPFormulation 0', '$setglobal CEPFormulation 1')}
     gams_file_changes_list = {changes_infile_string[k][0]: changes_infile_string[k][1] for k,v in gams_file_changes.items() if v == True}  #filter based on selection
@@ -782,7 +780,7 @@ def build_simulation(config):
         with open(os.path.join(sim, 'Inputs.p'), 'wb') as pfile:
             pickle.dump(SimData, pfile, protocol=pickle.HIGHEST_PROTOCOL)
     logging.info('Build finished')
-    
+
     if os.path.isfile(commons['logfile']):
         shutil.copy(commons['logfile'], os.path.join(sim, 'warn_preprocessing.log'))
 
@@ -792,7 +790,7 @@ def adjust_capacity(inputs,tech_fuel,scaling=1,value=None,singleunit=False,write
     '''
     Function used to modify the installed capacities in the Dispa-SET generated input data
     The function update the Inputs.p file in the simulation directory at each call
-    
+
     :param inputs:      Input data dictionary OR path to the simulation directory containing Inputs.p
     :param tech_fuel:   tuple with the technology and fuel type for which the capacity should be modified
     :param scaling:     Scaling factor to be applied to the installed capacity
@@ -877,7 +875,7 @@ def adjust_storage(inputs,tech_fuel,scaling=1,value=None,write_gdx=False,dest_pa
     '''
     Function used to modify the storage capacities in the Dispa-SET generated input data
     The function update the Inputs.p file in the simulation directory at each call
-    
+
     :param inputs:      Input data dictionary OR path to the simulation directory containing Inputs.p
     :param tech_fuel:   tuple with the technology and fuel type for which the capacity should be modified
     :param scaling:     Scaling factor to be applied to the installed capacity
@@ -937,7 +935,3 @@ def adjust_storage(inputs,tech_fuel,scaling=1,value=None,write_gdx=False,dest_pa
             shutil.copy('Inputs.gdx', dest_path + '/')
             os.remove('Inputs.gdx')
     return SimData
-
-
-
-

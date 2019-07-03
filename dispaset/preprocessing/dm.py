@@ -73,7 +73,7 @@ def _define_default_values(config):
 class DispaModel(object):
     """
     Usage: DispaModel(config_dict) or by building the dictionaries through DispaModel.from_excel(), DispaModel.from_yaml()
-    
+
     """
     def __init__(self, config): # TODO constructor
         if type(config) != dict:
@@ -89,22 +89,21 @@ class DispaModel(object):
         self.idx_utc, self.idx_utc_noloc, self.idx_utc_year_noloc = get_indices(self.config) #todo do i really need you all?
         enddate_long = self.idx_utc_noloc[-1] + dt.timedelta(days=config['LookAhead'])
         self.idx_long = pd.DatetimeIndex(pd.date_range(start=self.idx_utc_noloc[0], end=enddate_long, freq=commons['TimeStep']))
-        
         self.sets = load_sets(
             # todo create model object
-            Nhours_long = len(self.idx_long), 
-            look_ahead = self.data.config['LookAhead'], 
+            Nhours_long = len(self.idx_long),
+            look_ahead = self.data.config['LookAhead'],
             plants_index = self.data.Plants_merged.index.tolist(),
-            plants_sto_index = self.data.plants_sto.index.tolist(), 
-            Plants_chp_index = self.data.plants_sto.index.tolist(), 
-            countries = self.data.config['countries'], 
+            plants_sto_index = self.data.plants_sto.index.tolist(),
+            Plants_chp_index = self.data.plants_sto.index.tolist(),
+            countries = self.data.config['countries'],
             Interconnections = self.data.Interconnections,
             plants_uc = self.data.plants_expanded.index.tolist()
         )
 
         self.sets_param = load_params() # the parameters with their formal structure without data
         self.version = str(get_git_revision_tag())
-        self.time_range = (self.idx_utc[-1] - self.idx_utc[0]).days 
+        self.time_range = (self.idx_utc[-1] - self.idx_utc[0]).days
         self.sim = config['SimulationDirectory']
         self.dispa_version = str(get_git_revision_tag())
         self.SimData = {'sets': self.sets, 'parameters': self.sets_param, 'config': self.config, 'units': self.data.Plants_merged, 'version': self.dispa_version}
@@ -121,7 +120,7 @@ class DispaModel(object):
 
     def __str__(self):
         """Return a descriptive string for this instance, invoked by print() and str()"""
-        no_days = (self.idx_utc[-1] - self.idx_utc[0]).days 
+        no_days = (self.idx_utc[-1] - self.idx_utc[0]).days
         no_plants = self.data.plants.shape[0]
         return ('Dispa-SET model with: \
                 \n -> Simulationtype: %s \
@@ -138,7 +137,7 @@ class DispaModel(object):
 
         try:
             self.config[key] = new_value
-        except KeyError as e: 
+        except KeyError as e:
             print("Key not found")
 
     def build_model_parameters(self):
@@ -150,14 +149,14 @@ class DispaModel(object):
         Plants_sto = self.data.plants_sto
         Plants_chp = self.data.plants_chp
         ReservoirLevels = self.data.ReservoirLevels
-        
+
         idx_long = self.idx_long
         config = self.data.config
-        
+
         # Define all the parameters and set a default value of zero:
         for var in sets_param:
             parameters[var] = define_parameter(sets_param[var], sets, value=0)
-        
+
         for var in ["Investment", "EconomicLifetime"]:
             parameters[var] = define_parameter(sets_param[var], sets, value=0)
             if self.CEP & len(sets["uc"]) > 0: # ! serious todo
@@ -167,7 +166,7 @@ class DispaModel(object):
                     sets_param[var] = ['u']
                     parameters[var] = define_parameter(sets_param[var], sets, value=0)
                     parameters[var]["val"] =  Plants_merged['FixedCost'].values
-        
+
         Nunits = len(Plants_merged)
 
         # List of parameters whose default value is 1
@@ -201,7 +200,7 @@ class DispaModel(object):
 
         # The storage discharge efficiency is actually given by the unit efficiency:
         parameters['StorageDischargeEfficiency']['val'] = Plants_sto['Efficiency'].values
-        
+
         # List of parameters whose value is known, and provided in the dataframe Plants_chp
         for var in ['CHPPowerToHeat','CHPPowerLossFactor', 'CHPMaxHeat']:
             parameters[var]['val'] = Plants_chp[var].values
@@ -260,7 +259,7 @@ class DispaModel(object):
             values[0, i, :] = self.data.Load[sets['n'][i]]
             values[1, i, :] = reserve_2U_tot[sets['n'][i]]
             values[2, i, :] = reserve_2D_tot[sets['n'][i]]
-        
+
         parameters['Demand'] = {'sets': sets_param['Demand'], 'val': values}
         # Emission Rate:
         parameters['EmissionRate']['val'][:, 0] = Plants_merged['EmissionRate'].values
@@ -372,14 +371,13 @@ class DispaModel(object):
         ])
         parameters['Config'] = {'sets': ['x_config', 'y_config'], 'val': values}
         self.parameters = parameters
+        self.SimData['parameters'] = parameters #todo
 
     def build_sim_dir(self):
 
         config = self.config
         gdx_out = "Inputs.gdx"
         sim = self.sim
-
-        #print(self.parameters)
 
         if config['WriteGDX']:
             write_variables(config['GAMS_folder'], gdx_out, [self.sets, self.parameters])
@@ -397,7 +395,7 @@ class DispaModel(object):
             for i, j in dic.items():
                 text = text.replace(i, j)
             return text
-        
+
         gams_file_changes = {'LP':self.LP, 'CEP':self.CEP}
         changes_infile_string = {'LP': ('$setglobal LPFormulation 0','$setglobal LPFormulation 1'), 'CEP': ('$setglobal CEPFormulation 0', '$setglobal CEPFormulation 1')}
         gams_file_changes_list = {changes_infile_string[k][0]: changes_infile_string[k][1] for k,v in gams_file_changes.items() if v == True}  #filter based on selection
@@ -449,12 +447,12 @@ class DispaModel(object):
             except ImportError:
                 import pickle
             with open(os.path.join(sim, 'Inputs.p'), 'wb') as pfile:
-                pickle.dump(SimData, pfile, protocol=pickle.HIGHEST_PROTOCOL)
+                pickle.dump(self.SimData, pfile, protocol=pickle.HIGHEST_PROTOCOL)
         logging.info('Build finished')
-        
+
         if os.path.isfile(commons['logfile']):
             shutil.copy(commons['logfile'], os.path.join(sim, 'warn_preprocessing.log'))
-        return SimData
+        return self.SimData
 
 
 def load_loads(config, idx_utc_noloc, idx_utc_year_noloc):
@@ -470,7 +468,7 @@ def load_loads(config, idx_utc_noloc, idx_utc_year_noloc):
     return Load, PeakLoad
 
 def load_interconnections(config, idx_utc_noloc):
-    
+
     # Interconnections:
     if os.path.isfile(config['Interconnections']):
         flows = load_csv(config['Interconnections'], index_col=0, parse_dates=True).fillna(0)
@@ -525,7 +523,7 @@ def load_fuel_prices(config, idx_utc_noloc):
 
 
 #todo NOT ACTIVE
-def add_cap_expansion_cart_prod():
+def load_cep_parameters_cart_prod():
     return None
     logging.info("Capacity Expansion used!")
     all_cost = load_csv('Database/CapacityExpansion/techs_cost.csv') #TODO
@@ -539,10 +537,10 @@ def add_cap_expansion_cart_prod():
     plant_new['Zone'] = np.repeat(config['countries'], n_technologies) # create zone column
     plant_new['Unit'] = plant_new.apply(lambda x:  x['Zone'] + "-" + x['Unit'], axis=1) # naming
     plant_new = plant_new.set_index('Unit', drop=False)
-    
+
     ## Cost of new technologies
     index = plant_new[['Fuel', 'Technology']].reset_index().set_index('Unit', drop=False)
-    Plants_merged = Plants_merged.merge(index[['Fuel', 'Technology']],  how='outer', on = ['Fuel', 'Technology'], 
+    Plants_merged = Plants_merged.merge(index[['Fuel', 'Technology']],  how='outer', on = ['Fuel', 'Technology'],
         indicator=True).query('_merge == "left_only"')
     del Plants_merged['_merge']
     Plants_merged = Plants_merged.set_index('Unit', drop=False)
@@ -552,13 +550,13 @@ def add_cap_expansion_cart_prod():
     return df_expanded
 
 def load_cep_parameters(config, Plants_merged):
-    
+
     df_cap = Plants_merged[Plants_merged['ExtendableCapacity']>0] #todo put into csv sheets
-    techs_cost = load_csv(config["CapCosts"]) 
+    techs_cost = load_csv(config["CapCosts"])
     if df_cap.shape[0] > 0: #any extendable power plant technology
         logging.info("Capacity Expansion used!")
         df_expanded = df_cap[:]
-    else: 
+    else:
         df_expanded = pd.DataFrame() # empty dataframe -> empty set
 
     return df_expanded, techs_cost
@@ -570,9 +568,9 @@ def cluster_plants(config, plants):
     # Check clustering:
     check_clustering(plants, Plants_merged)
     return Plants_merged, mapping
-    
+
 def get_unit_based_tables(idx_utc_noloc, config, plants, plants_sto, plants_chp):
-    
+
     Outages = UnitBasedTable(plants,config['Outages'],idx_utc_noloc,config['countries'],fallbacks=['Unit','Technology'],tablename='Outages')
     AF = UnitBasedTable(plants,config['RenewablesAF'],idx_utc_noloc,config['countries'],fallbacks=['Unit','Technology'],tablename='AvailabilityFactors',default=1,RestrictWarning=commons['tech_renewables'])
     ReservoirLevels = UnitBasedTable(plants_sto,config['ReservoirLevels'],idx_utc_noloc,config['countries'],fallbacks=['Unit','Technology','Zone'],tablename='ReservoirLevels',default=0)
@@ -625,7 +623,7 @@ def load_plants(config):
     return plants, plants_sto, plants_chp
 
 class DataLoader(object):
-    
+
     def __rename_plant_columns(self):
             # Renaming the columns to ease the production of parameters:
         self.Plants_merged.rename(columns={'StartUpCost': 'CostStartUp',
@@ -639,10 +637,10 @@ class DataLoader(object):
                                     'STOChargingEfficiency': 'StorageChargingEfficiency',
                                     'STOSelfDischarge': 'StorageSelfDischarge',
                                     'CO2Intensity': 'EmissionRate'}, inplace=True)
-                                    
+
     def __init__(self, config):
 
-        # loading/assigning basic data 
+        # loading/assigning basic data
         self.config = config
         self.idx_utc, self.idx_utc_noloc, self.idx_utc_year_noloc = get_indices(self.config) #todo do i really need you all?
         self.Load, self.PeakLoad = load_loads(self.config, self.idx_utc_noloc, self.idx_utc_year_noloc)
@@ -654,7 +652,7 @@ class DataLoader(object):
         self.FuelPrices = load_fuel_prices(self.config, self.idx_utc_noloc)
         self.Plants_merged, self.mapping = cluster_plants(self.config, self.plants)
         self.Outages, self.AF, self.ReservoirLevels, self.ReservoirScaledInflows, self.HeatDemand, self.CostHeatSlack = get_unit_based_tables(self.idx_utc_noloc, self.config, self.plants, self.plants_sto, self.plants_chp)
-        
+
         # preprocess data
         self.__rename_plant_columns()
         self.__merge_time_series()
@@ -672,7 +670,7 @@ class DataLoader(object):
         check_AvailabilityFactors(self.plants, self.AF)
         check_heat_demand(self.plants, self.HeatDemand)
 
-    def __merge_time_series(self): 
+    def __merge_time_series(self):
 
         plants = self.plants
         mapping = self.mapping
@@ -686,7 +684,7 @@ class DataLoader(object):
         #return ReservoirScaledInflows, self.ReservoirLevels, Outages, HeatDemand, AF, CostHeatSlack
 
 
-    def __check_dfs(self): 
+    def __check_dfs(self):
         # checking data
         idx_utc_noloc = self.idx_utc_noloc
 
@@ -714,11 +712,11 @@ class DataLoader(object):
             'Load','AF','Inter_RoW','NTCs','FuelPrices','Load','Outages','ReservoirLevels',
             'ReservoirScaledInflows','LoadShedding','CostLoadShedding']
 
-        def extend_lookahead(dataset): 
+        def extend_lookahead(dataset):
             setattr(self, dataset, getattr(self, dataset)).reindex(idx_long, method='nearest').fillna(method='bfill')
 
         map(extend_lookahead, datasets)
-        
+
 
     def __extend_data_with_lookahead(self):
 
@@ -745,9 +743,9 @@ class DataLoader(object):
     def __prepare_plant_data(self):
 
         # using references for prettier coding
-        config = self.config  
-        plants = self.plants  
-        Plants_merged = self.Plants_merged   
+        config = self.config
+        plants = self.plants
+        Plants_merged = self.Plants_merged
 
         for key in ['TimeUpMinimum','TimeDownMinimum']:
             if any([not x.is_integer() for x in Plants_merged[key].fillna(0).values.astype('float')]):
@@ -801,7 +799,7 @@ class DataLoader(object):
                     PurePowerCapacity = PowerCapacity + self.plants_chp.loc[u,'CHPPowerLossFactor'] * MaxHeat
                 Plants_merged.loc[u,'PartLoadMin'] = Plants_merged.loc[u,'PartLoadMin'] * PowerCapacity / PurePowerCapacity  # FIXME: Is this correct?
                 Plants_merged.loc[u,'PowerCapacity'] = PurePowerCapacity
-                
+
 
             # Get the hydro time series corresponding to the original plant list: #FIXME Unused variable ?
             #StorageFormerIndexes = [s for s in plants.index if
@@ -828,7 +826,7 @@ class DataLoader(object):
                 # get the old plant name corresponding to s:
                 oldname = plants['Unit'][i]
                 newname = self.mapping['NewIndex'][i]
-    
+
 
 def load_sets(Nhours_long, look_ahead, plants_index, plants_sto_index, Plants_chp_index, countries, Interconnections, plants_uc=None):
     sets = {
@@ -849,7 +847,7 @@ def load_sets(Nhours_long, look_ahead, plants_index, plants_sto_index, Plants_ch
 
     return sets
 
-def load_params(): 
+def load_params():
 
     sets_param = {
         'AvailabilityFactor': ['u', 'h'],
