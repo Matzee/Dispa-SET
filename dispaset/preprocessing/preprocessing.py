@@ -136,15 +136,16 @@ class DispaModel(object):
                 \n -> LP: %r \
                 \n -> %s to %s \
                 \n -> %i days  \
-                \n -> %i plants' % \
+                \n -> %i plants' %
              (str(self.config), self.config['SimulationType'], self.LP, self.CEP, str(self.idx_utc_noloc[0]), str(self.idx_utc_noloc[-1]), no_days, no_plants))
 
     __repr__ = __str__  # pretty printing for usage in jupyter notebooks & print
 
-    def edit_config(self, key, new_value): #TODO
+    def edit_config(self, key, new_value):
 
         try:
             self.config[key] = new_value
+            return DispaModel(self.config)  # todo DAG or observer pattern for performance
         except KeyError as e:
             print("Key not found")
 

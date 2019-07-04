@@ -734,13 +734,20 @@ EQ_Flow_limits_upper(l,i)..
 EQ_Force_Commitment(u,i)$((sum(tr,Technology(u,tr))>=1 and LoadMaximum(u,i)>0))..
          Committed(u,i)
          =G=
-         1;
+         1 - Expanded(u);
+
+*Force Unit commitment/decommitment:
+* E.g: renewable units with AF>0 must be committed
+EQ_Force_Commitment_CAP(u,i)$((sum(tr,Technology(u,tr))>=1 and LoadMaximum(u,i)>0))..
+         Committed(u,i)
+         =G=
+         1 - Expanded(u);
 
 * E.g: renewable units with AF=0 must be decommitted
 EQ_Force_DeCommitment(u,i)$(LoadMaximum(u,i)=0)..
          Committed(u,i)
          =E=
-         0;
+         0 ;
 
 *Load shedding
 EQ_LoadShedding(n,i)..
