@@ -801,12 +801,12 @@ EQ_Heat_Storage_level(chp,i)..
 
 
 **** CAPACITY EXPANSION
+
 EQ_Startup_Cap(uc,i)..
     StartUp(uc,i)
         =L=
     Committed(uc,i);
 
-**** CAPACITY EXPANSION
 EQ_Shutdown_Cap(uc,i)..
     ShutDown(uc,i)
         =L=
@@ -815,12 +815,12 @@ EQ_Shutdown_Cap(uc,i)..
 *EQ_Power_available_Cap(uc,i)..
 *    Power(uc,i)
 *        =L=
-*    Expanded(uc)*PowerCapacity(uc)*LoadMaximum(uc,i);
+*    Expanded(uc)* PowerCapacity(uc)*LoadMaximum(uc,i);
 
 EQ_Committed_Cap(uc,i)..
     Committed(uc,i)
         =L=
-    Expanded(uc) ;
+    Expanded(uc);
 
 
 

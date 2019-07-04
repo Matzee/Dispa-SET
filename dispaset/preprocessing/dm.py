@@ -36,6 +36,8 @@ GMS_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'GAMS')
 def get_git_revision_tag():
     """Get version of DispaSET used for this run. tag + commit hash"""
     from subprocess import check_output
+
+
     try:
         return check_output(["git", "describe", "--tags", "--always"]).strip()
     except:
@@ -44,8 +46,8 @@ def get_git_revision_tag():
 def build_simulation(config):
     dm = DispaModel(config)
     dm.build_model_parameters()
-    return dm.build_sim_dir()
-
+    dm.build_sim_dir()
+    return dm.SimData
 
 def get_indices(config):
     # Indexes of the simulation:
@@ -64,20 +66,20 @@ def get_indices(config):
     return idx_utc, idx_utc_noloc, idx_utc_year_noloc
 
 def _define_default_values(config):
-    if not isinstance(config['default']['CostLoadShedding'],(float,int)):
+    if not isinstance(config['default']['CostLoadShedding'], (float, int)):
         config['default']['CostLoadShedding'] = 1000
-    if not isinstance(config['default']['CostHeatSlack'],(float,int)):
+    if not isinstance(config['default']['CostHeatSlack'], (float, int)):
         config['default']['CostHeatSlack'] = 50
 
 
 class DispaModel(object):
     """
-    Usage: DispaModel(config_dict) or by building the dictionaries through DispaModel.from_excel(), DispaModel.from_yaml()
+    Construct by DispaModel(config_dict) or by building the dictionaries through DispaModel.from_excel(), DispaModel.from_yaml()
 
     """
     def __init__(self, config): # TODO constructor
         if type(config) != dict:
-            raise TypeError("Either pass a dictionary or use the loader functions DispaModel.from_excel(), DispaModel.from_yaml()")
+            raise TypeError("Either pass a dictionary DispaModel(config_dict) or use the loader functions DispaModel.from_excel(), DispaModel.from_yaml()")
         self.config = config
         _define_default_values(self.config)
 
@@ -95,13 +97,13 @@ class DispaModel(object):
             look_ahead = self.data.config['LookAhead'],
             plants_index = self.data.Plants_merged.index.tolist(),
             plants_sto_index = self.data.plants_sto.index.tolist(),
-            Plants_chp_index = self.data.plants_sto.index.tolist(),
+            Plants_chp_index = self.data.plants_chp.index.tolist(),
             countries = self.data.config['countries'],
             Interconnections = self.data.Interconnections,
             plants_uc = self.data.plants_expanded.index.tolist()
         )
 
-        self.sets_param = load_params() # the parameters with their formal structure without data
+        self.sets_param = load_params()  # the parameters with their formal structure without data
         self.version = str(get_git_revision_tag())
         self.time_range = (self.idx_utc[-1] - self.idx_utc[0]).days
         self.sim = config['SimulationDirectory']
@@ -123,15 +125,16 @@ class DispaModel(object):
         no_days = (self.idx_utc[-1] - self.idx_utc[0]).days
         no_plants = self.data.plants.shape[0]
         return ('Dispa-SET model with: \
+                \n -> config: %s \
                 \n -> Simulationtype: %s \
                 \n -> CEP: %r \
                 \n -> LP: %r \
                 \n -> %s to %s \
                 \n -> %i days  \
                 \n -> %i plants' % \
-             (self.config['SimulationType'], self.LP, self.CEP, str(self.idx_utc_noloc[0]), str(self.idx_utc_noloc[-1]), no_days, no_plants))
+             (str(self.config), self.config['SimulationType'], self.LP, self.CEP, str(self.idx_utc_noloc[0]), str(self.idx_utc_noloc[-1]), no_days, no_plants))
 
-    __repr__ = __str__ # pretty printing for usage in jupyter notebooks & print
+    __repr__ = __str__  # pretty printing for usage in jupyter notebooks & print
 
     def edit_config(self, key, new_value): #TODO
 
@@ -141,6 +144,7 @@ class DispaModel(object):
             print("Key not found")
 
     def build_model_parameters(self):
+
         parameters=dict()
         sets = self.sets
         sets_param = self.sets_param
@@ -165,7 +169,7 @@ class DispaModel(object):
                 for var in ["CostFixed"]:
                     sets_param[var] = ['u']
                     parameters[var] = define_parameter(sets_param[var], sets, value=0)
-                    parameters[var]["val"] =  Plants_merged['FixedCost'].values
+                    parameters[var]["val"] = Plants_merged['FixedCost'].values
 
         Nunits = len(Plants_merged)
 
@@ -215,7 +219,7 @@ class DispaModel(object):
                 if any(ReservoirLevels[s] > 1):
                     logging.warning(s + ': The reservoir level is sometimes higher than its capacity!')
             else:
-                logging.warning( 'Could not find reservoir level data for storage plant ' + s + '. Assuming 50% of capacity')
+                logging.warning('Could not find reservoir level data for storage plant ' + s + '. Assuming 50% of capacity')
                 parameters['StorageInitial']['val'][i] = 0.5 * Plants_sto['StorageCapacity'][s]
                 parameters['StorageProfile']['val'][i, :] = 0.5
 
@@ -452,7 +456,6 @@ class DispaModel(object):
 
         if os.path.isfile(commons['logfile']):
             shutil.copy(commons['logfile'], os.path.join(sim, 'warn_preprocessing.log'))
-        return self.SimData
 
 
 def load_loads(config, idx_utc_noloc, idx_utc_year_noloc):
@@ -523,18 +526,17 @@ def load_fuel_prices(config, idx_utc_noloc):
 
 
 #todo NOT ACTIVE
-def load_cep_parameters_cart_prod():
-    return None
+def load_cep_parameters_cart_prod(Plants_merged, countries, expandable_units=['HRD-STUR', 'LIG-STUR', 'NUC-STUR','OIL-STUR', 'GAS-GTUR']):
     logging.info("Capacity Expansion used!")
-    all_cost = load_csv('Database/CapacityExpansion/techs_cost.csv') #TODO
-    expandable_units = ['HRD-STUR', 'LIG-STUR', 'NUC-STUR','OIL-STUR', 'GAS-GTUR'] #TODO
-    plant_new = load_csv('Database/CapacityExpansion/techs_cap.csv') #TODO
+    all_cost = load_csv('Database/CapacityExpansion/TechsCost.csv') #TODO
+    plant_new = load_csv('Database/CapacityExpansion/techs_cap.csv')
     plant_new = plant_new[plant_new.Unit.isin(expandable_units)]
+
     # create variables (cartesian product of tech x country)
-    n_countries = len(config['countries'])
+    n_countries = len(countries)
     n_technologies = plant_new.shape[0]
     plant_new = pd.concat([plant_new] * n_countries) # for each zone create new uc
-    plant_new['Zone'] = np.repeat(config['countries'], n_technologies) # create zone column
+    plant_new['Zone'] = np.repeat(countries, n_technologies) # create zone column
     plant_new['Unit'] = plant_new.apply(lambda x:  x['Zone'] + "-" + x['Unit'], axis=1) # naming
     plant_new = plant_new.set_index('Unit', drop=False)
 
@@ -599,7 +601,7 @@ def load_plants(config):
     plants.index = range(len(plants))
 
     # Some columns can be in two format (absolute or per unit). If not specified, they are set to zero:
-    for key in ['StartUpCost','NoLoadCost']:
+    for key in ['StartUpCost', 'NoLoadCost']:
         if key in plants:
             pass
         elif key+'_pu' in plants:
@@ -622,21 +624,22 @@ def load_plants(config):
 
     return plants, plants_sto, plants_chp
 
+
 class DataLoader(object):
 
     def __rename_plant_columns(self):
             # Renaming the columns to ease the production of parameters:
-        self.Plants_merged.rename(columns={'StartUpCost': 'CostStartUp',
-                                    'RampUpMax': 'RampUpMaximum',
-                                    'RampDownMax': 'RampDownMaximum',
-                                    'MinUpTime': 'TimeUpMinimum',
-                                    'MinDownTime': 'TimeDownMinimum',
-                                    'RampingCost': 'CostRampUp',
-                                    'STOCapacity': 'StorageCapacity',
-                                    'STOMaxChargingPower': 'StorageChargingCapacity',
-                                    'STOChargingEfficiency': 'StorageChargingEfficiency',
-                                    'STOSelfDischarge': 'StorageSelfDischarge',
-                                    'CO2Intensity': 'EmissionRate'}, inplace=True)
+        self.Plants_merged.rename(columns={ 'StartUpCost': 'CostStartUp',
+                                            'RampUpMax': 'RampUpMaximum',
+                                            'RampDownMax': 'RampDownMaximum',
+                                            'MinUpTime': 'TimeUpMinimum',
+                                            'MinDownTime': 'TimeDownMinimum',
+                                            'RampingCost': 'CostRampUp',
+                                            'STOCapacity': 'StorageCapacity',
+                                            'STOMaxChargingPower': 'StorageChargingCapacity',
+                                            'STOChargingEfficiency': 'StorageChargingEfficiency',
+                                            'STOSelfDischarge': 'StorageSelfDischarge',
+                                            'CO2Intensity': 'EmissionRate'}, inplace=True)
 
     def __init__(self, config):
 
@@ -663,7 +666,9 @@ class DataLoader(object):
 
         # adding cep
         self.plants_expanded, self.techs_cost = load_cep_parameters(config, self.Plants_merged)
-
+        self.extend_cep_cart_prod = False
+        if self.extend_cep_cart_prod:
+            self.plants_expanded = load_cep_parameters_cart_prod(self.plants_expanded, config["countries"])
 
     def __check_plants(self):
         # data checks:
@@ -797,8 +802,8 @@ class DataLoader(object):
                     else:
                         MaxHeat = self.plants_chp.loc[u, 'CHPMaxHeat']
                     PurePowerCapacity = PowerCapacity + self.plants_chp.loc[u,'CHPPowerLossFactor'] * MaxHeat
-                Plants_merged.loc[u,'PartLoadMin'] = Plants_merged.loc[u,'PartLoadMin'] * PowerCapacity / PurePowerCapacity  # FIXME: Is this correct?
-                Plants_merged.loc[u,'PowerCapacity'] = PurePowerCapacity
+                Plants_merged.loc[u, 'PartLoadMin'] = Plants_merged.loc[u,'PartLoadMin'] * PowerCapacity / PurePowerCapacity  # FIXME: Is this correct?
+                Plants_merged.loc[u, 'PowerCapacity'] = PurePowerCapacity
 
 
             # Get the hydro time series corresponding to the original plant list: #FIXME Unused variable ?
@@ -830,18 +835,18 @@ class DataLoader(object):
 
 def load_sets(Nhours_long, look_ahead, plants_index, plants_sto_index, Plants_chp_index, countries, Interconnections, plants_uc=None):
     sets = {
-        'h' : [str(x + 1) for x in range(Nhours_long)],
-        'z' : [str(x + 1) for x in range(Nhours_long - look_ahead * 24)],
-        'mk' : ['DA', '2U', '2D'],
-        'n' : countries,
-        'u' : plants_index,
-        'l' : Interconnections,
-        'f' : commons['Fuels'],
-        'p' : ['CO2'],
-        's' : plants_sto_index,
-        'chp' : Plants_chp_index,
-        't' : commons['Technologies'],
-        'tr' : commons['tech_renewables'],
+        'h': [str(x + 1) for x in range(Nhours_long)],
+        'z': [str(x + 1) for x in range(Nhours_long - look_ahead * 24)],
+        'mk': ['DA', '2U', '2D'],
+        'n': countries,
+        'u': plants_index,
+        'l': Interconnections,
+        'f': commons['Fuels'],
+        'p': ['CO2'],
+        's': plants_sto_index,
+        'chp': Plants_chp_index,
+        't': commons['Technologies'],
+        'tr': commons['tech_renewables'],
         'uc': plants_uc
     }
 
@@ -851,56 +856,56 @@ def load_params():
 
     sets_param = {
         'AvailabilityFactor': ['u', 'h'],
-        'CHPPowerToHeat' : ['chp'],
-        'CHPPowerLossFactor' : ['chp'],
-        'CHPMaxHeat' : ['chp'],
-        'CostFixed' : ['u'],
-        'CostHeatSlack' : ['chp','h'],
-        'CostLoadShedding' : ['n','h'],
-        'CostRampUp' : ['u'],
-        'CostRampDown' : ['u'],
-        'CostShutDown' : ['u'],
-        'CostStartUp' : ['u'],
-        'CostVariable' : ['u', 'h'],
-        'Curtailment' : ['n'],
-        'Demand' : ['mk', 'n', 'h'],
-        'Efficiency' : ['u'],
-        'EmissionMaximum' : ['n', 'p'],
-        'EmissionRate' : ['u', 'p'],
-        'FlowMaximum' : ['l', 'h'],
-        'FlowMinimum' : ['l', 'h'],
-        'Fuel' : ['u', 'f'],
-        'HeatDemand' : ['chp','h'],
-        'Investment' : ['uc'],
-        'EconomicLifetime' : ['uc'],
-        'LineNode' : ['l', 'n'],
-        'LoadShedding' : ['n', 'h'],
-        'Location' : ['u', 'n'],
-        'Markup' : ['u', 'h'],
-        'Nunits' : ['u'],
-        'OutageFactor' : ['u', 'h'],
-        'PartLoadMin' : ['u'],
-        'PowerCapacity' : ['u'],
-        'PowerInitial' : ['u'],
-        'PriceTransmission' : ['l', 'h'],
-        'RampUpMaximum' : ['u'],
-        'RampDownMaximum' : ['u'],
-        'RampStartUpMaximum' : ['u'],
-        'RampShutDownMaximum' : ['u'],
-        'Reserve' : ['t'],
-        'StorageCapacity' : ['u'],
-        'StorageChargingCapacity' : ['s'],
-        'StorageChargingEfficiency' : ['s'],
-        'StorageDischargeEfficiency' : ['s'],
-        'StorageSelfDischarge' : ['u'],
-        'StorageInflow' : ['s', 'h'],
-        'StorageInitial' : ['s'],
-        'StorageMinimum' : ['s'],
-        'StorageOutflow' : ['s', 'h'],
-        'StorageProfile' : ['s', 'h'],
-        'Technology' : ['u', 't'],
-        'TimeUpMinimum' : ['u'],
-        'TimeDownMinimum' : ['u'],
+        'CHPPowerToHeat': ['chp'],
+        'CHPPowerLossFactor': ['chp'],
+        'CHPMaxHeat': ['chp'],
+        'CostFixed': ['u'],
+        'CostHeatSlack': ['chp', 'h'],
+        'CostLoadShedding': ['n', 'h'],
+        'CostRampUp': ['u'],
+        'CostRampDown': ['u'],
+        'CostShutDown': ['u'],
+        'CostStartUp': ['u'],
+        'CostVariable': ['u', 'h'],
+        'Curtailment': ['n'],
+        'Demand': ['mk', 'n', 'h'],
+        'Efficiency': ['u'],
+        'EmissionMaximum': ['n', 'p'],
+        'EmissionRate': ['u', 'p'],
+        'FlowMaximum': ['l', 'h'],
+        'FlowMinimum': ['l', 'h'],
+        'Fuel': ['u', 'f'],
+        'HeatDemand': ['chp', 'h'],
+        'Investment': ['uc'],
+        'EconomicLifetime': ['uc'],
+        'LineNode': ['l', 'n'],
+        'LoadShedding': ['n', 'h'],
+        'Location': ['u', 'n'],
+        'Markup': ['u', 'h'],
+        'Nunits': ['u'],
+        'OutageFactor': ['u', 'h'],
+        'PartLoadMin': ['u'],
+        'PowerCapacity': ['u'],
+        'PowerInitial': ['u'],
+        'PriceTransmission': ['l', 'h'],
+        'RampUpMaximum': ['u'],
+        'RampDownMaximum': ['u'],
+        'RampStartUpMaximum': ['u'],
+        'RampShutDownMaximum': ['u'],
+        'Reserve': ['t'],
+        'StorageCapacity': ['u'],
+        'StorageChargingCapacity': ['s'],
+        'StorageChargingEfficiency': ['s'],
+        'StorageDischargeEfficiency': ['s'],
+        'StorageSelfDischarge': ['u'],
+        'StorageInflow': ['s', 'h'],
+        'StorageInitial': ['s'],
+        'StorageMinimum': ['s'],
+        'StorageOutflow': ['s', 'h'],
+        'StorageProfile': ['s', 'h'],
+        'Technology': ['u', 't'],
+        'TimeUpMinimum': ['u'],
+        'TimeDownMinimum': ['u'],
     }
 
     return sets_param

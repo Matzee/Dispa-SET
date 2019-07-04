@@ -1,0 +1,208 @@
+19/07/04 12:43:17 [INFO    ] (interconnections): Detected interconnection Z1 -> Z2. The historical NTCs will be imposed as maximum flow value
+19/07/04 12:43:17 [INFO    ] (interconnections): Detected interconnection Z2 -> Z1. The historical NTCs will be imposed as maximum flow value
+19/07/04 12:43:17 [INFO    ] (interconnections): Detected interconnection Z1 -> FR, happening between a simulated zone and the rest of the world. The historical flows will be imposed to the model
+19/07/04 12:43:17 [INFO    ] (interconnections): Detected interconnection FR -> Z1, happening between the rest of the world and a simulated zone. The historical flows will be imposed to the model
+19/07/04 12:43:18 [INFO    ] (NodeBasedTable): No data file found for the table LoadShedding. Using default value 0.05
+19/07/04 12:43:18 [INFO    ] (NodeBasedTable): No data file found for the table CostLoadShedding. Using default value 400.0
+19/07/04 12:43:18 [WARNING ] (load_fuel_prices): No data file found for "PriceOfNuclear. Using default value 3.0 EUR
+19/07/04 12:43:18 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBlackCoal. Using default value 10.62 EUR
+19/07/04 12:43:18 [WARNING ] (load_fuel_prices): No data file found for "PriceOfGas. Using default value 25.0 EUR
+19/07/04 12:43:18 [WARNING ] (load_fuel_prices): No data file found for "PriceOfFuelOil. Using default value 35.0 EUR
+19/07/04 12:43:18 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBiomass. Using default value 37.0 EUR
+19/07/04 12:43:18 [WARNING ] (load_fuel_prices): No data file found for "PriceOfCO2. Using default value 7.5 EUR
+19/07/04 12:43:18 [WARNING ] (load_fuel_prices): No data file found for "PriceOfLignite. Using default value 8.0 EUR
+19/07/04 12:43:18 [WARNING ] (load_fuel_prices): No data file found for "PriceOfPeat. Using default value 0.0 EUR
+19/07/04 12:43:18 [WARNING ] (clustering): The standard (or MILP) clustering method is only applicable if all values of the Nunits column in the power plant data are set to one. At least one different value has been encountered. No clustering will be applied
+19/07/04 12:43:18 [WARNING ] (clustering): Did not cluster any unit
+19/07/04 12:43:18 [INFO    ] (UnitBasedTable): No data file found for the table Outages. Using default value None
+19/07/04 12:43:18 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'PHOT') has been used
+19/07/04 12:43:18 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOff_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTOF') has been used
+19/07/04 12:43:18 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTON') has been used
+19/07/04 12:43:18 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'PHOT') has been used
+19/07/04 12:43:18 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'WTON') has been used
+19/07/04 12:43:18 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirLevels. Using default value 0
+19/07/04 12:43:18 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirScaledInflows. Using default value 0
+19/07/04 12:43:18 [INFO    ] (UnitBasedTable): No data file found for the table CostHeatSlack. Using default value 51.0
+19/07/04 12:43:18 [WARNING ] (check_heat_demand): The heat demand profile with header "INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 12:43:18 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z2 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:18 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z1 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:18 [CRITICAL] (check_AvailabilityFactors): Unit WindOff_Z2 (technology WTOF) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:18 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z2 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:18 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z1 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:18 [WARNING ] (check_heat_demand): The heat demand profile with header "[13] - INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 12:43:20 [INFO    ] (interconnections): Detected interconnection Z1 -> Z2. The historical NTCs will be imposed as maximum flow value
+19/07/04 12:43:20 [INFO    ] (interconnections): Detected interconnection Z2 -> Z1. The historical NTCs will be imposed as maximum flow value
+19/07/04 12:43:20 [INFO    ] (interconnections): Detected interconnection Z1 -> FR, happening between a simulated zone and the rest of the world. The historical flows will be imposed to the model
+19/07/04 12:43:20 [INFO    ] (interconnections): Detected interconnection FR -> Z1, happening between the rest of the world and a simulated zone. The historical flows will be imposed to the model
+19/07/04 12:43:20 [INFO    ] (NodeBasedTable): No data file found for the table LoadShedding. Using default value 0.05
+19/07/04 12:43:20 [INFO    ] (NodeBasedTable): No data file found for the table CostLoadShedding. Using default value 400.0
+19/07/04 12:43:20 [WARNING ] (load_fuel_prices): No data file found for "PriceOfNuclear. Using default value 3.0 EUR
+19/07/04 12:43:20 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBlackCoal. Using default value 10.62 EUR
+19/07/04 12:43:20 [WARNING ] (load_fuel_prices): No data file found for "PriceOfGas. Using default value 25.0 EUR
+19/07/04 12:43:20 [WARNING ] (load_fuel_prices): No data file found for "PriceOfFuelOil. Using default value 35.0 EUR
+19/07/04 12:43:20 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBiomass. Using default value 37.0 EUR
+19/07/04 12:43:20 [WARNING ] (load_fuel_prices): No data file found for "PriceOfCO2. Using default value 7.5 EUR
+19/07/04 12:43:20 [WARNING ] (load_fuel_prices): No data file found for "PriceOfLignite. Using default value 8.0 EUR
+19/07/04 12:43:20 [WARNING ] (load_fuel_prices): No data file found for "PriceOfPeat. Using default value 0.0 EUR
+19/07/04 12:43:20 [WARNING ] (clustering): The standard (or MILP) clustering method is only applicable if all values of the Nunits column in the power plant data are set to one. At least one different value has been encountered. No clustering will be applied
+19/07/04 12:43:21 [WARNING ] (clustering): Did not cluster any unit
+19/07/04 12:43:21 [INFO    ] (UnitBasedTable): No data file found for the table Outages. Using default value None
+19/07/04 12:43:21 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'PHOT') has been used
+19/07/04 12:43:21 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOff_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTOF') has been used
+19/07/04 12:43:21 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTON') has been used
+19/07/04 12:43:21 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'PHOT') has been used
+19/07/04 12:43:21 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'WTON') has been used
+19/07/04 12:43:21 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirLevels. Using default value 0
+19/07/04 12:43:21 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirScaledInflows. Using default value 0
+19/07/04 12:43:21 [INFO    ] (UnitBasedTable): No data file found for the table CostHeatSlack. Using default value 51.0
+19/07/04 12:43:21 [WARNING ] (check_heat_demand): The heat demand profile with header "INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 12:43:21 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z2 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:21 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z1 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:21 [CRITICAL] (check_AvailabilityFactors): Unit WindOff_Z2 (technology WTOF) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:21 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z2 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:21 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z1 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:21 [WARNING ] (check_heat_demand): The heat demand profile with header "[13] - INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 12:43:21 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel SUN in unit [4] - PHOT_Z2. A null variable cost has been assigned
+19/07/04 12:43:21 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WIN in unit [5] - WindOff_Z2. A null variable cost has been assigned
+19/07/04 12:43:21 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WIN in unit [6] - WindOn_Z2. A null variable cost has been assigned
+19/07/04 12:43:21 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WAT in unit [8] - COO II T. A null variable cost has been assigned
+19/07/04 12:43:21 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WAT in unit [10] - SISTERON. A null variable cost has been assigned
+19/07/04 12:43:21 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel SUN in unit [14] - PHOT_Z1. A null variable cost has been assigned
+19/07/04 12:43:21 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WIN in unit [15] - WindOn_Z1. A null variable cost has been assigned
+19/07/04 12:43:21 [INFO    ] (build_sim_dir): Build finished
+19/07/04 12:43:39 [INFO    ] (interconnections): Detected interconnection Z1 -> Z2. The historical NTCs will be imposed as maximum flow value
+19/07/04 12:43:39 [INFO    ] (interconnections): Detected interconnection Z2 -> Z1. The historical NTCs will be imposed as maximum flow value
+19/07/04 12:43:39 [INFO    ] (interconnections): Detected interconnection Z1 -> FR, happening between a simulated zone and the rest of the world. The historical flows will be imposed to the model
+19/07/04 12:43:39 [INFO    ] (interconnections): Detected interconnection FR -> Z1, happening between the rest of the world and a simulated zone. The historical flows will be imposed to the model
+19/07/04 12:43:39 [INFO    ] (NodeBasedTable): No data file found for the table LoadShedding. Using default value 0.05
+19/07/04 12:43:39 [INFO    ] (NodeBasedTable): No data file found for the table CostLoadShedding. Using default value 400.0
+19/07/04 12:43:39 [WARNING ] (load_fuel_prices): No data file found for "PriceOfNuclear. Using default value 3.0 EUR
+19/07/04 12:43:39 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBlackCoal. Using default value 10.62 EUR
+19/07/04 12:43:39 [WARNING ] (load_fuel_prices): No data file found for "PriceOfGas. Using default value 25.0 EUR
+19/07/04 12:43:39 [WARNING ] (load_fuel_prices): No data file found for "PriceOfFuelOil. Using default value 35.0 EUR
+19/07/04 12:43:39 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBiomass. Using default value 37.0 EUR
+19/07/04 12:43:39 [WARNING ] (load_fuel_prices): No data file found for "PriceOfCO2. Using default value 7.5 EUR
+19/07/04 12:43:39 [WARNING ] (load_fuel_prices): No data file found for "PriceOfLignite. Using default value 8.0 EUR
+19/07/04 12:43:39 [WARNING ] (load_fuel_prices): No data file found for "PriceOfPeat. Using default value 0.0 EUR
+19/07/04 12:43:39 [WARNING ] (clustering): The standard (or MILP) clustering method is only applicable if all values of the Nunits column in the power plant data are set to one. At least one different value has been encountered. No clustering will be applied
+19/07/04 12:43:39 [WARNING ] (clustering): Did not cluster any unit
+19/07/04 12:43:39 [INFO    ] (UnitBasedTable): No data file found for the table Outages. Using default value None
+19/07/04 12:43:39 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'PHOT') has been used
+19/07/04 12:43:39 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOff_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTOF') has been used
+19/07/04 12:43:39 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTON') has been used
+19/07/04 12:43:39 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'PHOT') has been used
+19/07/04 12:43:39 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'WTON') has been used
+19/07/04 12:43:39 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirLevels. Using default value 0
+19/07/04 12:43:39 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirScaledInflows. Using default value 0
+19/07/04 12:43:39 [INFO    ] (UnitBasedTable): No data file found for the table CostHeatSlack. Using default value 51.0
+19/07/04 12:43:39 [WARNING ] (check_heat_demand): The heat demand profile with header "INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 12:43:40 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z2 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:40 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z1 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:40 [CRITICAL] (check_AvailabilityFactors): Unit WindOff_Z2 (technology WTOF) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:40 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z2 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:40 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z1 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 12:43:40 [WARNING ] (check_heat_demand): The heat demand profile with header "[13] - INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 12:43:40 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel SUN in unit [4] - PHOT_Z2. A null variable cost has been assigned
+19/07/04 12:43:40 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WIN in unit [5] - WindOff_Z2. A null variable cost has been assigned
+19/07/04 12:43:40 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WIN in unit [6] - WindOn_Z2. A null variable cost has been assigned
+19/07/04 12:43:40 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WAT in unit [8] - COO II T. A null variable cost has been assigned
+19/07/04 12:43:40 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WAT in unit [10] - SISTERON. A null variable cost has been assigned
+19/07/04 12:43:40 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel SUN in unit [14] - PHOT_Z1. A null variable cost has been assigned
+19/07/04 12:43:40 [WARNING ] (build_model_parameters): No fuel price value has been found for fuel WIN in unit [15] - WindOn_Z1. A null variable cost has been assigned
+19/07/04 12:43:40 [INFO    ] (build_sim_dir): Build finished
+19/07/04 13:51:02 [INFO    ] (interconnections): Detected interconnection Z1 -> Z2. The historical NTCs will be imposed as maximum flow value
+19/07/04 13:51:02 [INFO    ] (interconnections): Detected interconnection Z2 -> Z1. The historical NTCs will be imposed as maximum flow value
+19/07/04 13:51:02 [INFO    ] (interconnections): Detected interconnection Z1 -> FR, happening between a simulated zone and the rest of the world. The historical flows will be imposed to the model
+19/07/04 13:51:02 [INFO    ] (interconnections): Detected interconnection FR -> Z1, happening between the rest of the world and a simulated zone. The historical flows will be imposed to the model
+19/07/04 13:51:02 [INFO    ] (NodeBasedTable): No data file found for the table LoadShedding. Using default value 0.05
+19/07/04 13:51:02 [INFO    ] (NodeBasedTable): No data file found for the table CostLoadShedding. Using default value 400.0
+19/07/04 13:51:02 [WARNING ] (load_fuel_prices): No data file found for "PriceOfNuclear. Using default value 3.0 EUR
+19/07/04 13:51:02 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBlackCoal. Using default value 10.62 EUR
+19/07/04 13:51:02 [WARNING ] (load_fuel_prices): No data file found for "PriceOfGas. Using default value 25.0 EUR
+19/07/04 13:51:02 [WARNING ] (load_fuel_prices): No data file found for "PriceOfFuelOil. Using default value 35.0 EUR
+19/07/04 13:51:02 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBiomass. Using default value 37.0 EUR
+19/07/04 13:51:02 [WARNING ] (load_fuel_prices): No data file found for "PriceOfCO2. Using default value 7.5 EUR
+19/07/04 13:51:02 [WARNING ] (load_fuel_prices): No data file found for "PriceOfLignite. Using default value 8.0 EUR
+19/07/04 13:51:02 [WARNING ] (load_fuel_prices): No data file found for "PriceOfPeat. Using default value 0.0 EUR
+19/07/04 13:51:02 [WARNING ] (clustering): The standard (or MILP) clustering method is only applicable if all values of the Nunits column in the power plant data are set to one. At least one different value has been encountered. No clustering will be applied
+19/07/04 13:51:02 [WARNING ] (clustering): Did not cluster any unit
+19/07/04 13:51:02 [INFO    ] (UnitBasedTable): No data file found for the table Outages. Using default value None
+19/07/04 13:51:02 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'PHOT') has been used
+19/07/04 13:51:02 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOff_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTOF') has been used
+19/07/04 13:51:02 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTON') has been used
+19/07/04 13:51:02 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'PHOT') has been used
+19/07/04 13:51:02 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'WTON') has been used
+19/07/04 13:51:02 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirLevels. Using default value 0
+19/07/04 13:51:02 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirScaledInflows. Using default value 0
+19/07/04 13:51:02 [INFO    ] (UnitBasedTable): No data file found for the table CostHeatSlack. Using default value 51.0
+19/07/04 13:51:02 [WARNING ] (check_heat_demand): The heat demand profile with header "INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 13:51:02 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z2 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:02 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z1 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:02 [CRITICAL] (check_AvailabilityFactors): Unit WindOff_Z2 (technology WTOF) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:02 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z2 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:02 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z1 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:02 [WARNING ] (check_heat_demand): The heat demand profile with header "[13] - INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 13:51:28 [INFO    ] (interconnections): Detected interconnection Z1 -> Z2. The historical NTCs will be imposed as maximum flow value
+19/07/04 13:51:28 [INFO    ] (interconnections): Detected interconnection Z2 -> Z1. The historical NTCs will be imposed as maximum flow value
+19/07/04 13:51:28 [INFO    ] (interconnections): Detected interconnection Z1 -> FR, happening between a simulated zone and the rest of the world. The historical flows will be imposed to the model
+19/07/04 13:51:28 [INFO    ] (interconnections): Detected interconnection FR -> Z1, happening between the rest of the world and a simulated zone. The historical flows will be imposed to the model
+19/07/04 13:51:28 [INFO    ] (NodeBasedTable): No data file found for the table LoadShedding. Using default value 0.05
+19/07/04 13:51:28 [INFO    ] (NodeBasedTable): No data file found for the table CostLoadShedding. Using default value 400.0
+19/07/04 13:51:28 [WARNING ] (load_fuel_prices): No data file found for "PriceOfNuclear. Using default value 3.0 EUR
+19/07/04 13:51:28 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBlackCoal. Using default value 10.62 EUR
+19/07/04 13:51:28 [WARNING ] (load_fuel_prices): No data file found for "PriceOfGas. Using default value 25.0 EUR
+19/07/04 13:51:28 [WARNING ] (load_fuel_prices): No data file found for "PriceOfFuelOil. Using default value 35.0 EUR
+19/07/04 13:51:28 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBiomass. Using default value 37.0 EUR
+19/07/04 13:51:28 [WARNING ] (load_fuel_prices): No data file found for "PriceOfCO2. Using default value 7.5 EUR
+19/07/04 13:51:28 [WARNING ] (load_fuel_prices): No data file found for "PriceOfLignite. Using default value 8.0 EUR
+19/07/04 13:51:28 [WARNING ] (load_fuel_prices): No data file found for "PriceOfPeat. Using default value 0.0 EUR
+19/07/04 13:51:28 [WARNING ] (clustering): The standard (or MILP) clustering method is only applicable if all values of the Nunits column in the power plant data are set to one. At least one different value has been encountered. No clustering will be applied
+19/07/04 13:51:29 [WARNING ] (clustering): Did not cluster any unit
+19/07/04 13:51:29 [INFO    ] (UnitBasedTable): No data file found for the table Outages. Using default value None
+19/07/04 13:51:29 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'PHOT') has been used
+19/07/04 13:51:29 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOff_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTOF') has been used
+19/07/04 13:51:29 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTON') has been used
+19/07/04 13:51:29 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'PHOT') has been used
+19/07/04 13:51:29 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'WTON') has been used
+19/07/04 13:51:29 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirLevels. Using default value 0
+19/07/04 13:51:29 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirScaledInflows. Using default value 0
+19/07/04 13:51:29 [INFO    ] (UnitBasedTable): No data file found for the table CostHeatSlack. Using default value 51.0
+19/07/04 13:51:29 [WARNING ] (check_heat_demand): The heat demand profile with header "INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 13:51:29 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z2 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:29 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z1 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:29 [CRITICAL] (check_AvailabilityFactors): Unit WindOff_Z2 (technology WTOF) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:29 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z2 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:29 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z1 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:51:29 [WARNING ] (check_heat_demand): The heat demand profile with header "[13] - INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 13:52:07 [INFO    ] (interconnections): Detected interconnection Z1 -> Z2. The historical NTCs will be imposed as maximum flow value
+19/07/04 13:52:07 [INFO    ] (interconnections): Detected interconnection Z2 -> Z1. The historical NTCs will be imposed as maximum flow value
+19/07/04 13:52:07 [INFO    ] (interconnections): Detected interconnection Z1 -> FR, happening between a simulated zone and the rest of the world. The historical flows will be imposed to the model
+19/07/04 13:52:07 [INFO    ] (interconnections): Detected interconnection FR -> Z1, happening between the rest of the world and a simulated zone. The historical flows will be imposed to the model
+19/07/04 13:52:07 [INFO    ] (NodeBasedTable): No data file found for the table LoadShedding. Using default value 0.05
+19/07/04 13:52:07 [INFO    ] (NodeBasedTable): No data file found for the table CostLoadShedding. Using default value 400.0
+19/07/04 13:52:07 [WARNING ] (load_fuel_prices): No data file found for "PriceOfNuclear. Using default value 3.0 EUR
+19/07/04 13:52:07 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBlackCoal. Using default value 10.62 EUR
+19/07/04 13:52:07 [WARNING ] (load_fuel_prices): No data file found for "PriceOfGas. Using default value 25.0 EUR
+19/07/04 13:52:07 [WARNING ] (load_fuel_prices): No data file found for "PriceOfFuelOil. Using default value 35.0 EUR
+19/07/04 13:52:07 [WARNING ] (load_fuel_prices): No data file found for "PriceOfBiomass. Using default value 37.0 EUR
+19/07/04 13:52:07 [WARNING ] (load_fuel_prices): No data file found for "PriceOfCO2. Using default value 7.5 EUR
+19/07/04 13:52:07 [WARNING ] (load_fuel_prices): No data file found for "PriceOfLignite. Using default value 8.0 EUR
+19/07/04 13:52:07 [WARNING ] (load_fuel_prices): No data file found for "PriceOfPeat. Using default value 0.0 EUR
+19/07/04 13:52:07 [WARNING ] (clustering): The standard (or MILP) clustering method is only applicable if all values of the Nunits column in the power plant data are set to one. At least one different value has been encountered. No clustering will be applied
+19/07/04 13:52:07 [WARNING ] (clustering): Did not cluster any unit
+19/07/04 13:52:07 [INFO    ] (UnitBasedTable): No data file found for the table Outages. Using default value None
+19/07/04 13:52:07 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'PHOT') has been used
+19/07/04 13:52:07 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOff_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTOF') has been used
+19/07/04 13:52:07 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z2 in table AvailabilityFactors. The generic information for ('Z2', 'WTON') has been used
+19/07/04 13:52:07 [WARNING ] (UnitBasedTable): No specific information was found for unit PHOT_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'PHOT') has been used
+19/07/04 13:52:07 [WARNING ] (UnitBasedTable): No specific information was found for unit WindOn_Z1 in table AvailabilityFactors. The generic information for ('Z1', 'WTON') has been used
+19/07/04 13:52:07 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirLevels. Using default value 0
+19/07/04 13:52:07 [INFO    ] (UnitBasedTable): No data file found for the table ReservoirScaledInflows. Using default value 0
+19/07/04 13:52:07 [INFO    ] (UnitBasedTable): No data file found for the table CostHeatSlack. Using default value 51.0
+19/07/04 13:52:07 [WARNING ] (check_heat_demand): The heat demand profile with header "INESCO WKK" does not correspond to any CHP plant. It will be ignored.
+19/07/04 13:52:07 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z2 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:52:07 [CRITICAL] (check_AvailabilityFactors): Unit WindOn_Z1 (technology WTON) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:52:07 [CRITICAL] (check_AvailabilityFactors): Unit WindOff_Z2 (technology WTOF) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:52:07 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z2 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:52:07 [CRITICAL] (check_AvailabilityFactors): Unit PHOT_Z1 (technology PHOT) does not appear in the availbilityFactors table. Its values will be set to 100%!
+19/07/04 13:52:07 [WARNING ] (check_heat_demand): The heat demand profile with header "[13] - INESCO WKK" does not correspond to any CHP plant. It will be ignored.
