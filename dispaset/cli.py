@@ -3,7 +3,7 @@ import logging
 import click
 
 from .preprocessing.data_handler import load_config_excel,load_config_yaml
-from .preprocessing.preprocessing import build_simulation
+from .preprocessing.preprocessing_old import build_simulation
 from .solve import solve_GAMS, solve_pyomo
 from ._version import __version__
 

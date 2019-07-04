@@ -4,8 +4,8 @@
 import dispaset as ds 
 import os
 import pytest
-from dispaset.preprocessing.dm import DataLoader, DispaModel
-from dispaset.preprocessing.dm import build_simulation
+from dispaset.preprocessing.DataLoader import DataLoader
+from dispaset.preprocessing.preprocessing import DispaModel, build_simulation
 import pandas as pd
 
 
@@ -83,9 +83,9 @@ def test_DataLoader_missing_values():
     for par in pars:
         df = getattr(dl, par)
         if type(df) == pd.DataFrame and par != "Plants_merged":  # todo which columns are required for plants?
-            assert df.isnull().sum().sum() == 0
-
-
+            assert df.isnull().sum().sum() == 0  # sum over all columns and rows
+        elif type(df) == list:
+            assert sum(x is None for x in df) == 0
 
 
 ######################################## Tests for all permutations simtypes x cep

@@ -5,7 +5,7 @@ import os
 from ._version import __version__
 from .common import commons
 
-from .preprocessing.preprocessing import get_git_revision_tag
+from .preprocessing.preprocessing_old import get_git_revision_tag
 __gitversion__ = get_git_revision_tag()
 
 # Logging: # TODO: Parametrize in dispacli or external config
@@ -49,8 +49,8 @@ _LOGCONFIG = {
 
 
 # Importing the main Dispa-SET functions so that they can be called with "ds.function"
-from .preprocessing.preprocessing import build_simulation
-from .preprocessing.preprocessing import adjust_capacity, adjust_storage
+from .preprocessing.preprocessing_old import build_simulation
+from .preprocessing.preprocessing_old import adjust_capacity, adjust_storage
 from .solve import solve_GAMS, solve_pyomo
 from .misc.gdx_handler import write_variables
 from .preprocessing.data_handler import load_config_excel, load_config_yaml, export_yaml_config
