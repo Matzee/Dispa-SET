@@ -4,7 +4,7 @@
 import dispaset as ds 
 import os
 import pytest
-from dispaset.preprocessing.DataLoader import DataLoader
+from dispaset.preprocessing.DataLoader import DispaData
 from dispaset.preprocessing.preprocessing import DispaModel, build_simulation
 import pandas as pd
 
@@ -15,18 +15,20 @@ config = ds.load_config_yaml(conf_file)
 config["WriteGDX"] = 0
 
 
+# python -m pytest tests/test_DispaModel.py -v 
+
+
 
 ######################################## Tests
 
-
-
-def test_DataLoader_all():
+def test_DispaData_all():
     # DataLoder building by config
-    dl = DataLoader(config)
+    dl = DispaData(config)
 
-def test_DataLoader():
+
+def test_DispaData():
     # model building from yaml
-    dl = DataLoader(config)
+    dl = DispaData(config)
 
 
 def test_DispaModel_yaml_all():
@@ -57,7 +59,7 @@ def test_SimData_set():
     assert len(sets['y_config']) == 4
 
 
-def test_DataLoader_missing_values():
+def test_DispaData_missing_values():
 
     pars = [
         'AF',
@@ -78,7 +80,7 @@ def test_DataLoader_missing_values():
         'ReservoirScaledInflows',
     ]
 
-    dl = DataLoader(config)
+    dl = DispaData(config)
 
     for par in pars:
         df = getattr(dl, par)
@@ -86,6 +88,7 @@ def test_DataLoader_missing_values():
             assert df.isnull().sum().sum() == 0  # sum over all columns and rows
         elif type(df) == list:
             assert sum(x is None for x in df) == 0
+
 
 
 ######################################## Tests for all permutations simtypes x cep
@@ -109,16 +112,16 @@ class TestDataModel:
         config['SimulationType'] = sim_type
         config['CEP'] = cep
         plants = pd.read_csv(unit_file, index_col=0)
-        plants.loc["Maasvlakte", "ExtendableCapacity"] = 2
+        plants.loc["Maasvlakte", "Extendable"] = 2
         plants.to_csv(unit_file, index=True)
         dm = DispaModel(config)
         idx_dim = len(dm.data.plants_expanded.index.tolist())
         assert(idx_dim == 1)
-        assert(dm.data.plants_expanded["ExtendableCapacity"].values[0] == 2)
+        assert(dm.data.plants_expanded["Extendable"].values[0] == 2)
 
         # revert to old status and test
         plants = pd.read_csv(unit_file, index_col=0)
-        plants.loc["Maasvlakte", "ExtendableCapacity"] = 0
+        plants.loc["Maasvlakte", "Extendable"] = 0
         plants.to_csv(unit_file, index=True)
         dm = DispaModel(config)
         idx_dim = len(dm.data.plants_expanded.index.tolist())

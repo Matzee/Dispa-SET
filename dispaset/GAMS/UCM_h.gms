@@ -51,7 +51,7 @@ $setglobal RetrieveStatus 0
 
 * Definition of the capacity expansion decision
 * (1 for yes 0 for no)
-$setglobal CEPFormulation 0
+$setglobal CEPFormulation 1
 
 
 *===============================================================================
@@ -437,6 +437,7 @@ EQ_Emission_limits
 EQ_Flow_limits_lower
 EQ_Flow_limits_upper
 EQ_Force_Commitment
+EQ_Force_Commitment_CAP
 EQ_Force_DeCommitment
 EQ_LoadShedding
 $If %RetrieveStatus% == 1 EQ_CommittedCalc
@@ -490,31 +491,20 @@ EQ_SystemCost(i)..
          +0.8*Config("ValueOfLostLoad","val")*(sum(n,LL_2U(n,i)+LL_2D(n,i)+LL_3U(n,i)))
          +0.7*Config("ValueOfLostLoad","val")*sum(u,LL_RampUp(u,i)+LL_RampDown(u,i))
          +Config("CostOfSpillage","val")*sum(s,spillage(s,i))
-         
+
          ;
 
 $endIf
 ;
 
 
-$ifthen [%CEPFormulation% == 1]
 
 EQ_Objective_function..
-         SystemCostD 
+         SystemCostD
          =E=
          sum(i,SystemCost(i))
-         +Config("WaterValue","val")*sum(s,WaterSlack(s)) ;
-$else
-EQ_Objective_function..
-         SystemCostD 
-         =E=
-         sum(i,SystemCost(i))
-         +Config("WaterValue","val")*sum(s,WaterSlack(s)) 
+         +Config("WaterValue","val")*sum(s,WaterSlack(s))
          + sum(uc, Expanded(uc) * C_inv(uc)*PowerCapacity(uc)* 1/card(h));
-
-
-$endIf
-;
 
 * 3 binary commitment status
 EQ_Commitment(u,i)..
@@ -731,17 +721,17 @@ EQ_Flow_limits_upper(l,i)..
 
 *Force Unit commitment/decommitment:
 * E.g: renewable units with AF>0 must be committed
-EQ_Force_Commitment(u,i)$((sum(tr,Technology(u,tr))>=1 and LoadMaximum(u,i)>0))..
-         Committed(u,i)
+EQ_Force_Commitment(ue,i)$((sum(tr,Technology(ue,tr))>=1 and LoadMaximum(ue,i)>0))..
+         Committed(ue,i)
          =G=
-         1 - Expanded(u);
+         1;
 
 *Force Unit commitment/decommitment:
 * E.g: renewable units with AF>0 must be committed
-EQ_Force_Commitment_CAP(u,i)$((sum(tr,Technology(u,tr))>=1 and LoadMaximum(u,i)>0))..
-         Committed(u,i)
+EQ_Force_Commitment_CAP(uc,i)$((sum(tr,Technology(uc,tr))>=1 and LoadMaximum(uc,i)>0))..
+         Committed(uc,i)
          =G=
-         1 - Expanded(u);
+         Expanded(uc);
 
 * E.g: renewable units with AF=0 must be decommitted
 EQ_Force_DeCommitment(u,i)$(LoadMaximum(u,i)=0)..
@@ -819,8 +809,6 @@ EQ_Heat_Storage_level(chp,i)..
 *         StorageLevel(chp,i)
 *;
 
-$ifthen %CEPFormulation% == 1
-
 **** CAPACITY EXPANSION
 EQ_Startup_Cap(uc,i)..
     StartUp(uc,i)
@@ -831,7 +819,7 @@ EQ_Startup_Cap(uc,i)..
 EQ_Shutdown_Cap(uc,i)..
     ShutDown(uc,i)
         =L=
-    Committed(uc, i);
+    Committed(uc,i);
 
 *EQ_Power_available_Cap(uc,i)..
 *    Power(uc,i)
@@ -842,9 +830,6 @@ EQ_Committed_Cap(uc,i)..
     Committed(uc,i)
         =L=
     Expanded(uc) ;
-
-$endif
-;
 
 *===============================================================================
 *Definition of models
@@ -892,6 +877,7 @@ EQ_SystemCost
 EQ_Flow_limits_lower,
 EQ_Flow_limits_upper,
 EQ_Force_Commitment,
+EQ_Force_Commitment_CAP,
 EQ_Force_DeCommitment,
 EQ_LoadShedding,
 $If %RetrieveStatus% == 1 EQ_CommittedCalc,
@@ -1007,6 +993,7 @@ LostLoad_RampDown(n,h)
 OutputGenMargin(n,h)
 OutputHeat(chp,h)
 OutputHeatSlack(chp,h)
+ExpandedPower(uc)
 ;
 
 OutputCommitted(u,z)=Committed.L(u,z);
@@ -1030,6 +1017,7 @@ LostLoad_3U(n,z) = LL_3U.L(n,z);
 LostLoad_RampUp(n,z)    = sum(u,LL_RampUp.L(u,z)*Location(u,n));
 LostLoad_RampDown(n,z)  = sum(u,LL_RampDown.L(u,z)*Location(u,n));
 ShadowPrice(n,z) = EQ_Demand_balance_DA.m(n,z);
+ExpandedPower(uc) = Expanded.L(uc) * PowerCapacity(uc);
 
 EXECUTE_UNLOAD "Results.gdx";
 

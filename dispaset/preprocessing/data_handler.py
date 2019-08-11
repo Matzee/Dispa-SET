@@ -493,7 +493,8 @@ def load_config_excel(ConfigFile,AbsPath=True):
     
     try:   
         config['CEP'] = sheet.cell_value(151, 2)
-        config["CapCosts"] = sheet.cell_value(168, 2)
+        config["CapCosts"] = sheet.cell_value(152, 2)
+
     except: # config sheet without CEP cell leads to out of bounds error -> backwards compatibility
         config['CEP'] = None
         config["CapCosts"] = None
@@ -574,7 +575,7 @@ def load_config_yaml(filename,AbsPath=True):
     import yaml
     with open(filename, 'r') as f:
         try:
-            config = yaml.load(f)
+            config = yaml.load(f, Loader=yaml.FullLoader)
         except yaml.YAMLError as exc:
             logging.error('Cannot parse config file: {}'.format(filename))
             raise exc

@@ -25,33 +25,30 @@ from .data_check import check_units, check_chp, check_sto, check_heat_demand, ch
 from .utils import clustering, interconnections, incidence_matrix
 from .data_handler import UnitBasedTable,NodeBasedTable,merge_series, \
         define_parameter, write_to_excel, load_csv, load_config_excel, load_config_yaml
-
 from ..misc.gdx_handler import write_variables
 from ..common import commons  # Load fuel types, technologies, timestep, etc:
+from .dataloader import DispaData
 
-
-from .DataLoader import DataLoader
 
 
 GMS_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'GAMS')
-
-# TODO Move to utils
-def get_git_revision_tag():
-    """Get version of DispaSET used for this run. tag + commit hash"""
-    from subprocess import check_output
-
-
-    try:
-        return check_output(["git", "describe", "--tags", "--always"]).strip()
-    except:
-        return 'NA'
-
 
 def build_simulation(config):
     dm = DispaModel(config)
     dm.build_model_parameters()
     dm.build_sim_dir()
     return dm.SimData
+
+
+# TODO Move to utils
+def get_git_revision_tag():
+    """Get version of DispaSET used for this run. tag + commit hash"""
+    from subprocess import check_output
+
+    try:
+        return check_output(["git", "describe", "--tags", "--always"]).strip()
+    except:
+        return 'NA'
 
 
 def get_indices(config):
@@ -87,10 +84,9 @@ class DispaModel(object):
             raise TypeError("Either pass a dictionary DispaModel(config_dict) or use the loader functions DispaModel.from_excel(), DispaModel.from_yaml()")
         self.config = config
         _define_default_values(self.config)
-
         self.LP = config['SimulationType'] == 'LP' or config['SimulationType'] == 'LP clustered'
         self.CEP = config['CEP'] == 1
-        self.data = DataLoader(config)
+        self.data = DispaData(config)
 
         # load sets
         self.idx_utc, self.idx_utc_noloc, self.idx_utc_year_noloc = get_indices(self.config) #todo do i really need you all?
@@ -130,14 +126,13 @@ class DispaModel(object):
         no_days = (self.idx_utc[-1] - self.idx_utc[0]).days
         no_plants = self.data.plants.shape[0]
         return ('Dispa-SET model with: \
-                \n -> config: %s \
                 \n -> Simulationtype: %s \
                 \n -> CEP: %r \
                 \n -> LP: %r \
                 \n -> %s to %s \
                 \n -> %i days  \
                 \n -> %i plants' %
-             (str(self.config), self.config['SimulationType'], self.LP, self.CEP, str(self.idx_utc_noloc[0]), str(self.idx_utc_noloc[-1]), no_days, no_plants))
+             (self.config['SimulationType'], self.LP, self.CEP, str(self.idx_utc_noloc[0]), str(self.idx_utc_noloc[-1]), no_days, no_plants))
 
     __repr__ = __str__  # pretty printing for usage in jupyter notebooks & print
 
@@ -166,16 +161,17 @@ class DispaModel(object):
         # Define all the parameters and set a default value of zero:
         for var in sets_param:
             parameters[var] = define_parameter(sets_param[var], sets, value=0)
-
+        
         for var in ["Investment", "EconomicLifetime"]:
             parameters[var] = define_parameter(sets_param[var], sets, value=0)
-            if self.CEP & len(sets["uc"]) > 0: # ! serious todo
-                parameters[var]["val"] =  self.data.plants_expanded[var].values
-                Plants_merged['FixedCost'] = pd.merge(Plants_merged, self.data.all_cost, how='left', on=['Fuel', 'Technology'])['FixedCost'].values
-                for var in ["CostFixed"]:
-                    sets_param[var] = ['u']
-                    parameters[var] = define_parameter(sets_param[var], sets, value=0)
-                    parameters[var]["val"] = Plants_merged['FixedCost'].values
+            expanded_plants = self.data.plants_expanded.index
+            parameters[var]["val"] =  Plants_merged.loc[expanded_plants, var].values
+            
+            # Plants_merged['FixedCost'] = pd.merge(Plants_merged, self.data.all_cost, how='left', on=['Fuel', 'Technology'])['FixedCost'].values
+        for var in ["CostFixed"]:
+            sets_param[var] = ['u']
+            parameters[var] = define_parameter(sets_param[var], sets, value=0)
+            parameters[var]["val"] = Plants_merged['FixedCost'].values
 
         Nunits = len(Plants_merged)
 
@@ -464,9 +460,9 @@ class DispaModel(object):
             shutil.copy(commons['logfile'], os.path.join(sim, 'warn_preprocessing.log'))
 
 
-
-
 def load_sets(Nhours_long, look_ahead, plants_index, plants_sto_index, Plants_chp_index, countries, Interconnections, plants_uc=None):
+    
+    plants_ue = [plant for plant in plants_index if plant not in plants_uc]
     sets = {
         'h': [str(x + 1) for x in range(Nhours_long)],
         'z': [str(x + 1) for x in range(Nhours_long - look_ahead * 24)],
@@ -480,7 +476,8 @@ def load_sets(Nhours_long, look_ahead, plants_index, plants_sto_index, Plants_ch
         'chp': Plants_chp_index,
         't': commons['Technologies'],
         'tr': commons['tech_renewables'],
-        'uc': plants_uc
+        'uc': plants_uc,
+        'ue': plants_ue
     }
 
     return sets
@@ -542,3 +539,154 @@ def load_params():
     }
 
     return sets_param
+
+
+def adjust_capacity(inputs,tech_fuel,scaling=1,value=None,singleunit=False,write_gdx=False,dest_path=''):
+    '''
+    Function used to modify the installed capacities in the Dispa-SET generated input data
+    The function update the Inputs.p file in the simulation directory at each call
+
+    :param inputs:      Input data dictionary OR path to the simulation directory containing Inputs.p
+    :param tech_fuel:   tuple with the technology and fuel type for which the capacity should be modified
+    :param scaling:     Scaling factor to be applied to the installed capacity
+    :param value:       Absolute value of the desired capacity (! Applied only if scaling != 1 !)
+    :param singleunit:  Set to true if the technology should remain lumped in a single unit
+    :param write_gdx:   boolean defining if Inputs.gdx should be also overwritten with the new data
+    :param dest_path:   Simulation environment path to write the new input data. If unspecified, no data is written!
+    :return:            New SimData dictionary
+    '''
+    import pickle
+
+    if isinstance(inputs,str) or isinstance(inputs,unicode):
+        path = inputs
+        inputfile = path + '/Inputs.p'
+        if not os.path.exists(path):
+            sys.exit('Path + "' + path + '" not found')
+        with open(inputfile, 'rb') as f:
+            SimData = pickle.load(f)
+    elif isinstance(inputs,dict):
+        SimData = inputs
+        path = SimData['config']['SimulationDirectory']
+    else:
+        logging.error('The input data must be either a dictionary or string containing a valid directory')
+        sys.exit(1)
+
+    if not isinstance(tech_fuel,tuple):
+        sys.exit('tech_fuel must be a tuple')
+
+    # find the units to be scaled:
+    cond = (SimData['units']['Technology'] == tech_fuel[0]) & (SimData['units']['Fuel'] == tech_fuel[1])
+    units = SimData['units'][cond]
+    idx = pd.Series(np.where(cond)[0],index=units.index)
+    TotalCapacity = (units.PowerCapacity*units.Nunits).sum()
+    if scaling != 1:
+        RequiredCapacity = TotalCapacity*scaling
+    elif value is not None:
+        RequiredCapacity = value
+    else:
+        RequiredCapacity = TotalCapacity
+    if singleunit:
+        Nunits_new = pd.Series(1,index=units.index)
+    else:
+        Nunits_new = (units.Nunits * RequiredCapacity/TotalCapacity).round()
+    Nunits_new[Nunits_new < 1] = 1
+    Cap_new = units.PowerCapacity * RequiredCapacity/(units.PowerCapacity*Nunits_new).sum()
+    for u in units.index:
+        logging.info('Unit ' + u +':')
+        logging.info('    PowerCapacity: ' + str(SimData['units'].PowerCapacity[u]) + ' --> ' + str(Cap_new[u]))
+        logging.info('    Nunits: ' + str(SimData['units'].Nunits[u]) + ' --> ' + str(Nunits_new[u]))
+        factor = Cap_new[u]/SimData['units'].PowerCapacity[u]
+        SimData['parameters']['PowerCapacity']['val'][idx[u]] = Cap_new[u]
+        SimData['parameters']['Nunits']['val'][idx[u]] = Nunits_new[u]
+        SimData['units'].loc[u,'PowerCapacity'] = Cap_new[u]
+        SimData['units'].loc[u,'Nunits'] = Nunits_new[u]
+        for col in ['CostStartUp', 'NoLoadCost','StorageCapacity','StorageChargingCapacity']:
+            SimData['units'].loc[u,col] = SimData['units'].loc[u,col] * factor
+        for param in ['CostShutDown','CostStartUp','PowerInitial','RampDownMaximum','RampShutDownMaximum','RampStartUpMaximum','RampUpMaximum','StorageCapacity']:
+            SimData['parameters'][param]['val'][idx[u]] = SimData['parameters'][param]['val'][idx[u]]*factor
+        for param in ['StorageChargingCapacity']:
+            # find index, if any:
+            idx_s = np.where(np.array(SimData['sets']['s']) == u)[0]
+            if len(idx_s) == 1:
+                idx_s = idx_s[0]
+                SimData['parameters'][param]['val'][idx_s] = SimData['parameters'][param]['val'][idx_s]*factor
+    if dest_path == '':
+        logging.info('Not writing any input data to the disk')
+    else:
+        if not os.path.isdir(dest_path):
+            shutil.copytree(path,dest_path)
+            logging.info('Created simulation environment directory ' + dest_path)
+        logging.info('Writing input files to ' + dest_path)
+        with open(os.path.join(dest_path, 'Inputs.p'), 'wb') as pfile:
+            pickle.dump(SimData, pfile, protocol=pickle.HIGHEST_PROTOCOL)
+        if write_gdx:
+            write_variables(SimData['config']['GAMS_folder'], 'Inputs.gdx', [SimData['sets'], SimData['parameters']])
+            shutil.copy('Inputs.gdx', dest_path + '/')
+            os.remove('Inputs.gdx')
+    return SimData
+
+
+def adjust_storage(inputs,tech_fuel,scaling=1,value=None,write_gdx=False,dest_path=''):
+    '''
+    Function used to modify the storage capacities in the Dispa-SET generated input data
+    The function update the Inputs.p file in the simulation directory at each call
+
+    :param inputs:      Input data dictionary OR path to the simulation directory containing Inputs.p
+    :param tech_fuel:   tuple with the technology and fuel type for which the capacity should be modified
+    :param scaling:     Scaling factor to be applied to the installed capacity
+    :param value:       Absolute value of the desired capacity (! Applied only if scaling != 1 !)
+    :param write_gdx:   boolean defining if Inputs.gdx should be also overwritten with the new data
+    :param dest_path:   Simulation environment path to write the new input data. If unspecified, no data is written!
+    :return:            New SimData dictionary
+    '''
+    import pickle
+
+    if isinstance(inputs,str) or isinstance(inputs,unicode):
+        path = inputs
+        inputfile = path + '/Inputs.p'
+        if not os.path.exists(path):
+            sys.exit('Path + "' + path + '" not found')
+        with open(inputfile, 'rb') as f:
+            SimData = pickle.load(f)
+    elif isinstance(inputs,dict):
+        SimData = inputs
+    else:
+        logging.error('The input data must be either a dictionary or string containing a valid directory')
+        sys.exit(1)
+
+    if not isinstance(tech_fuel,tuple):
+        sys.exit('tech_fuel must be a tuple')
+
+    # find the units to be scaled:
+    cond = (SimData['units']['Technology'] == tech_fuel[0]) & (SimData['units']['Fuel'] == tech_fuel[1]) & (SimData['units']['StorageCapacity'] > 0)
+    units = SimData['units'][cond]
+    idx = pd.Series(np.where(cond)[0],index=units.index)
+    TotalCapacity = (units.StorageCapacity*units.Nunits).sum()
+    if scaling != 1:
+        RequiredCapacity = TotalCapacity*scaling
+    elif value is not None:
+        RequiredCapacity = value
+    else:
+        RequiredCapacity = TotalCapacity
+    factor = RequiredCapacity/TotalCapacity
+    for u in units.index:
+        logging.info('Unit ' + u +':')
+        logging.info('    StorageCapacity: ' + str(SimData['units'].StorageCapacity[u]) + ' --> ' + str(SimData['units'].StorageCapacity[u]*factor))
+        SimData['units'].loc[u,'StorageCapacity'] = SimData['units'].loc[u,'StorageCapacity']*factor
+        SimData['parameters']['StorageCapacity']['val'][idx[u]] = SimData['parameters']['StorageCapacity']['val'][idx[u]]*factor
+
+    if dest_path == '':
+        logging.info('Not writing any input data to the disk')
+    else:
+        if not os.path.isdir(dest_path):
+            shutil.copytree(path,dest_path)
+            logging.info('Created simulation environment directory ' + dest_path)
+        logging.info('Writing input files to ' + dest_path)
+        import cPickle
+        with open(os.path.join(dest_path, 'Inputs.p'), 'wb') as pfile:
+            cPickle.dump(SimData, pfile, protocol=cPickle.HIGHEST_PROTOCOL)
+        if write_gdx:
+            write_variables(SimData['config']['GAMS_folder'], 'Inputs.gdx', [SimData['sets'], SimData['parameters']])
+            shutil.copy('Inputs.gdx', dest_path + '/')
+            os.remove('Inputs.gdx')
+    return SimData

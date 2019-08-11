@@ -508,7 +508,6 @@ def get_sim_results(path='.', gams_dir=None, cache=False, temp_path='.pickle'):
             warnings.warn("Pickle import still needs to be handled MZ")
 
         if os.path.getmtime(resultfile) > time_pd:
-            print("HIEr")
             gams_dir = gams_dir.decode("utf-8") # decode path
             #print(gdx_to_list(gams_dir.decode("utf-8"), resultfile, varname='all', verbose=True))
             results = gdx_to_dataframe(gdx_to_list(gams_dir, resultfile, varname='all', verbose=True), fixindex=True,
