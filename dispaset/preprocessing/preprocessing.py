@@ -58,6 +58,7 @@ def build_simulation(config):
     sim = config['SimulationDirectory']
     dispa_version = str(get_git_revision_tag())
     SimData = {'sets': sets, 'parameters': sets_param, 'config': config, 'units': data.Plants_merged, 'version': dispa_version}
+    build_sim_dir(config, sim, sets, parameters, SimData)
     return SimData
 
 
