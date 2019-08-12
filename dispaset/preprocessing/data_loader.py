@@ -131,7 +131,7 @@ def load_cep_parameters_cart_prod(Plants_merged, countries, expandable_units=['H
     return df_expanded
 
 
-def fill_missing_cols_by_mean(df, df_mean, on_cols, merge_cols):
+def _fill_missing_cols_by_mean(df, df_mean, on_cols, merge_cols):
     df.loc[:,"_missing"] = df.apply(lambda x: x[["Investment", "FixedCost", "EconomicLifetime"]].isna().any(), axis=1)
     
     df_merged = df.merge(df_mean[on_cols + merge_cols],  how='outer', 
@@ -142,7 +142,6 @@ def fill_missing_cols_by_mean(df, df_mean, on_cols, merge_cols):
     if df_only_left.shape[0] > 0:
         print("No values found for filling missing capacity values of: %s" % ", ".join(df_only_left.Unit.values))
     
-    
     for col in merge_cols:
         merge_col_name = col + "_mean"
         df_merged.loc[:, col] = df_merged[col].fillna(df_merged[merge_col_name])
@@ -150,8 +149,6 @@ def fill_missing_cols_by_mean(df, df_mean, on_cols, merge_cols):
     
     del df_merged["_missing"]
     del df_merged["_merge"]
-
-        
     return df_merged
 
 
@@ -165,11 +162,11 @@ def load_cep_parameters(config, Plants_merged):
             
             ## Cost of new technologies
             all_cost = load_csv('Database/CapacityExpansion/TechsCost.csv') #basic cost data
-            df_cap = fill_missing_cols_by_mean(df_cap, all_cost, ["Technology", "Fuel"], ["Investment", "EconomicLifetime", "FixedCost"])
+            df_cap = _fill_missing_cols_by_mean(df_cap, all_cost, ["Technology", "Fuel"], ["Investment", "EconomicLifetime", "FixedCost"])
         plant_new = df_cap[:]
         plant_new = plant_new.set_index('Unit', drop=False)
     else:
-        plant_new = pd.DataFrame() # empty dataframe -> empty set
+        plant_new = pd.DataFrame() # empty dataframe -> empty set in optimization model
         
         
     return plant_new

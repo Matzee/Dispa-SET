@@ -4,7 +4,7 @@
 import dispaset as ds 
 import os
 import pytest
-from dispaset.preprocessing.DataLoader import DispaData
+from dispaset.preprocessing.data_loader import DataLoader
 from dispaset.preprocessing.preprocessing import DispaModel, build_simulation
 import pandas as pd
 
@@ -88,7 +88,6 @@ def test_DispaData_missing_values():
             assert df.isnull().sum().sum() == 0  # sum over all columns and rows
         elif type(df) == list:
             assert sum(x is None for x in df) == 0
-
 
 
 ######################################## Tests for all permutations simtypes x cep

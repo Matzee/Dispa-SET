@@ -730,7 +730,7 @@ def build_simulation(config):
     gams_file_changes = {'LP':LP, 'CEP':CEP}
     changes_infile_string = {'LP': ('$setglobal LPFormulation 0','$setglobal LPFormulation 1'), 'CEP': ('$setglobal CEPFormulation 0', '$setglobal CEPFormulation 1')}
     gams_file_changes_list = {changes_infile_string[k][0]: changes_infile_string[k][1] for k,v in gams_file_changes.items() if v == True}  #filter based on selection
-    if len(gams_file_changes_list)>0:
+    if len(gams_file_changes_list) > 0:
         fin = open(os.path.join(GMS_FOLDER, 'UCM_h.gms'))
         fout = open(os.path.join(sim,'UCM_h.gms'), "wt")
         for line in fin:
