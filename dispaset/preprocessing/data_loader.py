@@ -21,6 +21,14 @@ from ..common import commons  # Load fuel types, technologies, timestep, etc:
 
 
 def get_indices(config):
+    '''
+    Get all used indices for the DataLoader class
+
+    :param config:              Config dictionary
+    :return idx_utc             utc datetime index based on
+    :return idx_utc_noloc       datetime without any location
+    :return idx_utc_year_noloc  utc year datetime index 
+    '''
     # Indexes of the simulation:
     idx_std = pd.DatetimeIndex(pd.date_range(start=pd.datetime(*config['StartDate']),
                                             end=pd.datetime(*config['StopDate']),
@@ -37,6 +45,14 @@ def get_indices(config):
     return idx_utc, idx_utc_noloc, idx_utc_year_noloc
 
 def load_loads(config, idx_utc_noloc, idx_utc_year_noloc):
+    '''
+    Load and Peakload from the data tables
+
+    :param config:              Config dictionary
+    :param idx_utc_noloc        datetime without any location
+    :return Load                Demand
+    :return PeakLoad            PeakLoad  
+    '''
 
     # Load :
     Load = NodeBasedTable(config['Demand'],idx_utc_noloc,config['countries'],tablename='Demand')
@@ -49,6 +65,17 @@ def load_loads(config, idx_utc_noloc, idx_utc_year_noloc):
     return Load, PeakLoad
 
 def load_interconnections(config, idx_utc_noloc):
+    '''
+    Interconnections between the countries
+
+    :param config:              Config dictionary
+    :param idx_utc_noloc        datetime without any location
+    :return flows               Demand
+    :return NTC                 PeakLoad
+    :return Interconnections    
+    :return NTCs
+    :return Inter_RoW
+    '''
 
     # Interconnections:
     if os.path.isfile(config['Interconnections']):
@@ -131,29 +158,36 @@ def load_cep_parameters_cart_prod(Plants_merged, countries, expandable_units=['H
     return df_expanded
 
 
-def _fill_missing_cols_by_mean(df, df_mean, on_cols, merge_cols):
+def cap_handle_missing_values(df, df_fill, on_cols, merge_cols, handle_mode="filter"):
+    
     df.loc[:,"_missing"] = df.apply(lambda x: x[["Investment", "FixedCost", "EconomicLifetime"]].isna().any(), axis=1)
     
-    df_merged = df.merge(df_mean[on_cols + merge_cols],  how='outer', 
-                         on = on_cols,  suffixes = ["", "_mean"], indicator=True)
-    df_merged = df_merged[(df_merged["_merge"] == "left_only") | (df_merged["_merge"] == "both")]
-    df_only_left = df_merged[(df_merged["_merge"] == "left_only") & (df_merged["_missing"] == True)]
-    
-    if df_only_left.shape[0] > 0:
-        print("No values found for filling missing capacity values of: %s" % ", ".join(df_only_left.Unit.values))
-    
-    for col in merge_cols:
-        merge_col_name = col + "_mean"
-        df_merged.loc[:, col] = df_merged[col].fillna(df_merged[merge_col_name])
-        del df_merged[merge_col_name]
-    
-    del df_merged["_missing"]
-    del df_merged["_merge"]
+    if handle_mode == "fill_mean":
+        df_merged = df.merge(df_fill[on_cols + merge_cols],  how='outer', 
+                            on = on_cols,  suffixes = ["", "_mean"], indicator=True)
+        df_merged = df_merged[(df_merged["_merge"] == "left_only") | (df_merged["_merge"] == "both")]
+        df_only_left = df_merged[(df_merged["_merge"] == "left_only") & (df_merged["_missing"] == True)]
+        
+        if df_only_left.shape[0] > 0:
+            print("No values found for filling missing capacity values of: %s" % ", ".join(df_only_left.Unit.values))
+        
+        for col in merge_cols:
+            merge_col_name = col + "_mean"
+            df_merged.loc[:, col] = df_merged[col].fillna(df_merged[merge_col_name])
+            del df_merged[merge_col_name]
+        
+        del df_merged["_missing"]
+        del df_merged["_merge"]
+
+    elif handle_mode == "filter":
+        print('Missing column of "Investment", "FixedCost", "EconomicLifetime" for %s  \n DELETING UNITS' % ", ".join(df.loc[df["_missing"]].Unit.values))
+        df_merged = df.loc[~df["_missing"]]
+        del df_merged["_missing"]
+
     return df_merged
 
-
 def load_cep_parameters(config, Plants_merged):
-    df_cap = Plants_merged[Plants_merged['Extendable'] == "x"] 
+    df_cap = Plants_merged[Plants_merged['Extendable'].astype(str) == "x"]
     
     if df_cap.shape[0] > 0: #any extendable power plant technology
         logging.info("Capacity Expansion used!")
@@ -162,12 +196,10 @@ def load_cep_parameters(config, Plants_merged):
             
             ## Cost of new technologies
             all_cost = load_csv('Database/CapacityExpansion/TechsCost.csv') #basic cost data
-            df_cap = _fill_missing_cols_by_mean(df_cap, all_cost, ["Technology", "Fuel"], ["Investment", "EconomicLifetime", "FixedCost"])
-        plant_new = df_cap[:]
+            plant_new = cap_handle_missing_values(df_cap, all_cost, ["Technology", "Fuel"], ["Investment", "EconomicLifetime", "FixedCost"])
         plant_new = plant_new.set_index('Unit', drop=False)
     else:
         plant_new = pd.DataFrame() # empty dataframe -> empty set in optimization model
-        
         
     return plant_new
 
@@ -233,7 +265,7 @@ def load_plants(config):
     return plants, plants_sto, plants_chp
 
 
-class DispaData(object):
+class DataLoader(object):
 
     def __rename_plant_columns(self):
             # Renaming the columns to ease the production of parameters:
@@ -276,8 +308,10 @@ class DispaData(object):
         # adding cep
         self.plants_expanded = load_cep_parameters(self.config, self.Plants_merged) #todo
         self.extend_cep_cart_prod = False
-        if self.extend_cep_cart_prod:
-            self.plants_expanded = load_cep_parameters_cart_prod(self.plants_expanded, self.config["countries"])
+
+        # currently not used:
+        # if self.extend_cep_cart_prod:
+        #     self.plants_expanded = load_cep_parameters_cart_prod(self.plants_expanded, self.config["countries"])
 
     def __check_plants(self):
         # data checks:
