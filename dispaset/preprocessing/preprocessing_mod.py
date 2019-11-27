@@ -27,7 +27,7 @@ from .data_handler import UnitBasedTable,NodeBasedTable,merge_series, \
         define_parameter, write_to_excel, load_csv, load_config_excel, load_config_yaml
 from ..misc.gdx_handler import write_variables
 from ..common import commons  # Load fuel types, technologies, timestep, etc:
-from .data_loader import DispaData
+from .data_loader import DataLoader
 
 
 GMS_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'GAMS')
@@ -85,7 +85,7 @@ class DispaModel(object):
         _define_default_values(self.config)
         self.LP = config['SimulationType'] == 'LP' or config['SimulationType'] == 'LP clustered'
         self.CEP = config['CEP'] == 1
-        self.data = DispaData(config)
+        self.data = DataLoader(config)
 
         # load sets
         self.idx_utc, self.idx_utc_noloc, self.idx_utc_year_noloc = get_indices(self.config) #todo do i really need you all?

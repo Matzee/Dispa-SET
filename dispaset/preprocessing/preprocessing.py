@@ -27,22 +27,22 @@ from .data_handler import UnitBasedTable,NodeBasedTable,merge_series, \
         define_parameter, write_to_excel, load_csv, load_config_excel, load_config_yaml
 from ..misc.gdx_handler import write_variables
 from ..common import commons  # Load fuel types, technologies, timestep, etc:
-from .data_loader import DispaData
+from .data_loader import DataLoader
 
 
 GMS_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'GAMS')
 
 def build_simulation(config):
+    '''The main function for building the optimization problem'''
+
     _define_default_values(config)
     config['SimulationType'] == 'LP' or config['SimulationType'] == 'LP clustered'
-    data = DispaData(config)
-    idx_utc, idx_utc_noloc, idx_utc_year_noloc = get_indices(config)
-    parameters = build_model_parameters()
+    data = DataLoader(config)
 
+    idx_utc, idx_utc_noloc, idx_utc_year_noloc = get_indices(config)
     enddate_long = idx_utc_noloc[-1] + dt.timedelta(days=config['LookAhead'])
     idx_long = pd.DatetimeIndex(pd.date_range(start=idx_utc_noloc[0], end=enddate_long, freq=commons['TimeStep']))
     sets = load_sets(
-        # todo create model object
         Nhours_long = len(idx_long),
         look_ahead = data.config['LookAhead'],
         plants_index = data.Plants_merged.index.tolist(),
@@ -58,13 +58,14 @@ def build_simulation(config):
     sim = config['SimulationDirectory']
     dispa_version = str(get_git_revision_tag())
     SimData = {'sets': sets, 'parameters': sets_param, 'config': config, 'units': data.Plants_merged, 'version': dispa_version}
+
+    parameters = build_model_parameters(config, sets, sets_param, data, idx_long)
     build_sim_dir(config, sim, sets, parameters, SimData)
     return SimData
 
 
-# TODO Move to utils
 def get_git_revision_tag():
-    """Get version of DispaSET used for this run. tag + commit hash"""
+    '''Get version of DispaSET used for this run. tag + commit hash'''
     from subprocess import check_output
 
     try:
@@ -74,11 +75,12 @@ def get_git_revision_tag():
 
 
 def get_indices(config):
+    '''Gets all relevant indices for the model simulation'''
     # Indexes of the simulation:
     idx_std = pd.DatetimeIndex(pd.date_range(start=pd.datetime(*config['StartDate']),
                                             end=pd.datetime(*config['StopDate']),
                                             freq=commons['TimeStep'])
-                            ) #todo check brackets on master
+                            ) 
 
     idx_utc_noloc = idx_std - dt.timedelta(hours=1)
     idx_utc = idx_utc_noloc.tz_localize('UTC')
@@ -96,9 +98,8 @@ def _define_default_values(config):
         config['default']['CostHeatSlack'] = 50
 
 
-
 def build_model_parameters(config, sets, sets_param, data, idx_long):
-
+    '''Prepares the model parameters based on indices, and the data''' # todo better naming 
     parameters = dict()
     #plants = self.data.plants
     Plants_merged = data.Plants_merged
@@ -345,7 +346,7 @@ def build_sim_dir(config, sim, sets, parameters, SimData):
         os.makedirs(sim)
 
     def replace_text_by_dict(text, dic):
-        """Replace dictionary items in text"""
+        '''Replace dictionary items in text'''
         for i, j in dic.items():
             text = text.replace(i, j)
         return text
@@ -410,7 +411,7 @@ def build_sim_dir(config, sim, sets, parameters, SimData):
 
 
 def load_sets(Nhours_long, look_ahead, plants_index, plants_sto_index, Plants_chp_index, countries, Interconnections, plants_uc=None):
-    
+    '''Build the sets/indices'''
     plants_ue = [plant for plant in plants_index if plant not in plants_uc]
     sets = {
         'h': [str(x + 1) for x in range(Nhours_long)],
@@ -432,7 +433,7 @@ def load_sets(Nhours_long, look_ahead, plants_index, plants_sto_index, Plants_ch
     return sets
 
 def load_params():
-
+    '''Load all parameters'''
     sets_param = {
         'AvailabilityFactor': ['u', 'h'],
         'CHPPowerToHeat': ['chp'],
